@@ -20,11 +20,7 @@ build:
     # Read more about steps on our dev center:
     # http://devcenter.wercker.com/docs/steps/index.html
   steps:
-    - arjen/hugo-build
+    - arjen/hugo-build:
+      version: "0.17"
       theme: blackburn
-deploy:
-  steps:
-    - lukevivier/gh-pages@0.2.1:
-      token: $GIT_TOKEN
-      domain: xiaowing.github.io
-      basedir: public
+      flags: --buildDrafts=true
