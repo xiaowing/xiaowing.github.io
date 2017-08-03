@@ -2,7 +2,7 @@
 # Docker Hub https://registry.hub.docker.com/_/debian/
 # Read more about containers on our dev center
 # http://devcenter.wercker.com/docs/containers/index.html
-box: wercker/default
+box: debian
 build:
   steps:
     - arjen/hugo-build:
@@ -17,6 +17,5 @@ deploy:
     - uetchy/gh-pages:
         token: $GIT_TOKEN
         repo: xiaowing/xiaowing.github.io
-        branch: master
         domain: xiaowing.github.io
         path: public
