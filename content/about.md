@@ -7,12 +7,12 @@ sidemenu = "true"
 
 # About me
 
-## 我的标签
+### 我的标签
 ☞ INTP星人☞爱猫家 ☞钝感男 ☞Google粉 ☞第70004号维基人  
 ☞民主自由控 ☞反对爱国主义 ☞伪技术爱好者 ☞Gopher  
 ☞无证程序员 ☞游戏宅 ☞摇滚乐拥趸 ☞原版CD收藏癖 
 
-## 最爱安利的三张唱片
+### 最爱安利的三张唱片
 * "Mellon Collie And The Infinite Sadness"   --*The Smashing Pumpkins*  
 <img src="https://img3.doubanio.com/lpic/s1400100.jpg" width=128 alt="Mellon Collie And The Infinite Sadness"/>
 
@@ -27,4 +27,5 @@ sidemenu = "true"
 - Powered by [Hugo](http://gohugo.io)
 - 本博客部署在 [github page](https://github.com/xiaowing/xiaowing.github.io)
 - 目前所用的主题名叫 [blackburn](https://github.com/yoshiharuyamashita/blackburn)
+- 本博客所用的持续集成工具为 [wercker](https://wercker.com)
  
