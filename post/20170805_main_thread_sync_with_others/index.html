@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.17" />
 
-  <title>技术 &middot; 小wing的驿站</title>
+  <title>主线程等待子线程结束的各语言实现 &middot; 小wing的驿站</title>
 
   
   
@@ -36,8 +36,6 @@
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
 
   
-  
-  <link rel="alternate" type="application/rss+xml" title="小wing的驿站" href="https://xiaowing.github.io/topics/%E6%8A%80%E6%9C%AF/index.xml" />
   
 
   
@@ -114,10 +112,6 @@
   <div class="pure-menu social">
   <ul class="pure-menu-list">
 
-    
-    <li class="pure-menu-item">
-      <a class="pure-menu-link" href="https://xiaowing.github.io/topics/%E6%8A%80%E6%9C%AF/index.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
-    </li>
     
 
     
@@ -229,16 +223,12 @@
 
 
 <div class="header">
-  <h1>技术</h1>
+  <h1>主线程等待子线程结束的各语言实现</h1>
+  <h2></h2>
 </div>
-
 <div class="content">
-  
-    <article>
-  <header>
-    <h2><a href="https://xiaowing.github.io/post/20170805_main_thread_sync_with_others/">主线程等待子线程结束的各语言实现</a></h2>
 
-    <div class="post-meta">
+  <div class="post-meta">
 
   <div>
     <i class="fa fa-calendar fa-fw"></i>
@@ -281,9 +271,6 @@
 
 </div>
 
-  </header>
-
-  <p>
   <p>在涉及到并发编程的情况下，经常性地会碰到一种场景:</p>
 
 <blockquote>
@@ -293,167 +280,146 @@
 <p>这种场景下，主线程在其创建的子线程执行期间内需要阻塞，直到其他子线程都执行完毕。由于这类场景已经在不同语言的开发中遇到多次，所以汇总一下这些语言的常用实现方法，以后查起来也方便~</p>
 
 <p></p>
-  </p>
+
+<ol>
+<li><p>C语言实现
+C语言在操作多线程方便由于缺乏一个统一的标准库，所以在Linux和Windows上各有各的实现方法:</p>
+
+<ul>
+<li><p>Linux版实现</p>
+
+<p>在Linux上的实现，主要是基于POSIX thread库进行实现，实例代码如下:</p>
+
+<pre><code class="language-c">#include &lt;pthread.h&gt;
+
+int main(void) {
+    int i;
+    pthread_t threads[THREAD_NUM];
+
+    pthread_setconcurrency(THREAD_NUM);
+
+    for (i = 0; i &lt; THREAD_NUM; i++){
+        /* 将需要执行的job的函数地址func传入新建的子线程 */
+        pthread_create(&amp;threads[i], NULL, func, NULL);
+    }
+
+    for(i = 0; i &lt; THREAD_NUM; i++){
+        pthread_join(handles[i], NULL);
+    }
+
+    /* 后续的处理逻辑略... */
+}
+</code></pre></li>
+
+<li><p>Windows版实现</p>
+
+<p>在Windows版上的实现中，主要是基于Windows API实现。由于Windows本身就和Linux就是风格迥异，因此在阻塞主线程的API设计上，也是略有不同：</p>
+
+<pre><code class="language-c">#include &lt;Windows.h&gt;
+
+int main(void) {
+    int i;
+    HANDLE handles[THREAD_NUM];
+
+    for (i = 0; i &lt; THREAD_NUM; i++){
+        /* 将需要执行的job的函数地址func传入新建的子线程 */
+        handles[i] = CreateThread(NULL, 0, func, NULL, 0, NULL);
+    }
+
+    WaitForMultipleObjects(THREAD_NUM, handles, TRUE, INFINITE);
+
+    /* 后续的处理逻辑略... */
+}
+</code></pre>
+
+<p>需要注意的是，Windows API的<code>WaitForMultipleObjects()</code>其实不仅仅是为多线程场景服务的，它可以用与多种内核句柄，如<code>Event</code>，<code>Mutex</code>，<code>Process</code>，<code>Thread</code>，<code>Semaphore</code>.</p></li>
+</ul></li>
+
+<li><p>Python3的实现</p>
+
+<p>Python3的实现形式与C语言的Linux版类似: 当子线程仍活着的时候，则通过类似Join()方法之类的API来阻塞当前的主线程。代码示例如下:</p>
+
+<pre><code class="language-python">from threading import Thread
+
+if __name__ == '__main__':
+    thread_list = []
+
+    for x range (0, THREAD_NUM):
+        # 将需要执行的job的函数和参数传入新建的子线程
+        t = Thread(target=job_func, args=(job_args,))
+        t.start()
+        thread_list.append(t)
+        
+    for element in thread_list:
+        if element.is_alive():
+            element.join()    # 通过join方法阻塞主线程
+    else:
+        # 后续的处理逻辑略...
+</code></pre></li>
+
+<li><p>Golang的实现</p>
+
+<p>由于Golang的语言特色，并发通过goroutine来实现。通常情况下，各个goroutine根本不需要知道彼此的存在。因此对于这个场景的实现方式，与之前的那些语言都有所不同.代码示例如下:</p>
+
+<pre><code>package main
+    
+import (
+    &quot;sync&quot;
+)
+
+func main() {
+    var wait sync.WaitGroup
+    wait.Add(ROUTINE_NUM)
+
+    for i := 0; i &lt; ROUTINE_NUM; i++ {
+        go func() {
+            defer wait.Done()
+
+            //Goroutine所要执行的Job逻辑略...
+        }()
+    }
+    wait.Wait()
+
+    // 后续的处理逻辑略...
+}
+</code></pre>
+
+<p>在之前的语言中，主线程在起了多个子线程后，不管用什么API阻塞，主线程或多或少还需要关注一下子线程(句柄等)，但是在Golang中，主协程不需要关注各个携程。主协程等待其他协程的这个场景，完全基于Workgroup就可以简单实现。</p>
+
+<p>真不愧是一门面向并发的语言:)</p></li>
+</ol>
+
+<p>最后需要说明的是，虽然本文描述的这个场景叫做&rdquo;主线程等待子线程&rdquo;。但实际上，无论是线程模型还是协程模型，线程与线程之间(协程与协程之间)都是平等的。毕竟只有在多进程模型下，被fork出的子进程会继承父进程的大部分数据(如打开的文件描述符)，完全相当于父进程的副本的形式。而这样的关系在线程模型(或协程模型)中并不存在，此处的说法完全只是遵循某种不成文的惯例，算是&rdquo;<strong>阀值</strong>&ldquo;之于&rdquo;<strong>阈值</strong>&ldquo;这样的错误吧。</p>
 
   
-  <footer>
-    <a href="https://xiaowing.github.io/post/20170805_main_thread_sync_with_others/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-  </footer>
-  
-</article>
-
-  
-    <article>
-  <header>
-    <h2><a href="https://xiaowing.github.io/post/howto_call_a_go_func_via_funcpoint_from_cside/">C语言程序通过函数指针调用Go函数的方法</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>30 Jul 2017, 16:16</time>
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="https://xiaowing.github.io/post/howto_call_a_go_func_via_funcpoint_from_cside/"><i class="fa fa-chevron-left"></i></a>
+    
   </div>
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-folder fa-fw"></i>
+  <div class="pure-u-10-24">
     
-      <a class="post-taxonomy-topic" href="https://xiaowing.github.io/topics/%E6%8A%80%E6%9C%AF">技术</a>
+    <nav class="prev">
+      <a href="https://xiaowing.github.io/post/howto_call_a_go_func_via_funcpoint_from_cside/">C语言程序通过函数指针调用Go函数的方法</a>
+    </nav>
     
   </div>
-  
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/cgo">cgo</a>&nbsp;&#47;
-    
-      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/golang">golang</a>&nbsp;&#47;
-    
-      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/development">development</a>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
     
   </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  <p>在github上关于cgo的wiki中，有一<a href="https://github.com/golang/go/wiki/cgo#function-pointer-callbacks">章节</a>专门介绍了如何利用cgo技术通过函数指针调用Golang的函数实现. 不过，仔细观察这个章节的代码示例可以发现，它所要解决的其实是以下的场景:</p>
-
-<blockquote>
-<p>在Golang中想要调用一个已有的C语言函数，但是该C语言函数要求一个函数指针作为参数时应该怎么办？</p>
-</blockquote>
-
-<p>如果将这个场景稍微改变一下，改成以下场景，对应的解法又该是什么？</p>
-
-<blockquote>
-<p>在一个C语言实现的已有系统中，对于一个要求函数指针的函数，如何传入一个Golang实现的回调函数以实现“用Golang扩展C语言系统”的目的。</p>
-</blockquote>
-
-<p>我基于wiki中已有的代码简单探索了一下方法，结果分享如下：</p>
-
-<p></p>
-  </p>
-
-  
-  <footer>
-    <a href="https://xiaowing.github.io/post/howto_call_a_go_func_via_funcpoint_from_cside/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-  </footer>
-  
-</article>
-
-  
-    <article>
-  <header>
-    <h2><a href="https://xiaowing.github.io/post/why_i_love_the_go_programming_language/">一件如故的Go语言</a></h2>
-
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>30 Jul 2017, 14:17</time>
-  </div>
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-folder fa-fw"></i>
-    
-      <a class="post-taxonomy-topic" href="https://xiaowing.github.io/topics/%E6%8A%80%E6%9C%AF">技术</a>
+  <div class="pure-u-1-24" style="text-align: right;">
     
   </div>
-  
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/golang">golang</a>&nbsp;&#47;
-    
-      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/development">development</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <p>
-  <p>从去年接触Go语言(以后简称&rdquo;Golang&rdquo;)到现在，已经有1年的时间了。感觉随着使用经验的积累，越发地喜爱这么编程语言。作为一个以C, C#语言出道，并自学了Java, Python, Golang的无证程序员，使用 了一段时间Go语言后，最明显的感觉就是：“这正式我所期盼的语言”。特别是写多了C语言代码，虽然感叹于C语言在语言上的简洁与性能上的高效，但是对于现实中C语言在开发方面的低效也总是吐槽不断。遭遇了Go语言之后，认为这门语言是C语言的最好传人(不要提C++)。</p>
-
-
-
-<div class="pure-g">
-
-  
-  
-  
-  
-  <div class="pure-u-1-1">
-    <div style="padding: 0 .2em">
-      <img
-        class="pure-img-responsive"
-        src="https://xiaowing.github.io/img/post/golang-gopher-100.jpg"
-        alt="Gopher">
-    </div>
-  </div>
-  
-
 </div>
 
 
-<p>以下分享一些我认为Golang做的比较值得推崇的地方：</p>
-
-<p></p>
-  </p>
 
   
-  <footer>
-    <a href="https://xiaowing.github.io/post/why_i_love_the_go_programming_language/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-  </footer>
-  
-</article>
 
-  
 </div>
 
 </div>
@@ -465,3 +431,4 @@
 
 </body>
 </html>
+
