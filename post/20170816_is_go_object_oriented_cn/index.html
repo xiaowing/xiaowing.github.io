@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.17" />
+
+  <title>[译文]GO语言是面向对象的吗？ &middot; 小wing的驿站</title>
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+  
+  
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+  
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="https://xiaowing.github.io/img/favicon.ico" type="image/x-icon" />
+
+  
+    <link rel="stylesheet" href="https://xiaowing.github.io/css/my.css">
+  
+  
+    <script src="https://xiaowing.github.io/js/my.js"></script>
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+  <a class="pure-menu-heading brand" href="https://xiaowing.github.io/">小wing的驿站</a>
+
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/post/"><i class='fa fa-list fa-fw'></i>Posts</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/about/"><i class='fa fa-user fa-fw'></i>About</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/topics/"><i class='fa fa-folder fa-fw'></i>Topics</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/tags/"><i class='fa fa-tags fa-fw'></i>Tags</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://twitter.com/xiaowing" target="_blank"><i class="fa fa-twitter-square fa-fw"></i>Twitter</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="http://weibo.com/u/3304350204" target="_blank"><i class="fa fa-weibo fa-fw"></i>Weibo</a>
+    </li>
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://instagram.com/xiaowing" target="_blank"><i class="fa fa-instagram fa-fw"></i>Instagram</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/xiaowing" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small>&copy; 2017. All rights reserved.</small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>[译文]GO语言是面向对象的吗？</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>16 Aug 2017, 21:48</time>
+  </div>
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-folder fa-fw"></i>
+    
+      <a class="post-taxonomy-topic" href="https://xiaowing.github.io/topics/%E6%8A%80%E6%9C%AF">技术</a>
+    
+  </div>
+  
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/golang">golang</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/%E8%AF%91%E4%BD%9C">译作</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  <p>周一在微信上收到了<a href="http://www.weixinyidu.com/a_277786">Go中国</a>公众号推送的一篇文章 <a href="https://flaviocopes.com/golang-is-go-object-oriented/">Is GO object oriented</a> ,读完以后感觉观点还是很有意思的，与我的所见有很多相似之处，所以就饶有兴趣地把它翻译成中文，也算是作为&rdquo;友军&rdquo;的一点贡献吧。</p>
+
+<p></p>
+
+<h2 id="go语言是面向对象的吗">GO语言是面向对象的吗？</h2>
+
+<p>原题: IS GO OBJECT ORIENTED?</p>
+
+<p>作者: Flavio Copes</p>
+
+<p>链接: <a href="https://flaviocopes.com/page/about/">https://flaviocopes.com/page/about/</a></p>
+
+<p>有时候我会读到文章宣称&rdquo;GO语言是面向对象的语言&rdquo;，有时候我又会读到一篇持相反观点的文章宣称&rdquo;GO语言无法做到面向对象编程因为它根本没有&rsquo;类&rsquo;&ldquo;.</p>
+
+<p>有鉴于此，我写了这篇文章来阐述这个话题: <strong>GO语言到底是不是面向对象的语言</strong>？</p>
+
+<p>如果你习惯了从某种特定编程语言的视角来思考问题，那么在这个话题上，你可能会由于自己所惯于使用的语言不同而得出截然相反的答案。比如说，如果你之前习惯了使用C语言，那么很显然GO语言拥有太多面向对象的特性；但是如果你之前习惯了使用Java，那么GO语言看起来就不那么&rdquo;面向对象&rdquo;了。</p>
+
+<p>因此关于这个话题，你首先要做的是摒弃其他语言带给你的先入为主的观念并学会用GO语言的思维模式来思考。</p>
+
+<p>然后我就可以给出我的答案了: YES. GO语言是一门面向对象的语言, 而且是以一种很清爽的方式实现了面向对象.</p>
+
+<p>在<a href="https://golang.org/doc/faq#Is_Go_an_object-oriented_language">GO语言官方文档的FAQ</a>中也表述过下述内容</p>
+
+<blockquote>
+<p>Is Go an object-oriented language?</p>
+
+<p>Yes and no. Although Go has types and methods and
+allows an object-oriented style of programming, there
+is no type hierarchy. The concept of “interface” in Go
+provides a different approach that we believe is easy
+to use and in some ways more general. There are also
+ways to embed types in other types to provide something
+analogous—but not identical—to subclassing. Moreover,
+methods in Go are more general than in C++ or Java:
+they can be defined for any sort of data, even built-in
+types such as plain, “unboxed” integers. They are not
+restricted to structs (classes).
+Also, the lack of a type hierarchy makes “objects” in
+Go feel much more lightweight than in languages such as
+C++ or Java.</p>
+</blockquote>
+
+<h3 id="集众家所长">集众家所长</h3>
+
+<p>GO语言从<a href="https://zh.wikipedia.org/wiki/%E8%BF%87%E7%A8%8B%E5%BC%8F%E7%BC%96%E7%A8%8B">过程式编程语言</a>, <a href="https://zh.wikipedia.org/wiki/%E5%87%BD%E6%95%B8%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80">函数式编程语言</a>以及<a href="https://zh.wikipedia.org/wiki/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1">面向对象编程语言</a>中都汲取了一些概念并将它们组装在一起后，将那些剩余的概念舍弃从而创造了一门极具特性但又十分地道的编程语言。</p>
+
+<h3 id="要结构体-不要类">要结构体,不要类</h3>
+
+<p>GO语言中并没有传统面向对象编程语言中的&rdquo;类&rdquo;(<code>class</code>)的概念，取而代之的是使用了&rdquo;结构体&rdquo;(<code>struct</code>)。但是GO语言的结构体可比C语言中的同名前辈要强大得多。在GO语言中,结构体以及结构体的方法(<code>method</code>)发挥了与传统意义上的&rdquo;类&rdquo;相同的作用，同时在概念上又清晰分明——结构体只负责管理状态，不管理行为;而结构体的方法则负责定义结构体的行为，比如说允许他们更改状态.</p>
+
+<h3 id="封装的奥义">封装的奥义</h3>
+
+<p>我认为GO语言中最好的一个特性就是，直接明了地通过字段名, 方法名以及函数名的首字母大写来保证它们的访问可见性为<strong>public</strong>。其他的那些以小写字母开头的字段等则默认为包(<code>package</code>)内私有(private)并且无法被导出至包外。这个特性使得开发者们一眼就可以看出来哪些字段/方法/属性是public的，哪些是private的。另外，由于GO语言中没有<strong>继承</strong>这一概念，所以GO语言中的访问修饰也就根本没有<code>protected</code>的概念.</p>
+
+<h3 id="无继承">无继承</h3>
+
+<p>GO语言中没有<a href="https://zh.wikipedia.org/wiki/%E7%BB%A7%E6%89%BF_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)">继承</a>,这一点在<a href="https://golang.org/doc/faq#Why_is_there_no_type_inheritance">GO语言官方文档的FAQ</a>也有明确说明:</p>
+
+<blockquote>
+<p>Object-oriented programming, at least in the best-known
+languages, involves too much discussion of the
+relationships between types, relationships that often
+could be derived automatically. Go takes a different
+approach.</p>
+</blockquote>
+
+<h3 id="用组合代替继承">用组合代替继承</h3>
+
+<p>程序设计理念中最广为认知的准则之一即是 <a href="https://en.wikipedia.org/wiki/Composition_over_inheritance">用组合代替继承</a>。这一准则在<a href="https://en.wikipedia.org/wiki/Design_Patterns">四人帮</a>的那本极富盛名的《设计模式》也屡有提及。而在GO语言中，这一准则被发挥得淋漓尽致。</p>
+
+<p>当我们在定义一个结构体时，我们可以追加类型为另一个结构体的匿名字段。这样一来，我们定义的这个结构体也就同时拥有了另一个结构体的所有字段以及方法。这种技法被称之为<strong>Struct Embedding</strong>。</p>
+
+<pre><code>package main
+
+import (
+	&quot;fmt&quot;
+)
+
+type Dog struct {
+	Animal
+}
+type Animal struct {
+	Age int
+}
+
+func (a *Animal) Move() {
+	fmt.Println(&quot;Animal moved&quot;)
+}
+func (a *Animal) SayAge() {
+	fmt.Printf(&quot;Animal age: %d\n&quot;, a.Age)
+}
+func main() {
+	d := Dog{}
+	d.Age = 3
+	d.Move()
+	d.SayAge()
+}
+</code></pre>
+
+<p><a href="https://play.golang.org/p/IxMoeByWp5">执行结果</a> (需要科学上网)</p>
+
+<h3 id="接口">接口</h3>
+
+<p>忘记Java或PHP风格的接口概念吧！GO语言中的接口是截然不同的，而其中最关键的一个特性即是: <strong>接口是隐式实现的</strong>——不需要在定义类型时去显式声明一下类型实现了哪些接口。</p>
+
+<p>还是摘抄自<a href="https://golang.org/doc/faq#Why_is_there_no_type_inheritance">GO语言官方文档的FAQ</a>:</p>
+
+<blockquote>
+<p>Rather than requiring the programmer to declare ahead
+of time that two types are related, in Go a type
+automatically satisfies any interface that specifies a
+subset of its methods.</p>
+</blockquote>
+
+<p>通常，接口的定义都很短，甚至有可能至包含一个方法声明。在地道的GO语言实践中，你不应该看到一个接口拥有长长的方法列表。</p>
+
+<p>借助这样的接口就可以很优雅地实现<a href="https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%9E%8B_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)">多态</a>: 一个方法如果接受某一个接口，那么就意味着这个方法接受了任何实现了该接口的对象.</p>
+
+<h3 id="方法">方法</h3>
+
+<p>GO语言中的类型往往都拥有方法，但是这些方法的定义是独立于类型定义而存在的。GO语言在语法层面通过一个类似Javascript中prototype方法的特性来实现了这种定义的独立性。</p>
+
+<pre><code class="language-javascript">function Person(first, last) {
+    this.firstName = first;
+    this.lastName = last;
+}
+Person.prototype.name = function() {
+    return this.firstName + &quot; &quot; + this.lastName;
+};
+p = new Person(&quot;Flavio&quot;, &quot;Copes&quot;)
+p.name() // Flavio Copes
+</code></pre>
+
+<p>在GO语言中，代码应该写成这样:</p>
+
+<pre><code>package main
+
+import (
+	&quot;fmt&quot;
+)
+type Person struct {
+	firstName string
+	lastName  string
+}
+func (p Person) name() string {
+	return p.firstName + &quot; &quot; + p.lastName
+}
+func main() {
+	p := Person{&quot;Flavio&quot;, &quot;Copes&quot;}
+	fmt.Println(p.name())
+}
+</code></pre>
+
+<h3 id="关联方法与类型">关联方法与类型</h3>
+
+<p>方法可以被关联至任何类型,甚至是&rdquo;曲线救国&rdquo;式地关联到GO语言中的基础类型。由于方法只能被关联至在同一个包中定义的类型,所以我们无法直接&rdquo;扩展&rdquo;基础类型。但事实上，我们可以通过对基础数据类型定义别名从而达到扩展的目的。</p>
+
+<pre><code>package main
+
+import (
+	&quot;fmt&quot;
+)
+
+type Amount int
+
+func (a *Amount) Add(add Amount) {
+	*a += add
+}
+
+func main() {
+	var a Amount
+	a = 1
+	a.Add(2)
+	fmt.Println(a)
+}
+</code></pre>
+
+<p><a href="https://play.golang.org/p/ONlUmue1jA">显示结果</a> (需要科学上网)</p>
+
+<h3 id="函数">函数</h3>
+
+<p>让我们回想一下传统的面向对象编程语言吧，比如Java。想想看你曾经定义过多少次包含的全是static方法的名为&rdquo;Utils&rdquo;的类?</p>
+
+<p>这样的现象来源与传统的面向对象变成语言中的一个观念: <strong>一切皆是对象</strong>，因此函数定义必须放在一个类里面。所幸的是，这种现象不会发生在GO语言中，因为GO语言有真正的&rdquo;函数&rdquo;这一概念。在真实世界中，并非所有事物都必须是一个对象。&rdquo;类&rdquo;和&rdquo;对象&rdquo;的概念很有用，但也不能到处都用。</p>
+
+<p>在GO语言中，并非所有东西都是对象(若严格从技术角度而言，GO语言没有东西是对象。但通常人们会将一个类型的实例或者变量称之为&rdquo;对象&rdquo;),方法仅仅是指那些被关联至某一类型的函数。但GO语言同时又允许函数脱离于对象而独立存在,就如同C语言的函数一样。</p>
+
+<p>所以，GO语言既允许方法存在，也允许函数存在。而且，函数是第一优先的(函数类型可用作定义结构体字段,函数可作为参数传递至其他函数，函数也可作为返回值被函数或方法返回)。</p>
+
+<h3 id="大道至简">大道至简</h3>
+
+<p>综上所述，GO语言对于面向对象的实现非常灵活且直接。不用再纠结于类和继承，你可以减少对源码模板文件的依赖，而且不用再一点一点地推敲类与类之间的理想层级结构，从此你只需根据需求自由地对类型进行组合或拆解即可。</p>
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="https://xiaowing.github.io/post/20170805_main_thread_sync_with_others/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="https://xiaowing.github.io/post/20170805_main_thread_sync_with_others/">主线程等待子线程结束的各语言实现</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+  </div>
+</div>
+
+
+
+  
+
+</div>
+
+</div>
+</div>
+<script src="https://xiaowing.github.io/js/ui.js"></script>
+
+
+
+
+</body>
+</html>
+
