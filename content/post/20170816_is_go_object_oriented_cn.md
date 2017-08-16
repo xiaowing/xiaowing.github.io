@@ -12,7 +12,7 @@ topics = [
 ]
 +++
 
-周一在微信上收到了[Go中国](http://www.weixinyidu.com/a_277786)公众号推送的一篇文章 [Is GO object oriented](https://flaviocopes.com/golang-is-go-object-oriented/) ,读完以后感觉观点还是很有意思的，与我的所见有很多相似之处，所以就饶有兴趣地把它翻译成中文，也算是作为"友军"的一点贡献吧。
+周一在微信上收到了[Go中国](http://www.weixinyidu.com/a_277786)公众号推送的一篇文章 [Is GO object oriented](https://flaviocopes.com/golang-is-go-object-oriented/) ,读完以后感觉观点还是很有意思的，与我的所见有很多相似之处，所以就饶有兴趣地把它翻译成中文，也算是作为"友军"的一点贡献吧......
 
 <!--more-->
 
@@ -22,7 +22,7 @@ topics = [
 
 作者: Flavio Copes
 
-链接: [https://flaviocopes.com/page/about/](https://flaviocopes.com/page/about/)
+链接: [https://flaviocopes.com/golang-is-go-object-oriented/](https://flaviocopes.com/golang-is-go-object-oriented/)
 
 有时候我会读到文章宣称"GO语言是面向对象的语言"，有时候我又会读到一篇持相反观点的文章宣称"GO语言无法做到面向对象编程因为它根本没有'类'".
 
