@@ -16,7 +16,7 @@
       <pubDate>Wed, 16 Aug 2017 21:48:52 +0800</pubDate>
       
       <guid>https://xiaowing.github.io/post/20170816_is_go_object_oriented_cn/</guid>
-      <description>&lt;p&gt;周一在微信上收到了&lt;a href=&#34;http://www.weixinyidu.com/a_277786&#34;&gt;Go中国&lt;/a&gt;公众号推送的一篇文章 &lt;a href=&#34;https://flaviocopes.com/golang-is-go-object-oriented/&#34;&gt;Is GO object oriented&lt;/a&gt; ,读完以后感觉观点还是很有意思的，与我的所见有很多相似之处，所以就饶有兴趣地把它翻译成中文，也算是作为&amp;rdquo;友军&amp;rdquo;的一点贡献吧。&lt;/p&gt;
+      <description>&lt;p&gt;周一在微信上收到了&lt;a href=&#34;http://www.weixinyidu.com/a_277786&#34;&gt;Go中国&lt;/a&gt;公众号推送的一篇文章 &lt;a href=&#34;https://flaviocopes.com/golang-is-go-object-oriented/&#34;&gt;Is GO object oriented&lt;/a&gt; ,读完以后感觉观点还是很有意思的，与我的所见有很多相似之处，所以就饶有兴趣地把它翻译成中文，也算是作为&amp;rdquo;友军&amp;rdquo;的一点贡献吧&amp;hellip;&amp;hellip;&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;
 
@@ -26,7 +26,7 @@
 
 &lt;p&gt;作者: Flavio Copes&lt;/p&gt;
 
-&lt;p&gt;链接: &lt;a href=&#34;https://flaviocopes.com/page/about/&#34;&gt;https://flaviocopes.com/page/about/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;链接: &lt;a href=&#34;https://flaviocopes.com/golang-is-go-object-oriented/&#34;&gt;https://flaviocopes.com/golang-is-go-object-oriented/&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;有时候我会读到文章宣称&amp;rdquo;GO语言是面向对象的语言&amp;rdquo;，有时候我又会读到一篇持相反观点的文章宣称&amp;rdquo;GO语言无法做到面向对象编程因为它根本没有&amp;rsquo;类&amp;rsquo;&amp;ldquo;.&lt;/p&gt;
 
