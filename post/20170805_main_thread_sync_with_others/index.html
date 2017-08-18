@@ -208,7 +208,7 @@
 
   <div>
   <div class="small-print">
-    <small>&copy; 2017. All rights reserved.</small>
+    <small>&copy; Licensed under CC BY-NC-SA.</small>
   </div>
   <div class="small-print">
     <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
@@ -390,6 +390,14 @@ func main() {
 </ol>
 
 <p>最后需要说明的是，虽然本文描述的这个场景叫做&rdquo;主线程等待子线程&rdquo;。但实际上，无论是线程模型还是协程模型，线程与线程之间(协程与协程之间)都是平等的。毕竟只有在多进程模型下，被fork出的子进程会继承父进程的大部分数据(如打开的文件描述符)，完全相当于父进程的副本的形式。而这样的关系在线程模型(或协程模型)中并不存在，此处的说法完全只是遵循某种不成文的惯例，算是&rdquo;<strong>阀值</strong>&ldquo;之于&rdquo;<strong>阈值</strong>&ldquo;这样的错误吧。</p>
+
+  <div>
+  <br/><br/>
+  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">
+    <img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png" />
+  </a><br/>
+  本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">知识共享署名-非商业性使用-相同方式共享 3.0 中国大陆许可协议</a>进行许可。
+  </div>
 
   
 <div class="prev-next-post pure-g">
