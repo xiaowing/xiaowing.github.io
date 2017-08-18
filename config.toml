@@ -4,7 +4,7 @@ title = "小wing的驿站"
 author = "Yi Yi"
 theme = "blackburn"
 # Shown in the side menu
-copyright = "&copy; 2017. All rights reserved."
+copyright = "&copy; Licensed under CC BY-NC-SA."
 canonifyurls = true
 paginate = 10
 
