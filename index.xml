@@ -685,6 +685,7 @@ int main(void) {        /* 追加main()函数实现 */
 
 &lt;ul&gt;
 &lt;li&gt;Powered by &lt;a href=&#34;http://gohugo.io&#34;&gt;Hugo&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;评论插件为 &lt;a href=&#34;https://disqus.com/&#34;&gt;Disqas&lt;/a&gt; (&lt;em&gt;需科学上网方能显示&lt;/em&gt;)&lt;/li&gt;
 &lt;li&gt;本博客部署在 &lt;a href=&#34;https://github.com/xiaowing/xiaowing.github.io&#34;&gt;github page&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;目前所用的主题名叫 &lt;a href=&#34;https://github.com/yoshiharuyamashita/blackburn&#34;&gt;blackburn&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;本博客所用的持续集成工具为 &lt;a href=&#34;https://wercker.com&#34;&gt;wercker&lt;/a&gt;&lt;/li&gt;
