@@ -25,6 +25,7 @@ sidemenu = "true"
 # About this blog
 
 - Powered by [Hugo](http://gohugo.io)
+- 评论插件为 [Disqas](https://disqus.com/) (*需科学上网方能显示*)
 - 本博客部署在 [github page](https://github.com/xiaowing/xiaowing.github.io)
 - 目前所用的主题名叫 [blackburn](https://github.com/yoshiharuyamashita/blackburn)
 - 本博客所用的持续集成工具为 [wercker](https://wercker.com)
