@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.17" />
+
+  <title>如何为PostgreSQL创建一个内置函数？ &middot; 小wing的驿站</title>
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+  
+  
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-9033761003757481",
+      enable_page_level_ads: true
+    });
+  </script>
+  
+  
+  
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+  
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="https://xiaowing.github.io/img/favicon.ico" type="image/x-icon" />
+
+  
+    <link rel="stylesheet" href="https://xiaowing.github.io/css/my.css">
+  
+  
+    <script src="https://xiaowing.github.io/js/my.js"></script>
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+  <a class="pure-menu-heading brand" href="https://xiaowing.github.io/">小wing的驿站</a>
+
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/post/"><i class='fa fa-list fa-fw'></i>Posts</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/about/"><i class='fa fa-user fa-fw'></i>About</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/topics/"><i class='fa fa-folder fa-fw'></i>Topics</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/tags/"><i class='fa fa-tags fa-fw'></i>Tags</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://twitter.com/xiaowing" target="_blank"><i class="fa fa-twitter-square fa-fw"></i>Twitter</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="http://weibo.com/u/3304350204" target="_blank"><i class="fa fa-weibo fa-fw"></i>Weibo</a>
+    </li>
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://instagram.com/xiaowing" target="_blank"><i class="fa fa-instagram fa-fw"></i>Instagram</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/xiaowing" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small>&copy; Licensed under CC BY-NC-SA.</small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>如何为PostgreSQL创建一个内置函数？</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>03 Sep 2017, 22:59</time>
+  </div>
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-folder fa-fw"></i>
+    
+      <a class="post-taxonomy-topic" href="https://xiaowing.github.io/topics/%E6%8A%80%E6%9C%AF">技术</a>
+    
+  </div>
+  
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/postgresql">PostgreSQL</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/development">development</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  <p>这篇文章我已经酝酿颇久了，诱因是因为<a href="https://www.pingcap.com/index-zh">PingCAP</a>团队为了推广他们的<strong>TiDB</strong>而在知乎专栏发了一篇文章《<a href="https://zhuanlan.zhihu.com/p/24870620">TiDB 增加 MySQL 内建函数</a>》。受此文启发，我在网上搜索了一下<strong>PostgreSQL</strong>(<em>以下略称&rdquo;PG&rdquo;</em>)中定制内置函数(<em>Built-in Function</em>)相关的文章，果然没有搜到什么像样的中文文章。其实为PG添加内置函数并不难，可能是相对于hacking它的SQL引擎或者存储引擎等等话题而言，加一个内置函数的逼格实在是太Low吧。不过TiDB这个诞生还没多久的数据库产品都知道通过先利用内置函数这个话题来由简入深地吸引广大开发者为它贡献代码，PG作为一个诞生了已有20年的开源数据库老大哥却没有一篇像样文章，也难怪PG的普及率不高了。</p>
+
+<p>以上就作为这篇分享的「意味づけ」吧&hellip;</p>
+
+<p></p>
+
+<h2 id="什么时候需要去增加一个内置函数">什么时候需要去增加一个内置函数</h2>
+
+<p>其实在大多数情况下，鉴于PG提供了强大的SQL扩展能力，我们通常只需要掌握PG中<a href="https://www.postgresql.org/docs/9.6/static/xfunc.html">User Define Function(略称:UDF)</a>就够了。不过内置函数的特性与UDF还是有些不同的，因此在一些特定场景下，我们可能会不得不采用内置函数的方式去定制一些函数接口。</p>
+
+<p>以下，我对比了一下内置函数和UDF的特性&hellip;</p>
+
+<ul>
+<li><strong>扩展灵活性</strong>
+
+<ul>
+<li><em>内置函数</em><br/>
+不灵活。<br/>对内置函数的增/删/改都必须通过修改并重编PostgreSQL源码实现。</li>
+<li><em>User Defined Function</em><br/>
+很灵活。<br/>通过<code>CREATE FUNCTION</code>以及<code>DROP FUNCTION</code>就可以实现UDF的增加与删除.且函数的具体实现可以通过多种语言(PL/pgsql,PL/python,PL/Perl等等)实现。</li>
+</ul></li>
+<li><strong>可见性</strong>
+
+<ul>
+<li><em>内置函数</em><br/>
+内置函数默认在所有实例的所有Database中都可见</li>
+<li><em>User Defined Function</em><br/>
+由于UDF只是一个数据库对象。因此对于一个特定的UDF而言，一次CREATE FUNCTION只能使得它在该特定的Database中可见。若要在别的Database中也可见，需要在目标Database中也执行<code>CREATE FUNCTION</code>语句</li>
+</ul></li>
+<li><strong>执行权限</strong>
+
+<ul>
+<li><em>内置函数</em><br/>
+除非在内置函数的实现中做特定限制逻辑，否则内置函数默认对所有的数据库用户可执行<br /></li>
+<li><em>User Defined Function</em><br/>
+默认只有创建了的该UDF数据库用户拥有执行权限，对于其他用户，需要通过<code>GRANT</code>语句赋权</li>
+</ul></li>
+</ul>
+
+<p>对于大部分PG用户而言，他们对SQL级别的函数的期待通常都是与具体业务数据紧密相关的(其中的大部分都是希望去实现一些存储过程),因此对于这部分用户而言，UDF已经足够(PG中“存储过程”这个概念已被融入UDF)。通常，只有在以下这几种场景下，我们才需要去实现一个内置函数:</p>
+
+<ul>
+<li>希望在SQL层面查询PG运行中的一些临时的内部状态(常见于做PG的商业发行版时为了为了满足一些特定需求)</li>
+<li>希望在SQL层面可以对PG的内部执行加以一些控制(常见于做PG的商业发行版时为了满足一些特定需求)</li>
+<li>纯粹只是想Hacking一下PG</li>
+</ul>
+
+<h2 id="增加内置函数的-三板斧">增加内置函数的&rdquo;三板斧&rdquo;</h2>
+
+<p>其实为PG增添一个内置函数本身并不复杂，我总结下来也就三个步骤: <strong>实现函数</strong>，<strong>声明函数</strong> &amp; <strong>注册函数</strong>。下面我就用一个简单的例子来说明如何给PG增加一个内置函数。</p>
+
+<h3 id="1-实现">1. 实现</h3>
+
+<p>仿照《<a href="https://book.douban.com/subject/26220250/">PostgreSQL服务器编程</a>》一书中的第8章实现一个最简单的函数:</p>
+
+<blockquote>
+<p>输入两个INTEGER的参数，返回一个表示两数相加及其结果的等式(TEXT)</p>
+</blockquote>
+
+<p>实现的代码如下:</p>
+
+<pre><code class="language-c">Datum
+add_str(PG_FUNCTION_ARGS) {
+    int arg_1, arg_2;
+    char buf[128] = {0x00};
+    char *result = NULL;
+
+    if (PG_ARGISNULL(0) || PG_ARGISNULL(1)) {
+        ereport(ERROR, 
+            (errcode(ERRCODE_NULL_VALUE_NOT_ALLOWED), 
+             errmsg(&quot;cannot specify NULL as the arguement.&quot;)));
+    }
+
+    arg_1 = PG_GETARG_INT32(0);
+    arg_2 = PG_GETARG_INT32(1);
+
+    snprintf(buf, 128, &quot;%d + %d = %d&quot;, arg_1, arg_2, (arg_1 + arg_2));
+    result = pstrdup(buf);
+
+    PG_RETURN_TEXT_P(cstring_to_text(result));
+}
+</code></pre>
+
+<p>这里需要注意的是，与用C语言编写UDF一样，编写的函数必须是一个<strong>fmgr-compatible</strong>的函数。即参数必须是<code>PG_FUNCTION_ARGS</code>, 返回值必须是<code>Datum</code>。这是由于PG中所有的SQL函数(含内置函数以及UDF)都被一个通用模块模块管理，该模块即为<strong>fmgr</strong>(全称:Postgres function manager关于这个模块的作用以及SQL文中的函数调用机制，后面会另写博客分享)。</p>
+
+<p>上述函数可以实现在PG中的任何一个代码文件中(当然也可以新建一个源文件定于)。不过需要注意的是，必须确保这个源文件包含了<code>&quot;funcapi.h&quot;</code>这个头文件。</p>
+
+<p>此外，这个例子只是为了示意，所以做了一个最简单的逻辑。在实际开发中，对于SQL函数，通常有一类需求是希望函数返回一个结果集。对于返回结果集的SQL函数，PG中称之为<code>SRF</code>(Set Returning Functions). SRF的实现有一个固定范式，详细可以参见PG代码中的<code>src/include/funcapi.h</code>的注释，内有关于这个范式的详细说明。</p>
+
+<h3 id="2-声明">2. 声明</h3>
+
+<p>PG中对于内置函数的声明有一个约定俗成的共通位置，即PG源码中的<code>src/include/utils/builtin.h</code>。通常都是在该头文件中将实现的内置函数声明为一个extern函数以确保外部可见。</p>
+
+<p>不过，这也只是一个惯例而已，事实上，内置函数的声明位置并不一定限定与此。说白了，只要保证这个声明能让整个fmgr机制看到即可。</p>
+
+<p>函数声明本身全无特别，在本例中，声明就只是下面简单的一句话：</p>
+
+<pre><code class="language-c">extern Datum add_str(PG_FUNCTION_ARGS);
+</code></pre>
+
+<h3 id="3-注册">3. 注册</h3>
+
+<p>Last but not least. 对于内置函数而言，光有实现和声明是不够的。与其他的数据库对象相仿，内置函数的元信息必须写入PG的数据字典中。而且由于系统表是数据库实例生来就有的对象，并没有一个CREATE文能帮它把元信息写入数据字典，因此这个步骤必须在源码中事先完成。这就是所谓的<strong>注册</strong>。</p>
+
+<p>与UDF一样，内置函数的元数据也是保存在系统表<code>pg_proc</code>中的。而<code>pg_proc</code>系统表在PG的数据库模板中初始状态下所具有的元数据元组是在<code>src/include/catalog/pg_proc.h</code>中注册的。每个元组的注册格式如下:</p>
+
+<blockquote>
+<p>DATA(insert OID = 元组的唯一OID (  内置函数名 属性1 属性2&hellip;&hellip; ));<br/>
+DESCR(内置函数的描述信息(使用半角双引号引起来));</p>
+</blockquote>
+
+<p>为<code>pg_proc.h</code>增加一个形如上文的元组时，有两个地方需要注意:</p>
+
+<ul>
+<li><p>OID必须保证全局唯一</p>
+
+<p>为<code>pg_proc。h</code>增加元组时，必须分配一个<strong>9999</strong>以内的唯一OID(在写下一个OID之前，可以先全文搜索一下PG源码确保其唯一性)</p>
+
+<p>至于为什么一定要将这个OID选在<strong>9999</strong>以内，是因为PG源码的<code>src/include/access/transam.h</code>对于Oid使用范围存在下述描述，且通过两个宏定义来限定:</p>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/about_oid.jpg"
+        alt="Object ID">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<p>在本例中，通过甄选，将<code>add_str</code>内置函数在<code>pg_proc</code>中元祖的OID选为<strong>5946</strong></p></li>
+
+<li><p>元组各个字段属性的写法</p>
+
+<p><code>pg_proc.h</code>中内置函数的元数据的元组格式咋一看估计会让人懵掉。但实际上，这里的元组的各个属性(函数名已降的各字段)实际上对应的就是PostgreSQL手册中<a href="https://www.postgresql.org/docs/9.6/static/catalog-pg-proc.html">pg_proc系统表的各个字段</a>。对照着这一章节的介绍以及参考<code>pg_proc.h</code>中已有的内置函数的元组，就可知道该如何为新的内置函数增添元组。</p>
+
+<p>以下是在手册基础上，对pg_proc的元组各字段数据的写法做的一些补充说明:</p>
+
+<ul>
+<li><p>proisstrict</br>
+如果将此字段设置为<code>t</code>, 只要通过SQL调用该函数时参数中有一个NULL，那么这个函数实际上不会被调用(即便函数实现中预备了对于NULL的处理)而是直接返回一个NULL。因此如果希望自己处理NULL参数，该字段不应为<code>t</code></p></li>
+
+<li><p>proparallel</br>
+这个字段是 9.6 开始新加的字段。表示的是这个函数是否支持在并行查询的模式下并行执行。</p></li>
+
+<li><p>prorettype</br>
+返回值类型。这里需要填入的是返回值类型所对应的OID。这些OID可以在<code>src/include/catalog/pg_type.h</code>中寻找。但需要注意的是，这里填的OID不要使用宏定义，直接填OID的数字。另外，结果集对应的OID是<code>2249</code>。对于<code>proargtypes</code>和<code>proallargtypes</code>中的OID写法，也和本字段一样</p></li>
+
+<li><p>proargtypes和proallargtypes</br>
+这两个字段都需要以集合的形式写出参数类型OID集合。但写法上略有差别:</p></li>
+
+<li><p>proargtypes的写法是<code>&quot;OID1 OID2 ...&quot;</code></p></li>
+
+<li><p>proallargtypes的写法是<code>{OID1 OID2 ...}</code>。此外，如果返回值是一个结果集的话，填写此字段时，结果集中各个字段的类型也需要在<code>proallargtypes</code>中严格按照结果集字段的顺序一一声明。在这里，结果集字段与输出参数可以视作等同效果.如果函数不包括任何输出参数且返回值不是结果集的话，这个字段可以直接声明为<code>_null_</code></p></li>
+</ul>
+
+<p>另外，对于返回值是结果集的内置函数而言，也许要把结果集的每一个字段的信息反映在<code>proargmodes</code>和<code>proargnames</code>这两个属性中。</p></li>
+</ul>
+
+<p>由于本例的函数比较简单，因此它在<code>pg_proc.h</code>中对应的元组可写为</p>
+
+<pre><code class="language-c">DATA(insert OID = 5946 (  add_str PGNSP PGUID 12 1 0 0 0 f f f f f f s s 2 0 25 &quot;23 23&quot; _null_ _null_ _null_ _null_ _null_ add_str _null_ _null_ _null_ ));
+DESCR(&quot;add_str just for test&quot;);
+</code></pre>
+
+<p>到这里为止，向PG源码中增添新的内置函数的方法就已经介绍完毕了。但是在实践中，除了上述&rdquo;三板斧&rdquo;，还有一些坑最好也事先知道，以免在增添内置函数时走弯路.</p>
+
+<h2 id="踩过的那些坑">踩过的那些坑</h2>
+
+<p>虽然为PG编写新的内置函数并不复杂，但是有些坑还是预先知道一下比较好，省得浪费时间自行调查(本来关于PG的资料就不算太多&hellip;)</p>
+
+<h3 id="坑1-内置函数的参数返回值">坑1. 内置函数的参数返回值</h3>
+
+<p>PG中的SQL函数的参数是可以定义返回值的，然而C语言编写的函数是没有办法为其参数指定返回值的。这个Gap还是必须得从PG自己的机制着手。好消息是<code>pg_proc</code>系统表中有一个字段叫做<code>proargdefaults</code>,它看上去似乎可以用于解决参数默认值的问题; 但坏消息是，这个字段接受的是一个以字符串形式表示的<code>Express Tree</code>，这几乎不是常人能通过人手能够写出来的。</p>
+
+<p>幸运的是，PG社区的大牛Tome Lane在<a href="https://www.postgresql.org/message-id/24148.1239060256@sss.pgh.pa.us">2009年的一封邮件</a>中指出了为内置函数设置默认值的正确姿势: 不要尝试在<code>pg_proc.h</code>中通过元组的方式指定参数默认值——因为这种方式很&rdquo;Ugly&rdquo;——而是应该通过在<code>src/backend/catalog/system_views.sql</code>中通过SQL文去用一个带默认值参数的函数去覆盖用C语言编写的SQL函数。比如，他在邮件中提到的内置函数<code>pg_start_backup()</code>:</p>
+
+<pre><code class="language-sql">CREATE OR REPLACE FUNCTION
+  pg_start_backup(label text, fast boolean DEFAULT false)
+  RETURNS text LANGUAGE internal STRICT AS 'start_backup';
+</code></pre>
+
+<p>换言之，可以先用C语言实现希望增加的内置函数的逻辑，再通过在<code>system_views.sql</code>的SQL函数接口。当然，这个C语言函数仍然得遵循上文所说<code>fmgr-compatible</code>范式.另外，由于<code>system_views.sql</code>中定义的函数不是预先写入数据库模板中的，而是在<code>initdb</code>创建实例的bootstrap过程中执行的，因此这样的函数的OID必然是在10000之后。</p>
+
+<h3 id="坑2-pg-proc-h中新元组的生效时机">坑2. pg_proc.h中新元组的生效时机</h3>
+
+<p>按照前文所述的&rdquo;三板斧&rdquo;来编写一个内置函数时，如果所用的PG源码所展开的路径是第一次执行编译还好，如果在所展开的路径下先前已经编译过至少一次的情况下，这时就会出现一个神奇的现象：重编后的二进制中可以看到新加的内置函数但无论如何就是没法走到。</p>
+
+<p>这是因为当我们给<code>pg_proc.h</code>中增加新的内置函数对应的元组时，以下三个文件会在源码编译过程中基于<code>pg_proc.h</code>的内容自动生成。</p>
+
+<blockquote>
+<p>src/backend/catalog/postgres.bki</br>
+src/backend/utils/fmgroids.h</br>
+src/backend/utils/fmgrtab.c</p>
+</blockquote>
+
+<p>这三个文件中生成的内容对于<code>pg_proc</code>系统表中的初始化元组起重要作用。但是这三个文件并不会在<code>make clean</code>时被清理掉。因此，如果是在一个已经执行过至少一次编译的源码环境中增加新的内置函数时，若要&rdquo;三板斧&rdquo;的最后一斧生效，必须在编译前执行下述命令:</p>
+
+<pre><code>$make maintainer-clean
+</code></pre>
+
+<p>当然，这样一来原本生成的所有Makefile也将被清理掉，之后要编译这份代码的话，必须从<code>./configure</code>重新开始。</p>
+
+<h2 id="创建内置函数时最好知道的pg内部api">创建内置函数时最好知道的PG内部API</h2>
+
+<p>用C语言为PG做扩展有一些通用的内部接口可供使用，这些接口也不限于内置函数。所以就我所知道的范围内列出一些，以作备忘:</p>
+
+<ul>
+<li><a href="https://www.postgresql.org/docs/9.6/static/spi.html">SPI系列函数</a></br>
+可以用于在内部执行SQL等等</li>
+<li>直接操作元组(Tuple)相关API
+
+<ul>
+<li><code>CreateTemplateTupleDesc()</code></li>
+<li><code>TupleDescInitEntry()</code></li>
+<li><code>BlessTupleDesc()</code></li>
+<li><code>heap_from_tuple()</code></li>
+</ul></li>
+<li>用于查询执行时当前会话状态判断的实用函数
+
+<ul>
+<li><code>superuser()</code></br>
+判断当前用户是否是DB的超级用户</li>
+<li><code>IsTransaction()</code></br>
+判断当前语句是否在一个显式事务块中</li>
+<li><code>IsInParallelMode()</code></br>
+判断当前是否在并行执行模式中</li>
+<li>全局变量 <code>XactReadOnly</code></br>
+判断当前会话是否是只读模式</li>
+</ul></li>
+</ul>
+
+<h2 id="结语">结语</h2>
+
+<p>以上就是给PG添加内置函数的方法的一个小结，也是我最近一段时间一直在折腾PG的SQL函数所做的一点积累。也希望能够为PG的普及尽一些绵薄之力吧。</p>
+
+  <div>
+  <br/><br/>
+  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">
+    <img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png" />
+  </a><br/>
+  本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">知识共享署名-非商业性使用-相同方式共享 3.0 中国大陆许可协议</a>进行许可。
+  </div>
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="https://xiaowing.github.io/post/20170816_is_go_object_oriented_cn/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="https://xiaowing.github.io/post/20170816_is_go_object_oriented_cn/">[译文]GO语言是面向对象的吗？</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+  </div>
+</div>
+
+
+
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'wingsdak';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+</div>
+
+</div>
+</div>
+<script src="https://xiaowing.github.io/js/ui.js"></script>
+
+
+
+
+</body>
+</html>
+
