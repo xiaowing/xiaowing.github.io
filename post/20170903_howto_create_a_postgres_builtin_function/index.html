@@ -357,7 +357,7 @@ add_str(PG_FUNCTION_ARGS) {
 }
 </code></pre>
 
-<p>这里需要注意的是，与用C语言编写UDF一样，编写的函数必须是一个<strong>fmgr-compatible</strong>的函数。即参数必须是<code>PG_FUNCTION_ARGS</code>, 返回值必须是<code>Datum</code>。这是由于PG中所有的SQL函数(含内置函数以及UDF)都被一个通用模块模块管理，该模块即为<strong>fmgr</strong>(全称:Postgres function manager关于这个模块的作用以及SQL文中的函数调用机制，后面会另写博客分享)。</p>
+<p>这里需要注意的是，与用C语言编写UDF一样，编写的函数必须是一个<strong>fmgr-compatible</strong>的函数。即参数必须是<code>PG_FUNCTION_ARGS</code>, 返回值必须是<code>Datum</code>。这是由于PG中所有的SQL函数(含内置函数以及UDF)都被一个通用模块模块管理，该模块通过自己的一套机制去定位并执行SQL文中指定的SQL函数(SQL文中的函数调用机制，后面会另写博客分享)。</p>
 
 <p>上述函数可以实现在PG中的任何一个代码文件中(当然也可以新建一个源文件定于)。不过需要注意的是，必须确保这个源文件包含了<code>&quot;funcapi.h&quot;</code>这个头文件。</p>
 
@@ -365,7 +365,7 @@ add_str(PG_FUNCTION_ARGS) {
 
 <h3 id="2-声明">2. 声明</h3>
 
-<p>PG中对于内置函数的声明有一个约定俗成的共通位置，即PG源码中的<code>src/include/utils/builtin.h</code>。通常都是在该头文件中将实现的内置函数声明为一个extern函数以确保外部可见。</p>
+<p>PG中对于内置函数的声明有一个约定俗成的共通位置，即PG源码中的<code>src/include/utils/builtin.h</code>。通常都是在该头文件中将实现的内置函数声明为一个extern函数以确保其对其他源码文件可见。</p>
 
 <p>不过，这也只是一个惯例而已，事实上，内置函数的声明位置并不一定限定与此。说白了，只要保证这个声明能让整个fmgr机制看到即可。</p>
 
@@ -390,7 +390,7 @@ DESCR(内置函数的描述信息(使用半角双引号引起来));</p>
 <ul>
 <li><p>OID必须保证全局唯一</p>
 
-<p>为<code>pg_proc。h</code>增加元组时，必须分配一个<strong>9999</strong>以内的唯一OID(在写下一个OID之前，可以先全文搜索一下PG源码确保其唯一性)</p>
+<p>为<code>pg_proc.h</code>增加元组时，必须分配一个<strong>9999</strong>以内的唯一OID(在写下一个OID之前，可以先全文搜索一下PG源码确保其唯一性)</p>
 
 <p>至于为什么一定要将这个OID选在<strong>9999</strong>以内，是因为PG源码的<code>src/include/access/transam.h</code>对于Oid使用范围存在下述描述，且通过两个宏定义来限定:</p>
 
@@ -431,7 +431,7 @@ DESCR(内置函数的描述信息(使用半角双引号引起来));</p>
 这个字段是 9.6 开始新加的字段。表示的是这个函数是否支持在并行查询的模式下并行执行。</p></li>
 
 <li><p>prorettype</br>
-返回值类型。这里需要填入的是返回值类型所对应的OID。这些OID可以在<code>src/include/catalog/pg_type.h</code>中寻找。但需要注意的是，这里填的OID不要使用宏定义，直接填OID的数字。另外，结果集对应的OID是<code>2249</code>。对于<code>proargtypes</code>和<code>proallargtypes</code>中的OID写法，也和本字段一样</p></li>
+返回值类型。这里需要填入的是返回值类型所对应的OID。这些OID可以在<code>src/include/catalog/pg_type.h</code>中寻找。但需要注意的是，这里填的OID不要使用宏定义，直接填OID的数字。另外，结果集对应的OID是<code>2249</code>。</p></li>
 
 <li><p>proargtypes和proallargtypes</br>
 这两个字段都需要以集合的形式写出参数类型OID集合。但写法上略有差别:</p></li>
@@ -444,7 +444,7 @@ DESCR(内置函数的描述信息(使用半角双引号引起来));</p>
 <p>另外，对于返回值是结果集的内置函数而言，也许要把结果集的每一个字段的信息反映在<code>proargmodes</code>和<code>proargnames</code>这两个属性中。</p></li>
 </ul>
 
-<p>由于本例的函数比较简单，因此它在<code>pg_proc.h</code>中对应的元组可写为</p>
+<p>由于本例的<code>add_str()</code>函数比较简单，因此它在<code>pg_proc.h</code>中对应的元组可写为</p>
 
 <pre><code class="language-c">DATA(insert OID = 5946 (  add_str PGNSP PGUID 12 1 0 0 0 f f f f f f s s 2 0 25 &quot;23 23&quot; _null_ _null_ _null_ _null_ _null_ add_str _null_ _null_ _null_ ));
 DESCR(&quot;add_str just for test&quot;);
@@ -454,20 +454,18 @@ DESCR(&quot;add_str just for test&quot;);
 
 <h2 id="踩过的那些坑">踩过的那些坑</h2>
 
-<p>虽然为PG编写新的内置函数并不复杂，但是有些坑还是预先知道一下比较好，省得浪费时间自行调查(本来关于PG的资料就不算太多&hellip;)</p>
+<h3 id="坑1-内置函数的参数默认值">坑1. 内置函数的参数默认值</h3>
 
-<h3 id="坑1-内置函数的参数返回值">坑1. 内置函数的参数返回值</h3>
+<p>PG中的SQL函数的参数是可以定义默认值的，然而C语言编写的函数是没有办法为其参数指定默认值的。这个Gap还是必须得从PG自己的机制着手。好消息是<code>pg_proc</code>系统表中有一个字段叫做<code>proargdefaults</code>,它看上去似乎可以用于解决参数默认值的问题; 但坏消息是，这个字段接受的是一个以字符串形式表示的<code>Express Tree</code>，这几乎不是常人能通过人手能够写出来的。</p>
 
-<p>PG中的SQL函数的参数是可以定义返回值的，然而C语言编写的函数是没有办法为其参数指定返回值的。这个Gap还是必须得从PG自己的机制着手。好消息是<code>pg_proc</code>系统表中有一个字段叫做<code>proargdefaults</code>,它看上去似乎可以用于解决参数默认值的问题; 但坏消息是，这个字段接受的是一个以字符串形式表示的<code>Express Tree</code>，这几乎不是常人能通过人手能够写出来的。</p>
-
-<p>幸运的是，PG社区的大牛Tome Lane在<a href="https://www.postgresql.org/message-id/24148.1239060256@sss.pgh.pa.us">2009年的一封邮件</a>中指出了为内置函数设置默认值的正确姿势: 不要尝试在<code>pg_proc.h</code>中通过元组的方式指定参数默认值——因为这种方式很&rdquo;Ugly&rdquo;——而是应该通过在<code>src/backend/catalog/system_views.sql</code>中通过SQL文去用一个带默认值参数的函数去覆盖用C语言编写的SQL函数。比如，他在邮件中提到的内置函数<code>pg_start_backup()</code>:</p>
+<p>幸运的是，PG社区的大牛<strong>Tome Lane</strong>在<a href="https://www.postgresql.org/message-id/24148.1239060256@sss.pgh.pa.us">2009年的一封邮件</a>中指出了为内置函数设置默认值的正确姿势: 不要尝试在<code>pg_proc.h</code>中通过元组的方式指定参数默认值——因为这种方式很&rdquo;Ugly&rdquo;——而是应该通过在<code>src/backend/catalog/system_views.sql</code>中通过SQL文定义一个带默认值参数的函数去覆盖用C语言编写的SQL函数。比如，他在邮件中提到的内置函数<code>pg_start_backup()</code>:</p>
 
 <pre><code class="language-sql">CREATE OR REPLACE FUNCTION
   pg_start_backup(label text, fast boolean DEFAULT false)
   RETURNS text LANGUAGE internal STRICT AS 'start_backup';
 </code></pre>
 
-<p>换言之，可以先用C语言实现希望增加的内置函数的逻辑，再通过在<code>system_views.sql</code>的SQL函数接口。当然，这个C语言函数仍然得遵循上文所说<code>fmgr-compatible</code>范式.另外，由于<code>system_views.sql</code>中定义的函数不是预先写入数据库模板中的，而是在<code>initdb</code>创建实例的bootstrap过程中执行的，因此这样的函数的OID必然是在10000之后。</p>
+<p>换言之，可以先用C语言实现希望增加的内置函数的逻辑，再通过在<code>system_views.sql</code>中创建SQL函数接口。当然，这个C语言函数仍然得遵循上文所说<code>fmgr-compatible</code>范式.另外，由于<code>system_views.sql</code>中定义的函数不是预先写入数据库模板中的，而是在<code>initdb</code>创建实例的bootstrap过程中执行的，因此这样的函数的OID必然是在10000之后。</p>
 
 <h3 id="坑2-pg-proc-h中新元组的生效时机">坑2. pg_proc.h中新元组的生效时机</h3>
 
@@ -481,7 +479,7 @@ src/backend/utils/fmgroids.h</br>
 src/backend/utils/fmgrtab.c</p>
 </blockquote>
 
-<p>这三个文件中生成的内容对于<code>pg_proc</code>系统表中的初始化元组起重要作用。但是这三个文件并不会在<code>make clean</code>时被清理掉。因此，如果是在一个已经执行过至少一次编译的源码环境中增加新的内置函数时，若要&rdquo;三板斧&rdquo;的最后一斧生效，必须在编译前执行下述命令:</p>
+<p>这三个文件中生成的内容对于<code>pg_proc</code>系统表中的初始化元组起重要作用。但是这三个文件只会在第一次编译时生成且并不会在<code>make clean</code>时被清理掉。因此，如果是在一个已经执行过至少一次编译的源码环境中增加新的内置函数时，若要&rdquo;三板斧&rdquo;的最后一斧生效，必须在编译前执行下述命令:</p>
 
 <pre><code>$make maintainer-clean
 </code></pre>
@@ -490,7 +488,7 @@ src/backend/utils/fmgrtab.c</p>
 
 <h2 id="创建内置函数时最好知道的pg内部api">创建内置函数时最好知道的PG内部API</h2>
 
-<p>用C语言为PG做扩展有一些通用的内部接口可供使用，这些接口也不限于内置函数。所以就我所知道的范围内列出一些，以作备忘:</p>
+<p>用C语言为PG做扩展有一些通用的内部接口可供使用，这些接口也不限于内置函数。所以在我所知道的范围内列出一些内部接口，以作备忘:</p>
 
 <ul>
 <li><a href="https://www.postgresql.org/docs/9.6/static/spi.html">SPI系列函数</a></br>
@@ -519,7 +517,7 @@ src/backend/utils/fmgrtab.c</p>
 
 <h2 id="结语">结语</h2>
 
-<p>以上就是给PG添加内置函数的方法的一个小结，也是我最近一段时间一直在折腾PG的SQL函数所做的一点积累。也希望能够为PG的普及尽一些绵薄之力吧。</p>
+<p>以上就是给PG添加内置函数的方法的一个小结，也是我最近一段时间一直在折腾PG的SQL函数所做的一点积累, 希望能够为有类似需求的人提供一些帮助。</p>
 
   <div>
   <br/><br/>
