@@ -1,7 +1,7 @@
 +++
 title = "如何为PostgreSQL创建一个内置函数？"
 author = "xiaowing"
-date = 2017-08-27T22:59:31+08:00
+date = 2017-09-03T22:59:31+08:00
 draft = false
 tags =  [
     "PostgreSQL",
@@ -12,7 +12,7 @@ topics = [
 ]
 +++
 
-这篇文章我已经酝酿颇久了，诱因是因为[PingCAP](https://www.pingcap.com/index-zh)团队为了推广他们的**TiDB**而在知乎专栏发了一篇文章《[TiDB 增加 MySQL 内建函数](https://zhuanlan.zhihu.com/p/24870620)》。受此文启发，我在网上搜索了一下**PostgreSQL**(*以下略称"PG"*)中定制内置函数(*Built-in Function*)相关的文章，果然没有搜到什么像样的中文文章。其实为PG添加内置函数并不难，可能是相对于hacking它的SQL引擎或者存储殷勤等等话题而言，加一个内置函数的逼格实在是太Low吧。不过TiDB这个诞生还没多久的数据库产品都知道通过先利用内置函数这个话题来由简入深地吸引广大开发者为它贡献代码，PG作为一个诞生了已有20年的开源数据库老大哥却没有一篇像样文章，也难怪PG的普及率不高了。
+这篇文章我已经酝酿颇久了，诱因是因为[PingCAP](https://www.pingcap.com/index-zh)团队为了推广他们的**TiDB**而在知乎专栏发了一篇文章《[TiDB 增加 MySQL 内建函数](https://zhuanlan.zhihu.com/p/24870620)》。受此文启发，我在网上搜索了一下**PostgreSQL**(*以下略称"PG"*)中定制内置函数(*Built-in Function*)相关的文章，果然没有搜到什么像样的中文文章。其实为PG添加内置函数并不难，可能是相对于hacking它的SQL引擎或者存储引擎等等话题而言，加一个内置函数的逼格实在是太Low吧。不过TiDB这个诞生还没多久的数据库产品都知道通过先利用内置函数这个话题来由简入深地吸引广大开发者为它贡献代码，PG作为一个诞生了已有20年的开源数据库老大哥却没有一篇像样文章，也难怪PG的普及率不高了。
 
 以上就作为这篇分享的「意味づけ」吧...
 
@@ -156,9 +156,64 @@ DESCR("add_str just for test");
 
 ## 踩过的那些坑
 
+虽然为PG编写新的内置函数并不复杂，但是有些坑还是预先知道一下比较好，省得浪费时间自行调查(本来关于PG的资料就不算太多...)
+
+### 坑1. 内置函数的参数返回值
+
+PG中的SQL函数的参数是可以定义返回值的，然而C语言编写的函数是没有办法为其参数指定返回值的。这个Gap还是必须得从PG自己的机制着手。好消息是`pg_proc`系统表中有一个字段叫做`proargdefaults`,它看上去似乎可以用于解决参数默认值的问题; 但坏消息是，这个字段接受的是一个以字符串形式表示的`Express Tree`，这几乎不是常人能通过人手能够写出来的。
+
+幸运的是，PG社区的大牛Tome Lane在[2009年的一封邮件](https://www.postgresql.org/message-id/24148.1239060256@sss.pgh.pa.us)中指出了为内置函数设置默认值的正确姿势: 不要尝试在`pg_proc.h`中通过元组的方式指定参数默认值——因为这种方式很"Ugly"——而是应该通过在`src/backend/catalog/system_views.sql`中通过SQL文去用一个带默认值参数的函数去覆盖用C语言编写的SQL函数。比如，他在邮件中提到的内置函数`pg_start_backup()`:
+
+````sql
+CREATE OR REPLACE FUNCTION
+  pg_start_backup(label text, fast boolean DEFAULT false)
+  RETURNS text LANGUAGE internal STRICT AS 'start_backup';
+````
+
+换言之，可以先用C语言实现希望增加的内置函数的逻辑，再通过在`system_views.sql`的SQL函数接口。当然，这个C语言函数仍然得遵循上文所说`fmgr-compatible`范式.另外，由于`system_views.sql`中定义的函数不是预先写入数据库模板中的，而是在`initdb`创建实例的bootstrap过程中执行的，因此这样的函数的OID必然是在10000之后。
+
+### 坑2. pg_proc.h中新元组的生效时机
+
+按照前文所述的"三板斧"来编写一个内置函数时，如果所用的PG源码所展开的路径是第一次执行编译还好，如果在所展开的路径下先前已经编译过至少一次的情况下，这时就会出现一个神奇的现象：重编后的二进制中可以看到新加的内置函数但无论如何就是没法走到。
+
+这是因为当我们给`pg_proc.h`中增加新的内置函数对应的元组时，以下三个文件会在源码编译过程中基于`pg_proc.h`的内容自动生成。
+
+> src/backend/catalog/postgres.bki</br>
+> src/backend/utils/fmgroids.h</br>
+> src/backend/utils/fmgrtab.c
+
+这三个文件中生成的内容对于`pg_proc`系统表中的初始化元组起重要作用。但是这三个文件并不会在`make clean`时被清理掉。因此，如果是在一个已经执行过至少一次编译的源码环境中增加新的内置函数时，若要"三板斧"的最后一斧生效，必须在编译前执行下述命令:
+
+````
+$make maintainer-clean
+````
+
+当然，这样一来原本生成的所有Makefile也将被清理掉，之后要编译这份代码的话，必须从`./configure`重新开始。
+
 ## 创建内置函数时最好知道的PG内部API
 
+用C语言为PG做扩展有一些通用的内部接口可供使用，这些接口也不限于内置函数。所以就我所知道的范围内列出一些，以作备忘:
+
+* [SPI系列函数](https://www.postgresql.org/docs/9.6/static/spi.html)</br>
+    可以用于在内部执行SQL等等
+* 直接操作元组(Tuple)相关API
+  * `CreateTemplateTupleDesc()`
+  * `TupleDescInitEntry()`
+  * `BlessTupleDesc()`
+  * `heap_from_tuple()`
+* 用于查询执行时当前会话状态判断的实用函数
+  * `superuser()`</br>
+    判断当前用户是否是DB的超级用户
+  * `IsTransaction()`</br>
+    判断当前语句是否在一个显式事务块中
+  * `IsInParallelMode()`</br>
+    判断当前是否在并行执行模式中
+  * 全局变量 `XactReadOnly`</br>
+    判断当前会话是否是只读模式
+
 ## 结语
+
+以上就是给PG添加内置函数的方法的一个小结，也是我最近一段时间一直在折腾PG的SQL函数所做的一点积累。也希望能够为PG的普及尽一些绵薄之力吧。
 
 
 
