@@ -10,6 +10,86 @@
     <atom:link href="https://xiaowing.github.io/tags/%E8%AF%91%E4%BD%9C/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>[译文]Python为何会成为机器学习领域的主流语言</title>
+      <link>https://xiaowing.github.io/post/20170913_python_and_machine_learning_cn/</link>
+      <pubDate>Wed, 13 Sep 2017 21:37:02 +0800</pubDate>
+      
+      <guid>https://xiaowing.github.io/post/20170913_python_and_machine_learning_cn/</guid>
+      <description>&lt;div class=&#34;pure-g&#34;&gt;
+
+  
+  
+  
+  
+  &lt;div class=&#34;pure-u-1-1&#34;&gt;
+    &lt;div style=&#34;padding: 0 .2em&#34;&gt;
+      &lt;img
+        class=&#34;pure-img-responsive&#34;
+        src=&#34;https://xiaowing.github.io/img/post/python-logo.png&#34;
+        alt=&#34;Python Logo&#34;&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  
+
+&lt;/div&gt;
+
+
+&lt;p&gt;最近因为在改PostgreSQL的相关的一些代码，因此在自学Perl语言。虽然和Python一样，它也是门解释型语言，然而这门语言真的是比较奇葩，因此无比地怀念Python.&lt;/p&gt;
+
+&lt;p&gt;Python是我2015年自学的，虽然没用它做过什么正经的项目，但是小东西还是写了不少。只可惜自己终究还是修行不够，否则在目前这个被&amp;rdquo;人工智能&amp;rdquo;，“机器学习”等概念刷屏的年代，借助Python这门深受机器学习领域欢迎的语言，我说不定也能包装成一个年薪百万的大咖~&lt;/p&gt;
+
+&lt;p&gt;不过，为什么机器学习领域会如此欢迎Python？之前在一个日文网站上看到一篇文章说这个事情，我觉得写得有点意思，所以就把它翻译了一下&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;python为何会成为机器学习领域的主流语言&#34;&gt;Python为何会成为机器学习领域的主流语言&lt;/h2&gt;
+
+&lt;p&gt;原题: 機械学習でPythonが主流になっている必然的な理由とは&lt;/p&gt;
+
+&lt;p&gt;作者: 株式会社キャパ&lt;/p&gt;
+
+&lt;p&gt;链接: &lt;a href=&#34;http://www.capa.co.jp/archives/13875&#34;&gt;http://www.capa.co.jp/archives/13875&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;在&lt;a href=&#34;https://zh.wikipedia.org/wiki/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0&#34;&gt;机器学习&lt;/a&gt;,或者说&lt;a href=&#34;https://zh.wikipedia.org/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0&#34;&gt;深度学习&lt;/a&gt;的领域, Python正成为主流的编程语言。&lt;/p&gt;
+
+&lt;p&gt;在海外，Python是作为一个用于编程教育的语言而慢慢普及开来的;但是在日本国内，Python则几乎没怎么受到过关注(&lt;em&gt;译注: 相对于Python，日本业界对于Ruby的关注度更高，大概因为Ruby是日本人发明的吧&lt;/em&gt;).那么，为什么在机器学习领域Python会成为主流呢？这其中有以下几个缘由:&lt;/p&gt;
+
+&lt;h3 id=&#34;为什么选择了python-而不是c&#34;&gt;为什么选择了Python，而不是C++?&lt;/h3&gt;
+
+&lt;p&gt;你知道解释型语言(通称:脚本语言)与编译型语言的差异吗？&lt;/p&gt;
+
+&lt;p&gt;前者以Python以及Ruby为代表的语言，后者则因C语言或C++而广为人知。解释型语言是不管你将代码写到什么程度，随时都可以把写好的代码立刻运行起来;但是后者的编译型语言则必须遵循一定的编译手顺生成可执行文件之后，然后才能把它执行起来。编译型语言需要开发者在编译上花费一定的时间以及精力，但相对的，它的执行起来的性能是非常高速的。&lt;/p&gt;
+
+&lt;p&gt;在机器学习领域，往往会涉及到大量的计算。理论上处理速度应该是越快越好，但为什么它选择了不是编译型语言的Python？其中有这么几点原因:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;“编码-运行”的周期可以变得更短&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;在机器学习，或者深度学习领域，往往需要开发者写了代码以后立刻运行一下，根据运行结果进而修正相应的代码，之后再执行——这样的循环过程在实际开发中会再三反复。如果在这样的开发中选用了编译型语言，也就意味着在开发过程中实际上又要加入一个编译的过程，因此可以预见开发的生产性会下降。&lt;/p&gt;
+
+&lt;p&gt;而且在编译型语言中，数据的&amp;rdquo;类型&amp;rdquo;是很受重视的，但是Python却是一个动态类型的语言，因此编码中根本无需声明数据的类型。对于同时有可能处理各种数据的机器学习而言，如果是用重视类型的编译型语言去一个个事先定义好数据的类型，写代码的时间应该会被拉长不少吧。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;拥有各种各样的涉及高速运算的程序库&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;在Python中，拥有以&lt;code&gt;Numpy&lt;/code&gt;和&lt;code&gt;Scipy&lt;/code&gt;为代表的高速处理数值计算的程序库。因为有了这些库，尽管Python是解释型语言，但是可以借助它们的高速化而使人们不再对Python性能而感到担心。除此之外，还有&lt;code&gt;Matplotlib&lt;/code&gt;之类的绘图库，因此可以很简单地将机器学习的结果以图或表的形式展现出来。再借助&lt;code&gt;Django&lt;/code&gt;这个Web框架，就可以将机器学习的结果很方便地公开为一个Web服务，&lt;/p&gt;
+
+&lt;p&gt;当然，Python中用于机器学习以及深度学习的各种程序库还在不断充实中。比如享誉业界的Google出品的&lt;code&gt;TensorFlow&lt;/code&gt;框架,以及&lt;code&gt;Caffe&lt;/code&gt;, &lt;code&gt;Scikit-learn&lt;/code&gt;, &lt;code&gt;Theano&lt;/code&gt;等等。Python中这些程序库/框架的充实度以及Python在机器学习中的流行度这两者之间，现在已经说不清到底是先有的鸡还是先有的蛋。总之，随着用户的增多，Python在机器学习方面的生态也的确会越变越好吧。&lt;/p&gt;
+
+&lt;h3 id=&#34;r语言-与-python&#34;&gt;R语言 与 Python&lt;/h3&gt;
+
+&lt;p&gt;R语言是数据科学家们用于进行数据统计的一门语言。而机器学习以及深度学习的知识领域其实与数据科学在很多方面是重合的。此外，在最初的阶段，R语言的程序库的性能普遍要更好。因此，一开始的时候普遍认为R语言会成为该领域的主流。&lt;/p&gt;
+
+&lt;p&gt;但是，机器学习毕竟是需要通过软件开发人员来落地并实现的，比起只在数据科学家圈子中运用的R语言，对于软件开发人员而言，如果能用相对熟悉的Python语言来做，那当然会倾向于选择用Python来实现。因此，最终反而是Python中这方面的程序库变得更加充实起来。&lt;/p&gt;
+
+&lt;h3 id=&#34;时势造就的python英雄&#34;&gt;时势造就的Python英雄&lt;/h3&gt;
+
+&lt;p&gt;就结果而言，Python现今成了机器学习领域的主流语言。不过，这其实也谈不上是“必然”，只是经由时代选择而得到的一个结果而已。今后也许会发明一种专门面向机器学习领域的语言也说不定。只是目前还是暂时让Python的时代继续一段时间吧。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>[译文]GO语言是面向对象的吗？</title>
       <link>https://xiaowing.github.io/post/20170816_is_go_object_oriented_cn/</link>
       <pubDate>Wed, 16 Aug 2017 21:48:52 +0800</pubDate>

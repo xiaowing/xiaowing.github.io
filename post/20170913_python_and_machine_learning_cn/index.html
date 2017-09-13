@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.17" />
+
+  <title>[译文]Python为何会成为机器学习领域的主流语言 &middot; 小wing的驿站</title>
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+  
+  
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-9033761003757481",
+      enable_page_level_ads: true
+    });
+  </script>
+  
+  
+  
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+  
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="https://xiaowing.github.io/img/favicon.ico" type="image/x-icon" />
+
+  
+    <link rel="stylesheet" href="https://xiaowing.github.io/css/my.css">
+  
+  
+    <script src="https://xiaowing.github.io/js/my.js"></script>
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+  <a class="pure-menu-heading brand" href="https://xiaowing.github.io/">小wing的驿站</a>
+
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/post/"><i class='fa fa-list fa-fw'></i>Posts</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/about/"><i class='fa fa-user fa-fw'></i>About</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/topics/"><i class='fa fa-folder fa-fw'></i>Topics</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/tags/"><i class='fa fa-tags fa-fw'></i>Tags</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://twitter.com/xiaowing" target="_blank"><i class="fa fa-twitter-square fa-fw"></i>Twitter</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="http://weibo.com/u/3304350204" target="_blank"><i class="fa fa-weibo fa-fw"></i>Weibo</a>
+    </li>
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://instagram.com/xiaowing" target="_blank"><i class="fa fa-instagram fa-fw"></i>Instagram</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/xiaowing" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small>&copy; Licensed under CC BY-NC-SA.</small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>[译文]Python为何会成为机器学习领域的主流语言</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>13 Sep 2017, 21:37</time>
+  </div>
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-folder fa-fw"></i>
+    
+      <a class="post-taxonomy-topic" href="https://xiaowing.github.io/topics/%E6%8A%80%E6%9C%AF">技术</a>
+    
+  </div>
+  
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/python">Python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">机器学习</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/%E8%AF%91%E4%BD%9C">译作</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  <div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/python-logo.png"
+        alt="Python Logo">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<p>最近因为在改PostgreSQL的相关的一些代码，因此在自学Perl语言。虽然和Python一样，它也是门解释型语言，然而这门语言真的是比较奇葩，因此无比地怀念Python.</p>
+
+<p>Python是我2015年自学的，虽然没用它做过什么正经的项目，但是小东西还是写了不少。只可惜自己终究还是修行不够，否则在目前这个被&rdquo;人工智能&rdquo;，“机器学习”等概念刷屏的年代，借助Python这门深受机器学习领域欢迎的语言，我说不定也能包装成一个年薪百万的大咖~</p>
+
+<p>不过，为什么机器学习领域会如此欢迎Python？之前在一个日文网站上看到一篇文章说这个事情，我觉得写得有点意思，所以就把它翻译了一下&hellip;</p>
+
+<p></p>
+
+<h2 id="python为何会成为机器学习领域的主流语言">Python为何会成为机器学习领域的主流语言</h2>
+
+<p>原题: 機械学習でPythonが主流になっている必然的な理由とは</p>
+
+<p>作者: 株式会社キャパ</p>
+
+<p>链接: <a href="http://www.capa.co.jp/archives/13875">http://www.capa.co.jp/archives/13875</a></p>
+
+<p>在<a href="https://zh.wikipedia.org/wiki/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">机器学习</a>,或者说<a href="https://zh.wikipedia.org/wiki/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0">深度学习</a>的领域, Python正成为主流的编程语言。</p>
+
+<p>在海外，Python是作为一个用于编程教育的语言而慢慢普及开来的;但是在日本国内，Python则几乎没怎么受到过关注(<em>译注: 相对于Python，日本业界对于Ruby的关注度更高，大概因为Ruby是日本人发明的吧</em>).那么，为什么在机器学习领域Python会成为主流呢？这其中有以下几个缘由:</p>
+
+<h3 id="为什么选择了python-而不是c">为什么选择了Python，而不是C++?</h3>
+
+<p>你知道解释型语言(通称:脚本语言)与编译型语言的差异吗？</p>
+
+<p>前者以Python以及Ruby为代表的语言，后者则因C语言或C++而广为人知。解释型语言是不管你将代码写到什么程度，随时都可以把写好的代码立刻运行起来;但是后者的编译型语言则必须遵循一定的编译手顺生成可执行文件之后，然后才能把它执行起来。编译型语言需要开发者在编译上花费一定的时间以及精力，但相对的，它的执行起来的性能是非常高速的。</p>
+
+<p>在机器学习领域，往往会涉及到大量的计算。理论上处理速度应该是越快越好，但为什么它选择了不是编译型语言的Python？其中有这么几点原因:</p>
+
+<ul>
+<li>“编码-运行”的周期可以变得更短</li>
+</ul>
+
+<p>在机器学习，或者深度学习领域，往往需要开发者写了代码以后立刻运行一下，根据运行结果进而修正相应的代码，之后再执行——这样的循环过程在实际开发中会再三反复。如果在这样的开发中选用了编译型语言，也就意味着在开发过程中实际上又要加入一个编译的过程，因此可以预见开发的生产性会下降。</p>
+
+<p>而且在编译型语言中，数据的&rdquo;类型&rdquo;是很受重视的，但是Python却是一个动态类型的语言，因此编码中根本无需声明数据的类型。对于同时有可能处理各种数据的机器学习而言，如果是用重视类型的编译型语言去一个个事先定义好数据的类型，写代码的时间应该会被拉长不少吧。</p>
+
+<ul>
+<li>拥有各种各样的涉及高速运算的程序库</li>
+</ul>
+
+<p>在Python中，拥有以<code>Numpy</code>和<code>Scipy</code>为代表的高速处理数值计算的程序库。因为有了这些库，尽管Python是解释型语言，但是可以借助它们的高速化而使人们不再对Python性能而感到担心。除此之外，还有<code>Matplotlib</code>之类的绘图库，因此可以很简单地将机器学习的结果以图或表的形式展现出来。再借助<code>Django</code>这个Web框架，就可以将机器学习的结果很方便地公开为一个Web服务，</p>
+
+<p>当然，Python中用于机器学习以及深度学习的各种程序库还在不断充实中。比如享誉业界的Google出品的<code>TensorFlow</code>框架,以及<code>Caffe</code>, <code>Scikit-learn</code>, <code>Theano</code>等等。Python中这些程序库/框架的充实度以及Python在机器学习中的流行度这两者之间，现在已经说不清到底是先有的鸡还是先有的蛋。总之，随着用户的增多，Python在机器学习方面的生态也的确会越变越好吧。</p>
+
+<h3 id="r语言-与-python">R语言 与 Python</h3>
+
+<p>R语言是数据科学家们用于进行数据统计的一门语言。而机器学习以及深度学习的知识领域其实与数据科学在很多方面是重合的。此外，在最初的阶段，R语言的程序库的性能普遍要更好。因此，一开始的时候普遍认为R语言会成为该领域的主流。</p>
+
+<p>但是，机器学习毕竟是需要通过软件开发人员来落地并实现的，比起只在数据科学家圈子中运用的R语言，对于软件开发人员而言，如果能用相对熟悉的Python语言来做，那当然会倾向于选择用Python来实现。因此，最终反而是Python中这方面的程序库变得更加充实起来。</p>
+
+<h3 id="时势造就的python英雄">时势造就的Python英雄</h3>
+
+<p>就结果而言，Python现今成了机器学习领域的主流语言。不过，这其实也谈不上是“必然”，只是经由时代选择而得到的一个结果而已。今后也许会发明一种专门面向机器学习领域的语言也说不定。只是目前还是暂时让Python的时代继续一段时间吧。</p>
+
+  <div>
+  <br/><br/>
+  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">
+    <img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png" />
+  </a><br/>
+  本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">知识共享署名-非商业性使用-相同方式共享 3.0 中国大陆许可协议</a>进行许可。
+  </div>
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="https://xiaowing.github.io/post/20170903_howto_create_a_postgres_builtin_function/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="https://xiaowing.github.io/post/20170903_howto_create_a_postgres_builtin_function/">如何为PostgreSQL创建一个内置函数？</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+  </div>
+</div>
+
+
+
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'wingsdak';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+</div>
+
+</div>
+</div>
+<script src="https://xiaowing.github.io/js/ui.js"></script>
+
+
+
+
+</body>
+</html>
+
