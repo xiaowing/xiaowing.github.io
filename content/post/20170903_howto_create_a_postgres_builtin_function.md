@@ -117,7 +117,7 @@ Last but not least. 对于内置函数而言，光有实现和声明是不够的
     至于为什么一定要将这个OID选在**9999**以内，是因为PG源码的`src/include/access/transam.h`对于Oid使用范围存在下述描述，且通过两个宏定义来限定:
 
     {{< fluid_imgs
-      "pure-u-1-1|/img/post/about_oid.jpg|Object ID"
+      "pure-u-1-1|/img/post/20170903/about_oid.jpg|Object ID"
     >}}
 
     在本例中，通过甄选，将`add_str`内置函数在`pg_proc`中元祖的OID选为**5946**

@@ -176,7 +176,7 @@ topics = [
 4. 一切正常的话，就可以正常生成可执行文件clibmain了。之后再将先前生成的libgoprog.so 放置到链接器可找到的路径下，执行该程序就可得到下述结果了:
 
 {{< fluid_imgs
-  "pure-u-1-1|/img/post/c-calls-go-output.jpg|通过函数指针调用golang函数的输出"
+  "pure-u-1-1|/img/post/20170730/c-calls-go-output.jpg|通过函数指针调用golang函数的输出"
 >}}
 
 ## 总结
