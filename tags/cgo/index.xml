@@ -194,7 +194,7 @@ int main(void) {        /* 追加main()函数实现 */
     &lt;div style=&#34;padding: 0 .2em&#34;&gt;
       &lt;img
         class=&#34;pure-img-responsive&#34;
-        src=&#34;https://xiaowing.github.io/img/post/c-calls-go-output.jpg&#34;
+        src=&#34;https://xiaowing.github.io/img/post/20170730/c-calls-go-output.jpg&#34;
         alt=&#34;通过函数指针调用golang函数的输出&#34;&gt;
     &lt;/div&gt;
   &lt;/div&gt;
