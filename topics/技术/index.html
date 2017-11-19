@@ -245,6 +245,90 @@
   
     <article>
   <header>
+    <h2><a href="https://xiaowing.github.io/post/20171117_pg_knowhow_oid/">揭秘PG —— 无处不在的OID</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>17 Nov 2017, 23:08</time>
+  </div>
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-folder fa-fw"></i>
+    
+      <a class="post-taxonomy-topic" href="https://xiaowing.github.io/topics/%E6%8A%80%E6%9C%AF">技术</a>
+    
+  </div>
+  
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/postgresql">PostgreSQL</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/c">C</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1">程序设计</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  <p>由于手头当前的工作是基于PostgreSQL(以下简称<strong>PG</strong>)做二次开发，因此目前对PG的源码也或多或少地读了一些，因此便想到了在博客里分享一些关于阅读PG源码所获得的KnowHow。</p>
+
+<p>在国内的PG技术圈内，提到PG源码解读自然首推武汉大学的两位彭老师所著的<a href="https://book.douban.com/subject/6971366/">《PostgreSQL数据库内核分析》</a>。不过这本书的着眼点是对PG源码的整体架构，以及SQL引擎，存储系统，事务处理等等这些实现机制&amp;算法的介绍，而我则主要想分享一些PG代码中的一些有意思的小细节/小功能。虽然只是PG那几百万行源码中的沧海一粟，不过从这些小细节中解读程序设计的匠心也是颇有意思的。</p>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/PostgreSQL_logo_120x120.png"
+        alt="PostgreSQL Logo">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<p>第一篇就从PG中无处不在的<strong>OID</strong>开始吧</p>
+
+<p></p>
+  </p>
+
+  
+  <footer>
+    <a href="https://xiaowing.github.io/post/20171117_pg_knowhow_oid/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+  </footer>
+  
+</article>
+
+  
+    <article>
+  <header>
     <h2><a href="https://xiaowing.github.io/post/20170913_python_and_machine_learning_cn/">[译文]Python为何会成为机器学习领域的主流语言</a></h2>
 
     <div class="post-meta">
