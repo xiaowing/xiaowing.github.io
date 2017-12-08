@@ -401,7 +401,14 @@ xlog_redo()&lt;/code&gt;函数和&lt;code&gt;StartupXlog()&lt;/code&gt;函数中
 
 &lt;p&gt;这个遗憾，恐怕可以比肩当年比尔盖茨的“内存有640KB就够了”的预言以及即将枯竭的IPv4地址资源。&lt;/p&gt;
 
-&lt;p&gt;看来我们做设计时还是不能太保守啊~&lt;/p&gt;</description>
+&lt;p&gt;最后，再发散性地想一想: OID本身就是为了实现一个自增的唯一性ID。如果扩展到分布式系统架构下，PG的OID实现是否也可以套用呢？ 答案是肯定的，只需要把上述OID的实现机制中的两部分替换掉，我们就可以用完全相同的逻辑来实现一个适用于分布式架构下的高可用自增唯一性ID的生成服务。而那需要替换掉的两部分分别是:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;将&lt;strong&gt;共享内存&lt;/strong&gt;替换为一个高可用的内存数据库(比如&lt;strong&gt;Redis&lt;/strong&gt;)&lt;/li&gt;
+&lt;li&gt;将&lt;strong&gt;单机上的磁盘&lt;/strong&gt;替换为一个高可用的持久化存储组件(比如&lt;strong&gt;一个DBMS&lt;/strong&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;昨天看到的这篇文章&lt;a href=&#34;https://mp.weixin.qq.com/s?__biz=MzI0MTk0NTY5MA==&amp;amp;mid=2247483753&amp;amp;idx=1&amp;amp;sn=ee92dd4b76550d333047256ed331b80a&amp;amp;chksm=e9029c5cde75154a56d76e8608d317ba49a073cd090db610992b2a0c35d2c649819635ae95e7&amp;amp;mpshare=1&amp;amp;scene=1&amp;amp;srcid=1208dDQ4MjIHoXZbH7xYZspA&amp;amp;pass_ticket=WMTOs1AURvSB6mWmq5lLAwcyI9EAIL%2BZRa4v13AlE82VEpLG7zmt4Y2JIEYG2J9E#rd&#34;&gt;基于 Redis 的序列号服务的设计&lt;/a&gt;则基本上验证了我的上述想法。难怪&lt;a href=&#34;https://coolshell.cn/haoel&#34;&gt;陈皓&lt;/a&gt;在不同场合都一直在劝诫程序员:&lt;strong&gt;&amp;ldquo;基础上的东西的变化少，基础上的东西一通百通&amp;rdquo;&lt;/strong&gt;。果然如是!&lt;/p&gt;</description>
     </item>
     
     <item>
