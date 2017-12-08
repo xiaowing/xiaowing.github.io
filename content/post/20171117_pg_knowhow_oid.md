@@ -321,4 +321,9 @@ xlog_redo()`函数和`StartupXlog()`函数中，由于代码较多便不再贴�
 
 这个遗憾，恐怕可以比肩当年比尔盖茨的“内存有640KB就够了”的预言以及即将枯竭的IPv4地址资源。
 
-看来我们做设计时还是不能太保守啊~
+最后，再发散性地想一想: OID本身就是为了实现一个自增的唯一性ID。如果扩展到分布式系统架构下，PG的OID实现是否也可以套用呢？ 答案是肯定的，只需要把上述OID的实现机制中的两部分替换掉，我们就可以用完全相同的逻辑来实现一个适用于分布式架构下的高可用自增唯一性ID的生成服务。而那需要替换掉的两部分分别是:
+
+  * 将**共享内存**替换为一个高可用的内存数据库(比如**Redis**)
+  * 将**单机上的磁盘**替换为一个高可用的持久化存储组件(比如**一个DBMS**)
+
+昨天看到的这篇文章[基于 Redis 的序列号服务的设计](https://mp.weixin.qq.com/s?__biz=MzI0MTk0NTY5MA==&mid=2247483753&idx=1&sn=ee92dd4b76550d333047256ed331b80a&chksm=e9029c5cde75154a56d76e8608d317ba49a073cd090db610992b2a0c35d2c649819635ae95e7&mpshare=1&scene=1&srcid=1208dDQ4MjIHoXZbH7xYZspA&pass_ticket=WMTOs1AURvSB6mWmq5lLAwcyI9EAIL%2BZRa4v13AlE82VEpLG7zmt4Y2JIEYG2J9E#rd)则基本上验证了我的上述想法。难怪[陈皓](https://coolshell.cn/haoel)在不同场合都一直在劝诫程序员:**"基础上的东西的变化少，基础上的东西一通百通"**。果然如是!
