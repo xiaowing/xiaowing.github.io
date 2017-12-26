@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.17" />
+
+  <title>在Ubuntu 16.04上从源码编译安装go1.9.2 &middot; 小wing的驿站</title>
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+  
+  
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-9033761003757481",
+      enable_page_level_ads: true
+    });
+  </script>
+  
+  
+  
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+  
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="https://xiaowing.github.io/img/favicon.ico" type="image/x-icon" />
+
+  
+    <link rel="stylesheet" href="https://xiaowing.github.io/css/my.css">
+  
+  
+    <script src="https://xiaowing.github.io/js/my.js"></script>
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+  <a class="pure-menu-heading brand" href="https://xiaowing.github.io/">小wing的驿站</a>
+
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/post/"><i class='fa fa-list fa-fw'></i>Posts</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/about/"><i class='fa fa-user fa-fw'></i>About</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/topics/"><i class='fa fa-folder fa-fw'></i>Topics</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/tags/"><i class='fa fa-tags fa-fw'></i>Tags</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://twitter.com/xiaowing" target="_blank"><i class="fa fa-twitter-square fa-fw"></i>Twitter</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="http://weibo.com/u/3304350204" target="_blank"><i class="fa fa-weibo fa-fw"></i>Weibo</a>
+    </li>
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://instagram.com/xiaowing" target="_blank"><i class="fa fa-instagram fa-fw"></i>Instagram</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/xiaowing" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small>&copy; Licensed under CC BY-NC-SA.</small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>在Ubuntu 16.04上从源码编译安装go1.9.2</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>22 Dec 2017, 11:37</time>
+  </div>
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-folder fa-fw"></i>
+    
+      <a class="post-taxonomy-topic" href="https://xiaowing.github.io/topics/%E6%8A%80%E6%9C%AF">技术</a>
+    
+  </div>
+  
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/golang">golang</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/ubuntu">ubuntu</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  <p>这两天在虚拟机上新装了一个 <a href="http://releases.ubuntu.com/16.04/">Ubuntu Server 16.04LTS</a>,于是很自然地想安装一个Go语言环境。以往无论在Windows上还是在Linux上都是用的现成的二进制distribute包来安装Go, 但是这次打算尝试用源码来直接编译安装。于是把本次编译安装的一些手顺和注意事项分享在本文中:</p>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/20171226/ubuntu-go.png"
+        alt="Go on Ubuntu">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<p></p>
+
+<h2 id="编译安装过程">编译安装过程</h2>
+
+<p>得益于Go语言团队的强大技术，Go语言的编译安装非常智能化，整个编译安装过程非常惬意。不过，由于Go语言从1.5版本开始就实现了<a href="http://www.cnblogs.com/lidyan/p/6727184.html">自举</a>, 因此对于一个只有gcc编译环境的几乎等同于一张白纸的系统，必须先编译安装一个1.5以前版本的Go语言，之后再用这个低版本去编译1.9.2的Go语言。</p>
+
+<p>以下安装过程是在以下环境中实施的</p>
+
+<ul>
+<li>操作系统: Ubuntu Server 16.04</li>
+<li>CPU架构:  x86-64</li>
+<li>gcc版本:  5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.5)</li>
+</ul>
+
+<h3 id="使用gcc编译go-1-4">使用gcc编译Go 1.4</h3>
+
+<ol>
+<li><p>Go 1.4的编译依赖于glibc，因此首先需要在Ubuntu上确保安装了新版的glibc</p>
+
+<pre><code class="language-shell">$sudo apt-get install libc-dev
+</code></pre></li>
+
+<li><p>下载解压 go1.4源码, 并进行编译。由于编译脚本写得非常好，这一步没有什么特别的。</p>
+
+<pre><code class="language-shell">$wget -c -t 3  https://storage.googleapis.com/golang/go1.4-bootstrap-20170531.tar.gz
+$tar zxvf go1.4-bootstrap-20170531.tar.gz
+$cd ~/go/src
+$./all.bash
+</code></pre>
+
+<p>all.bash脚本执行编译后，会对1.4的各个pkg进行回归测试。这里可能会有一点问题，具体会在后文描述。总之，当编译完成后，会在<code>~/go</code>目录下生成一个<code>bin</code>目录，里面有生成的可执行文件<code>go</code>; 且所有go语言的标准库会生成在<code>~/go/pkg/linux_amd64</code>目录下(我是x86-64的虚拟机，因此目录名是<code>linux_amd64</code>。该目录名会因操作系统以及体系架构不同而变化)</p></li>
+
+<li><p>使用Go语言自举时，需要创建GOROOT_BOOTSTRAP环境变量，指向低版本的Go语言环境。</p>
+
+<pre><code class="language-shell">$cd ~/go/
+$export GOROOT_BOOTSTRAP=`pwd`
+</code></pre>
+
+<p>使用<code>echo</code>命令查看该环境变量<code>$echo ${GOROOT_BOOTSTRAP}</code>，确认它指向的是Go1.4的路径即可.</p>
+
+<blockquote>
+<p>/home/wing/go</p>
+</blockquote></li>
+</ol>
+
+<h3 id="使用go-1-4编译-go-1-9-2">使用Go 1.4编译 Go 1.9.2</h3>
+
+<p>这样一来，用于自举的低版本的Go语言便已编译安装完毕，接下来就用它编译安装 Go 1.9.2</p>
+
+<ol>
+<li><p>下载并编译 1.9.2 , 整个过程仍然无比惬意</p>
+
+<pre><code class="language-shell">$wget -c -t 3 https://github.com/golang/go/archive/go1.9.2.tar.gz
+$cd ~
+$tar zxvf go-go1.9.2.tar.gz
+$cd ~/go-go1.9.2/src
+$./all.bash
+</code></pre>
+
+<p>如果编译过程没有问题的话，那么标准输出中就会输出类似以下的信息</p>
+
+<blockquote>
+<h2 id="all-tests-passed">ALL TESTS PASSED</h2>
+
+<p>Installed Go for linux/amd64 in /home/wing/go-go1.9.2
+Installed commands in /home/wing/go-go1.9.2/bin</p>
+</blockquote>
+
+<p>由于我是让这个Go语言语言环境在整个系统内生效，而不是装在我的个人home目录下，因此我还要做以下事项。</p></li>
+
+<li><p>移至/opt目录下并使安装全局生效</p>
+
+<pre><code class="language-shell">$cd ~
+$sudo mv go-go1.9.2 /opt/.
+$sudo vi /etc/profile
+</code></pre>
+
+<p>在<code>/etc/profile</code>文件底部增加下述变量导出</p>
+
+<pre><code class="language-shell">export GOROOT=/opt/go-go1.9.2
+export PATH=$GOROOT/bin:$PATH
+</code></pre></li>
+
+<li><p>此时，切换shell会话测试上述安装设置。</p>
+
+<p>$ go version</p>
+
+<p>这时理应输出以下信息:</p>
+
+<blockquote>
+<p>go version go1.9.2 linux/amd64</p>
+</blockquote></li>
+</ol>
+
+<p>至此，整个Go 1.9.2的编译安装就圆满达成</p>
+
+<h2 id="一点注意事项">一点注意事项</h2>
+
+<p>在编译Go 1.4时，<code>all.bash</code>最后的回归测试中，有可能会在下述测试中出错并进而打印出出错消息, 从而没有打印出预期的<strong>ALL TESTS PASSED</strong></p>
+
+<pre><code>&gt; dial_test.go  all connections connected; expected some to time out
+</code></pre>
+
+<p>不过，即使出现上述现象也不是意味着编译出了问题。真的要论“锅”属于谁的话，其实它属于 Go语言团队。 根据<a href="https://github.com/golang/go/issues/3307">这个issue</a>的相关讨论，该现象有大概率会在 64位Linux的 6g环境(即 x84-64 体系的gcc环境)中编译测试稍低版本的Go代码时出现。为了避免这个现象，Go团队也在后续更新中对<code>dial_test.go</code>这个测试代码进行了改善(按: 感觉就是把超时时长拉长了一点&hellip;)</p>
+
+<p>-以上-</p>
+
+  <div>
+  <br/><br/>
+  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">
+    <img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png" />
+  </a><br/>
+  本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">知识共享署名-非商业性使用-相同方式共享 3.0 中国大陆许可协议</a>进行许可。
+  </div>
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="https://xiaowing.github.io/post/20171117_pg_knowhow_oid/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="https://xiaowing.github.io/post/20171117_pg_knowhow_oid/">揭秘PG —— 无处不在的OID</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+  </div>
+</div>
+
+
+
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'wingsdak';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+</div>
+
+</div>
+</div>
+<script src="https://xiaowing.github.io/js/ui.js"></script>
+
+
+
+
+</body>
+</html>
+

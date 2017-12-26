@@ -7,8 +7,145 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>&amp;copy; Licensed under CC BY-NC-SA.</copyright>
-    <lastBuildDate>Fri, 17 Nov 2017 23:08:31 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 22 Dec 2017 11:37:20 +0800</lastBuildDate>
     <atom:link href="https://xiaowing.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>在Ubuntu 16.04上从源码编译安装go1.9.2</title>
+      <link>https://xiaowing.github.io/post/20171226_install_golang_fromsrc_ubuntu/</link>
+      <pubDate>Fri, 22 Dec 2017 11:37:20 +0800</pubDate>
+      
+      <guid>https://xiaowing.github.io/post/20171226_install_golang_fromsrc_ubuntu/</guid>
+      <description>&lt;p&gt;这两天在虚拟机上新装了一个 &lt;a href=&#34;http://releases.ubuntu.com/16.04/&#34;&gt;Ubuntu Server 16.04LTS&lt;/a&gt;,于是很自然地想安装一个Go语言环境。以往无论在Windows上还是在Linux上都是用的现成的二进制distribute包来安装Go, 但是这次打算尝试用源码来直接编译安装。于是把本次编译安装的一些手顺和注意事项分享在本文中:&lt;/p&gt;
+
+
+
+&lt;div class=&#34;pure-g&#34;&gt;
+
+  
+  
+  
+  
+  &lt;div class=&#34;pure-u-1-1&#34;&gt;
+    &lt;div style=&#34;padding: 0 .2em&#34;&gt;
+      &lt;img
+        class=&#34;pure-img-responsive&#34;
+        src=&#34;https://xiaowing.github.io/img/post/20171226/ubuntu-go.png&#34;
+        alt=&#34;Go on Ubuntu&#34;&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  
+
+&lt;/div&gt;
+
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;编译安装过程&#34;&gt;编译安装过程&lt;/h2&gt;
+
+&lt;p&gt;得益于Go语言团队的强大技术，Go语言的编译安装非常智能化，整个编译安装过程非常惬意。不过，由于Go语言从1.5版本开始就实现了&lt;a href=&#34;http://www.cnblogs.com/lidyan/p/6727184.html&#34;&gt;自举&lt;/a&gt;, 因此对于一个只有gcc编译环境的几乎等同于一张白纸的系统，必须先编译安装一个1.5以前版本的Go语言，之后再用这个低版本去编译1.9.2的Go语言。&lt;/p&gt;
+
+&lt;p&gt;以下安装过程是在以下环境中实施的&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;操作系统: Ubuntu Server 16.04&lt;/li&gt;
+&lt;li&gt;CPU架构:  x86-64&lt;/li&gt;
+&lt;li&gt;gcc版本:  5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.5)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;使用gcc编译go-1-4&#34;&gt;使用gcc编译Go 1.4&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Go 1.4的编译依赖于glibc，因此首先需要在Ubuntu上确保安装了新版的glibc&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;$sudo apt-get install libc-dev
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;下载解压 go1.4源码, 并进行编译。由于编译脚本写得非常好，这一步没有什么特别的。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;$wget -c -t 3  https://storage.googleapis.com/golang/go1.4-bootstrap-20170531.tar.gz
+$tar zxvf go1.4-bootstrap-20170531.tar.gz
+$cd ~/go/src
+$./all.bash
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;all.bash脚本执行编译后，会对1.4的各个pkg进行回归测试。这里可能会有一点问题，具体会在后文描述。总之，当编译完成后，会在&lt;code&gt;~/go&lt;/code&gt;目录下生成一个&lt;code&gt;bin&lt;/code&gt;目录，里面有生成的可执行文件&lt;code&gt;go&lt;/code&gt;; 且所有go语言的标准库会生成在&lt;code&gt;~/go/pkg/linux_amd64&lt;/code&gt;目录下(我是x86-64的虚拟机，因此目录名是&lt;code&gt;linux_amd64&lt;/code&gt;。该目录名会因操作系统以及体系架构不同而变化)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;使用Go语言自举时，需要创建GOROOT_BOOTSTRAP环境变量，指向低版本的Go语言环境。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;$cd ~/go/
+$export GOROOT_BOOTSTRAP=`pwd`
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;使用&lt;code&gt;echo&lt;/code&gt;命令查看该环境变量&lt;code&gt;$echo ${GOROOT_BOOTSTRAP}&lt;/code&gt;，确认它指向的是Go1.4的路径即可.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;/home/wing/go&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;使用go-1-4编译-go-1-9-2&#34;&gt;使用Go 1.4编译 Go 1.9.2&lt;/h3&gt;
+
+&lt;p&gt;这样一来，用于自举的低版本的Go语言便已编译安装完毕，接下来就用它编译安装 Go 1.9.2&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;下载并编译 1.9.2 , 整个过程仍然无比惬意&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;$wget -c -t 3 https://github.com/golang/go/archive/go1.9.2.tar.gz
+$cd ~
+$tar zxvf go-go1.9.2.tar.gz
+$cd ~/go-go1.9.2/src
+$./all.bash
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果编译过程没有问题的话，那么标准输出中就会输出类似以下的信息&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;h2 id=&#34;all-tests-passed&#34;&gt;ALL TESTS PASSED&lt;/h2&gt;
+
+&lt;p&gt;Installed Go for linux/amd64 in /home/wing/go-go1.9.2
+Installed commands in /home/wing/go-go1.9.2/bin&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;由于我是让这个Go语言语言环境在整个系统内生效，而不是装在我的个人home目录下，因此我还要做以下事项。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;移至/opt目录下并使安装全局生效&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;$cd ~
+$sudo mv go-go1.9.2 /opt/.
+$sudo vi /etc/profile
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;在&lt;code&gt;/etc/profile&lt;/code&gt;文件底部增加下述变量导出&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;export GOROOT=/opt/go-go1.9.2
+export PATH=$GOROOT/bin:$PATH
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;此时，切换shell会话测试上述安装设置。&lt;/p&gt;
+
+&lt;p&gt;$ go version&lt;/p&gt;
+
+&lt;p&gt;这时理应输出以下信息:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;go version go1.9.2 linux/amd64&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;至此，整个Go 1.9.2的编译安装就圆满达成&lt;/p&gt;
+
+&lt;h2 id=&#34;一点注意事项&#34;&gt;一点注意事项&lt;/h2&gt;
+
+&lt;p&gt;在编译Go 1.4时，&lt;code&gt;all.bash&lt;/code&gt;最后的回归测试中，有可能会在下述测试中出错并进而打印出出错消息, 从而没有打印出预期的&lt;strong&gt;ALL TESTS PASSED&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt; dial_test.go  all connections connected; expected some to time out
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;不过，即使出现上述现象也不是意味着编译出了问题。真的要论“锅”属于谁的话，其实它属于 Go语言团队。 根据&lt;a href=&#34;https://github.com/golang/go/issues/3307&#34;&gt;这个issue&lt;/a&gt;的相关讨论，该现象有大概率会在 64位Linux的 6g环境(即 x84-64 体系的gcc环境)中编译测试稍低版本的Go代码时出现。为了避免这个现象，Go团队也在后续更新中对&lt;code&gt;dial_test.go&lt;/code&gt;这个测试代码进行了改善(按: 感觉就是把超时时长拉长了一点&amp;hellip;)&lt;/p&gt;
+
+&lt;p&gt;-以上-&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>揭秘PG —— 无处不在的OID</title>
