@@ -1,5 +1,5 @@
 +++
-title = "一件如故的Go语言"
+title = "一见如故的Go语言"
 author = "xiaowing"
 date = 2017-07-30T14:17:37+08:00
 draft = false
