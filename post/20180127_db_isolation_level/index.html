@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.17" />
+
+  <title>我所理解的事务隔离级别 &middot; 小wing的驿站</title>
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+  
+  
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-9033761003757481",
+      enable_page_level_ads: true
+    });
+  </script>
+  
+  
+  
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+  
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="https://xiaowing.github.io/img/favicon.ico" type="image/x-icon" />
+
+  
+    <link rel="stylesheet" href="https://xiaowing.github.io/css/my.css">
+  
+  
+    <script src="https://xiaowing.github.io/js/my.js"></script>
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+  <a class="pure-menu-heading brand" href="https://xiaowing.github.io/">小wing的驿站</a>
+
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/post/"><i class='fa fa-list fa-fw'></i>Posts</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/about/"><i class='fa fa-user fa-fw'></i>About</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/topics/"><i class='fa fa-folder fa-fw'></i>Topics</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/tags/"><i class='fa fa-tags fa-fw'></i>Tags</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://twitter.com/xiaowing" target="_blank"><i class="fa fa-twitter-square fa-fw"></i>Twitter</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="http://weibo.com/u/3304350204" target="_blank"><i class="fa fa-weibo fa-fw"></i>Weibo</a>
+    </li>
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://instagram.com/xiaowing" target="_blank"><i class="fa fa-instagram fa-fw"></i>Instagram</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/xiaowing" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small>&copy; Licensed under CC BY-NC-SA.</small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>我所理解的事务隔离级别</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>27 Jan 2018, 21:08</time>
+  </div>
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-folder fa-fw"></i>
+    
+      <a class="post-taxonomy-topic" href="https://xiaowing.github.io/topics/%E6%8A%80%E6%9C%AF">技术</a>
+    
+  </div>
+  
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/database">database</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/postgresql">postgresql</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  <p>我发现有不少做应用的技术人员对于数据库的一些常识概念其实是理解不清的，这就导致了他们设计的应用中往往充斥了数据访问的相关错误却浑然不知。所以其实我还是比较乐意普及一些数据库常识的。</p>
+
+<p>本文就是我在 <a href="https://about.segmentfault.com/?utm_source=sf-footer&amp;utm_medium=footer-nav&amp;utm_campaign=about&amp;utm_content=about-index&amp;utm_term=%E5%85%B3%E4%BA%8E%E6%88%91%E4%BB%AC"><em>segmentfault.com</em></a> 上对 &ldquo;<strong>怎么理解SQL的四个事务隔离级别？</strong>&ldquo;<a href="https://segmentfault.com/q/1010000012178278/a-1020000012661683">这个问题的回答</a>:</p>
+
+<p></p>
+
+<p>我认为要理解事务隔离级别，就必须先理解在并发事务场景下隔离的重要性。因此，对于并发读事务之间数据可见性的三种现象需要首先理解清楚。</p>
+
+<p>下面我将以下表为例直观说明这三种现象。</p>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/20180127/isolation_level_table.png"
+        alt="示例表">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<h2 id="并发读的三种现象">并发读的三种现象</h2>
+
+<h3 id="脏读">脏读</h3>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/20180127/isolation_level_dirty_read.png"
+        alt="dirty read">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<p>这种现象出现在事物间的隔离级别最差的场景下，写事务<strong>对一个元组的更新</strong>尚未提交时就被另一个事务读到了。如果在一个业务应用中，写事务后面没提交而是回滚了，那么可以预见这个读事务读到的这个未提交的更新在某些业务场景下可能会带来一些困扰。</p>
+
+<h3 id="不可重复读">不可重复读</h3>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/20180127/isolation_level_unrepeatable_read.png"
+        alt="unrepeatable read">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<p>这种现象比上面的<strong>脏读</strong>&ldquo;好&rdquo;一点，只有当写事务提交后，这个更新才会被读事务读取到。但是考虑到如上图所示，在同一个事务中的不同时间点意图读取同一个元组却读到了不同的数据，在某些业务场景下可能也会带来一些困扰。</p>
+
+<blockquote>
+<p>划重点： &ldquo;脏读&rdquo;和&rdquo;不可重复读&rdquo;这两个现象针对的是对于表中的<strong>同一个逻辑上的元组</strong>而言.引发&rdquo;脏读&rdquo;和&rdquo;不可重复读&rdquo;这两个现象的写事务的操作通常是<strong>UPDATE</strong></p>
+</blockquote>
+
+<h3 id="幻读">幻读</h3>
+
+<p><strong>幻读</strong>这一现象针对的已不是表中的单一元组而言，而是指读事务在对表中的<strong>某个范围多个元组</strong>而言的一种现象，引发幻读的写事务对应的操作通常是<strong>INSERT</strong>或<strong>DELETE</strong>。如下图所示：</p>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/20180127/isolation_level_phantom_read.png"
+        alt="phantom read">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<p>在同一个读事务中，对于同一个过滤条件查询出了不同的结果集，这在某些业务场景下也有可能带来一定的困扰。</p>
+
+<h3 id="补充说明">补充说明</h3>
+
+<p>上面这些就是关于&rdquo;脏读&rdquo;，&rdquo;不可重复读&rdquo;以及&rdquo;幻读&rdquo;这三个现象的介绍。除此之外，这边还需要再强调两个注意点：</p>
+
+<ol>
+<li>&ldquo;脏读&rdquo;，&rdquo;不可重复读&rdquo;以及&rdquo;幻读&rdquo;这三个现象<strong>不是错误,更不是BUG</strong>。它们仅仅是事务并发场景下可能出现的现象。</li>
+
+<li><p>&ldquo;脏读&rdquo;，&rdquo;不可重复读&rdquo;以及&rdquo;幻读&rdquo;针对的是<strong>同一个事务</strong>中的读操作而言。为什么要强调这一点，因为有些对数据库理解不深的同学不能很好的理解清楚 <strong>会话</strong>,<strong>事务</strong>和<strong>语句</strong>这三个概念。于是对于以下的例子就会误认为是&rdquo;不可重复读&rdquo;的现象:</p>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/20180127/read_exception.jpg"
+        alt="例外">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<p>但实际上，在这个例子中<strong>会话2</strong>的SQL是按<strong>隐式事务</strong>来执行，其执行的两条<code>SELECT name FROM foo WHERE id = 1;</code>实际上是分属两个不同的读事务。对于后执行的那条SELECT文所属的隐式事务，由于其执行时会话1的更新已经提交，所以它理所当然地可以读到更新后的数据。这与&rdquo;不可重复读&rdquo;的概念没有任何关系。</p></li>
+</ol>
+
+<hr />
+
+<h2 id="如何理解事务隔离级别">如何理解事务隔离级别</h2>
+
+<h3 id="事务隔离级别与上述三现象的关系">事务隔离级别与上述三现象的关系</h3>
+
+<p>理解清楚了以上的这三个&rdquo;读&rdquo;的概念后，就可以很容易的理解事务隔离级别了。因为事务隔离级别的设置本质上就意味着让你控制并发事务之间的写事务带来的数据更新的对于同时正在执行的其他事务的可见性——即，<strong>你允许业务中的并发事务之间出现怎样的都现象</strong>. 由于&rdquo;脏读&rdquo;，&rdquo;不可重复读&rdquo;以及&rdquo;幻读&rdquo;的概念是一种层层递进的概念，因此事务隔离级别从&rdquo;Read Uncommited&rdquo;到&rdquo;Serializable&rdquo;也是一个比一个严格。</p>
+
+<p>SQL标准中对于隔离级别与事务之间数据可见性的关系定义如下:</p>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/20180127/isolation_read.png"
+        alt="读隔离">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<p>需要注意的是，SQL标准中对于这些隔离级别定义中约束的&rdquo;不允许&rdquo;现象是强制要求的。数据库厂商在宣称支持某个隔离级别时，必须将上表中对应隔离级别的&rdquo;不允许&rdquo;进行实现。但是对于&rdquo;可能&rdquo;项则不代表你必须实现成具备某种都现象。比如在PostgreSQL中，由于其MVCC的实现，<code>REPEATABLE READ</code>对于读事务的行为实现也和<code>SERIALIZABLE</code>一样是不会出现幻读的，而<code>REPEATABLE READ</code>和<code>SERIALIZABLE</code>的区别，主要体现在下文所述的对更新操作的约束力度上。</p>
+
+<h3 id="serializable对写操作的约束">SERIALIZABLE对写操作的约束</h3>
+
+<p>在其他隔离级别中，如果并发的两个事务同时意图对同一个元组进行更新时，后更新的事务会等待直到先更新的事务提交后在继续执行其更新操作。 但是在<strong>SERIALIZABLE</strong>的情况下，由于此时事务隔离级别最强，会对有可能对读一致性带来影响的写操作必须按照事务的串行执行。在PG的实现中，这表现为尝试对于同一元组进行更新的并发事务会在等待完先更新的事务提交后自己报个错：</p>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/20180127/write_serializable.jpg"
+        alt="可串行化的写约束">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<p>在<strong>SERIALIZABLE</strong>隔离级别下，对于上图中的两个更新事务若都希望成功，需要保证右边会话的更新操作所属事务的<code>START TRANSACTION</code>必须发生在左边会话的更新事务<code>COMMIT</code>之后，即两个写事务真正是&rdquo;串行&rdquo;的。</p>
+
+<p>以上就是我对事务隔离级别的认识。</p>
+
+  <div>
+  <br/><br/>
+  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">
+    <img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png" />
+  </a><br/>
+  本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">知识共享署名-非商业性使用-相同方式共享 3.0 中国大陆许可协议</a>进行许可。
+  </div>
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="https://xiaowing.github.io/post/20171226_install_golang_fromsrc_ubuntu/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="https://xiaowing.github.io/post/20171226_install_golang_fromsrc_ubuntu/">在Ubuntu 16.04上从源码编译安装go1.9.2</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+  </div>
+</div>
+
+
+
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'wingsdak';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+</div>
+
+</div>
+</div>
+<script src="https://xiaowing.github.io/js/ui.js"></script>
+
+
+
+
+</body>
+</html>
+
