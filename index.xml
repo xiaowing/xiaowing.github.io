@@ -1748,11 +1748,28 @@ int main(void) {        /* 追加main()函数实现 */
 
 &lt;h1 id=&#34;about-me&#34;&gt;About me&lt;/h1&gt;
 
+&lt;h3 id=&#34;自我介绍&#34;&gt;自我介绍&lt;/h3&gt;
+
+&lt;p&gt;2005年从学校毕业出来的野生码农一枚。 虽然大学是正经的大学，讲来可算作科班毕业，但其实四年大学生活中没怎么正经学习过。后来自己开窍，学会了写代码，目前应该是我大学那个班上为数不多的还在靠写代码讨生活的人(不知此处是该喜还是悲&amp;hellip;)&lt;/p&gt;
+
+&lt;p&gt;过去十二年间，一直做的是略偏底层的开发，其中开发并维护一个自研数据库的数据库驱动占据了大半的职场生涯。应用项目也接触过一些，但所用技术非常混杂，不成体系。两年前跳出了舒适区, 开始混迹于新的行业，新的领域。目前仍以三十来岁的&amp;rdquo;高龄&amp;rdquo;在开发的道路上探索&lt;/p&gt;
+
 &lt;h3 id=&#34;我的标签&#34;&gt;我的标签&lt;/h3&gt;
 
 &lt;p&gt;☞ INTP星人☞爱猫家 ☞钝感男 ☞Google粉 ☞第70004号维基人&lt;br /&gt;
 ☞民主自由控 ☞反对爱国主义 ☞伪技术爱好者 ☞Gopher&lt;br /&gt;
 ☞无证程序员 ☞游戏宅 ☞摇滚乐拥趸 ☞原版CD收藏癖&lt;/p&gt;
+
+&lt;h3 id=&#34;关注的技术&#34;&gt;关注的技术&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;C programming in Linux&lt;/li&gt;
+&lt;li&gt;Go programming language&lt;/li&gt;
+&lt;li&gt;Hacking PostgreSQL&lt;/li&gt;
+&lt;li&gt;Database technologies, especially in NewSQL&lt;/li&gt;
+&lt;li&gt;Microservice architecture &amp;amp; Serverless architecture&lt;/li&gt;
+&lt;li&gt;Last but not least, I don&amp;rsquo;t like those who keep talking about Deep learning, A.I. blah blah blah&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;h3 id=&#34;最爱安利的三张唱片&#34;&gt;最爱安利的三张唱片&lt;/h3&gt;
 
@@ -1766,6 +1783,8 @@ int main(void) {        /* 追加main()函数实现 */
 &lt;li&gt;&lt;p&gt;&amp;ldquo;我去2000年&amp;rdquo;  &amp;ndash;&lt;em&gt;朴树&lt;/em&gt;&lt;br /&gt;
 &lt;img src=&#34;https://img1.doubanio.com/lpic/s4715377.jpg&#34; width=128 alt=&#34;我去2000年&#34;/&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;p&gt;&lt;/br&gt;&lt;/br&gt;&lt;/p&gt;
 
 &lt;h1 id=&#34;about-this-blog&#34;&gt;About this blog&lt;/h1&gt;
 
