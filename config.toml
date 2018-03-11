@@ -16,7 +16,7 @@ paginate = 10
   # Shown in the home page
   subtitle = "wing's dak"
   brand = "小wing的驿站"
-  #googleAnalytics = "Your Google Analytics tracking ID"
+  #googleAnalytics = "UA-115469991-1"
   disqus = "wingsdak"
   # CSS name for highlight.js
   highlightjs = "androidstudio"
