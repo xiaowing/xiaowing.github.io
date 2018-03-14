@@ -245,6 +245,79 @@
   
     <article>
   <header>
+    <h2><a href="https://xiaowing.github.io/post/20180313_thread_stack_overflow_protection/">记一次面向线程栈的防爆栈机制的实现探索</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>13 Mar 2018, 22:37</time>
+  </div>
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-folder fa-fw"></i>
+    
+      <a class="post-taxonomy-topic" href="https://xiaowing.github.io/topics/%E6%8A%80%E6%9C%AF">技术</a>
+    
+  </div>
+  
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/c">C</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/development">development</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/pthread">pthread</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1">程序设计</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  <p>爆栈(<a href="https://en.wikipedia.org/wiki/Stack_overflow"><em>stack overflow</em></a>), 众所周知是一种软件的致命错误, 一旦发生程序就core了。根据维基百科的描述，当代码中有以下三种情形时会引发爆栈</p>
+
+<ol>
+<li>无限递归</li>
+<li>函数调用链展开过深</li>
+<li>函数内申请过大的局部变量</li>
+</ol>
+
+<p>其中1.和2.本质上是相同的，不管是否递归，只要函数调用链过深，压栈过多就会引发爆栈。只不过在实践中，由递归更容易引发爆栈。</p>
+
+<p>可是在很多时候，我们无法避免递归。比如数据库在对SQL语句的执行实现中，伴随着输入的SQL语句的复杂性，间接递归通常是可以预见的。但是无论哪种情况，我们都不能容忍一个用户输入导致程序爆栈，因此这种情况下，我们就需要一个防爆栈机制</p>
+
+<p>下文通过介绍我经手的一个防爆栈机制的实现过程，分享一下有关程序设计的教训与心得:</p>
+
+<p></p>
+  </p>
+
+  
+  <footer>
+    <a href="https://xiaowing.github.io/post/20180313_thread_stack_overflow_protection/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+  </footer>
+  
+</article>
+
+  
+    <article>
+  <header>
     <h2><a href="https://xiaowing.github.io/post/20170903_howto_create_a_postgres_builtin_function/">如何为PostgreSQL创建一个内置函数？</a></h2>
 
     <div class="post-meta">

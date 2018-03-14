@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.17" />
+
+  <title>记一次面向线程栈的防爆栈机制的实现探索 &middot; 小wing的驿站</title>
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+  
+  
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-9033761003757481",
+            enable_page_level_ads: true
+       });
+  </script>
+  
+  
+  
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+  
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="https://xiaowing.github.io/img/favicon.ico" type="image/x-icon" />
+
+  
+    <link rel="stylesheet" href="https://xiaowing.github.io/css/my.css">
+  
+  
+    <script src="https://xiaowing.github.io/js/my.js"></script>
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+  <a class="pure-menu-heading brand" href="https://xiaowing.github.io/">小wing的驿站</a>
+
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/post/"><i class='fa fa-list fa-fw'></i>Posts</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/about/"><i class='fa fa-user fa-fw'></i>About</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/topics/"><i class='fa fa-folder fa-fw'></i>Topics</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/tags/"><i class='fa fa-tags fa-fw'></i>Tags</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://twitter.com/xiaowing" target="_blank"><i class="fa fa-twitter-square fa-fw"></i>Twitter</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="http://weibo.com/u/3304350204" target="_blank"><i class="fa fa-weibo fa-fw"></i>Weibo</a>
+    </li>
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://instagram.com/xiaowing" target="_blank"><i class="fa fa-instagram fa-fw"></i>Instagram</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/xiaowing" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small>&copy; Licensed under CC BY-NC-SA.</small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>记一次面向线程栈的防爆栈机制的实现探索</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>13 Mar 2018, 22:37</time>
+  </div>
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-folder fa-fw"></i>
+    
+      <a class="post-taxonomy-topic" href="https://xiaowing.github.io/topics/%E6%8A%80%E6%9C%AF">技术</a>
+    
+  </div>
+  
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/c">C</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/development">development</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/pthread">pthread</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1">程序设计</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  <p>爆栈(<a href="https://en.wikipedia.org/wiki/Stack_overflow"><em>stack overflow</em></a>), 众所周知是一种软件的致命错误, 一旦发生程序就core了。根据维基百科的描述，当代码中有以下三种情形时会引发爆栈</p>
+
+<ol>
+<li>无限递归</li>
+<li>函数调用链展开过深</li>
+<li>函数内申请过大的局部变量</li>
+</ol>
+
+<p>其中1.和2.本质上是相同的，不管是否递归，只要函数调用链过深，压栈过多就会引发爆栈。只不过在实践中，由递归更容易引发爆栈。</p>
+
+<p>可是在很多时候，我们无法避免递归。比如数据库在对SQL语句的执行实现中，伴随着输入的SQL语句的复杂性，间接递归通常是可以预见的。但是无论哪种情况，我们都不能容忍一个用户输入导致程序爆栈，因此这种情况下，我们就需要一个防爆栈机制</p>
+
+<p>下文通过介绍我经手的一个防爆栈机制的实现过程，分享一下有关程序设计的教训与心得:</p>
+
+<p></p>
+
+<h2 id="背景目标">背景目标</h2>
+
+<p>我们的系统是一个高并发的系统，实现的是基于线程的并发(session-per-thread模式)，由于用户输入可能会引发我们系统内部的合理的间接递归。由于用户输入的复杂性不可避免，如果极端情况下用户输入引发了一个会话爆栈，将会使整个进程core掉。因此我们需要一个基于线程栈的防爆栈机制。</p>
+
+<p>此外，为了尽可能地容忍更大地并发量，系统为每个用户会话创建后台线程时限定了线程栈的大小为<strong>256KB</strong>(通过<code>pthread_attr_setstacksize()</code>设置)</p>
+
+<h2 id="借鉴-postgresql的防爆栈实现">借鉴——PostgreSQL的防爆栈实现</h2>
+
+<p>首先我们想到了PG的实现，PG代码中也实现了一个防爆栈机制。其原理简要说明如下：</p>
+
+<ol>
+<li><p>PG在为新的用户会话创建后台进程(PG是session-per-process模式)后,在入口函数<code>PostmasterMain()</code>中获取进程栈中的基地址,并将其记录在<code>postgres</code>进程的一个全局变量(会话内可见)上</p>
+
+<p><em>保存栈基址的代码如下:</em></p>
+
+<pre><code class="language-c">pg_stack_base_t
+set_stack_base(void)
+{
+    char stack_base;
+    pg_stack_base_t old;
+
+#if defined(__ia64__) || defined(__ia64)
+    old.stack_base_ptr = stack_base_ptr;
+    old.register_stack_base_ptr = register_stack_base_ptr;
+#else
+    old = stack_base_ptr;
+#endif
+
+    /* Set up reference point for stack depth checking */
+    stack_base_ptr = &amp;stack_base;  /* ★stack_base_ptr即为保存栈基址的全局变量 */
+#if defined(__ia64__) || defined(__ia64)
+    register_stack_base_ptr = ia64_get_bsp();
+#endif
+
+    return old;
+}
+</code></pre></li>
+
+<li><p>在SQL语句的处理逻辑在所有涉嫌递归调用的入口执行栈深的检查函数，通过比较检查时点所用的局部变量的地址与先前记录的栈基址做比较，如果差值超过<strong>阈值</strong>，则退出当前SQL的执行并提示错误信息</p></li>
+
+<li><p>PG中栈深的阈值(<code>max_stack_depth_bytes</code>)默认为<strong>2MB</strong>, 其大小可由用户配置，但最大值不能超过操作系统的栈大小(可通过<code>ulimit -a</code>查询) <strong>减去 512KB</strong></p>
+
+<p><em>其比较栈深的代码实现如下:</em></p>
+
+<pre><code class="language-c">/* src/backend/tcop/postgres.c */
+bool
+stack_is_too_deep(void)
+{
+    char        stack_top_loc;
+    long        stack_depth;
+
+    stack_depth = (long) (stack_base_ptr - &amp;stack_top_loc);  /* ★stack_base_ptr即为保存栈基址的全局变量 */
+
+    if (stack_depth &lt; 0)
+        stack_depth = -stack_depth;
+
+    if (stack_depth &gt; max_stack_depth_bytes &amp;&amp;
+        stack_base_ptr != NULL)
+        return true;
+
+
+#if defined(__ia64__) || defined(__ia64)
+    stack_depth = (long) (ia64_get_bsp() - register_stack_base_ptr);
+
+    if (stack_depth &gt; max_stack_depth_bytes &amp;&amp;
+        register_stack_base_ptr != NULL)
+        return true;
+#endif   /* IA64 */
+
+    return false;
+}
+</code></pre></li>
+</ol>
+
+<p>PG的代码质量是值得信赖的，所以我们借鉴了上述机制。由于两个系统的会话模型不同，因此我们做了一些改造: 由于我们系统的用户会话和线程是一一对应的关系，所以把栈基址的保存位置从全局变量放到了会话上下文中。比如上述检查栈深的代码就变成了类似以下的代码：</p>
+
+<pre><code class="language-c">bool
+stack_is_too_deep(session_t *session)
+{
+    char		stack_top_loc;
+    long		stack_depth;
+
+    stack_depth = (long) (session-&gt;stack_base_ptr - &amp;stack_top_loc);  /* 之前获取的栈基地址放在了会话上下文 */
+
+    if (stack_depth &lt; 0)
+        stack_depth = -stack_depth;
+
+    /* MAX_STACK_SIZE为256KB */
+    if (stack_depth &gt; MAX_STACK_SIZE &amp;&amp; stack_base_ptr != NULL)
+        return true;
+
+    return false;
+}
+</code></pre>
+
+<p>本以为这样一来就大功告成了，后来的事实证明： <strong>我们把问题考虑得太简单了&hellip;</strong></p>
+
+<h2 id="第一次爆栈">第一次爆栈</h2>
+
+<p>在事先了上述防爆栈机制后，为了测试效果，我们构造了一个会引发无限递归的用户输入, 希望将之加入回归测试集作为该防爆栈功能的看护用例。可是，当我们运行该用例时，结果却让我们傻眼了——<strong>程序直接core掉了</strong>！！</p>
+
+<p>连忙分析生成的core文件:发现事发现场的线程栈有 <strong>3000+</strong> 个栈帧(<a href="https://en.wikipedia.org/wiki/Call_stack#STACK-FRAME">stack frame</a>), 最后程序core掉时所处的栈帧居然是标准库函数 <code>snprintf()</code>&hellip;&hellip;换言之，<strong>防爆栈机制没有生效</strong></p>
+
+<h3 id="原因分析">原因分析</h3>
+
+<p>首先分析了一下PG原有的防爆栈实现，突然被其GUC参数<code>max_stack_depth_bytes</code>的配置逻辑所吸引:</p>
+
+<blockquote>
+<p>栈深的阈值(<code>max_stack_depth_bytes</code>)默认为<strong>2MB</strong>, 其大小可由用户配置，但最大值不能超过操作系统的栈大小(可通过<code>ulimit -a</code>查询) <strong>减去 512KB</strong></p>
+</blockquote>
+
+<p><strong>PG的允许用户设置的阈值为什么不是直接等于操作系统的栈大小?</strong></p>
+
+<p>这是因为如果将阈值等于OS的栈大小，将会产生下述后果:</p>
+
+<p><strong>只要程序走到栈深检查函数时，则说明栈深肯定没有超过阈值; 另一方面, 当栈深超过阈值时, 已经没有时间让程序在走到栈深检查函数去自我预警了.</strong></p>
+
+<p>换言之: 关于栈深检查的阈值，应当设置为一个在两次检查之间事实上允许程序栈深适当超过的值。也就是说，在栈深的阈值和操作系统所允许的最大栈深之间应该放一个余量，这个余量要能够让程序在两次栈深检查之间继续展开栈帧并坚持到下一个栈深检查为止。——考虑到当代Linux系统下默认的栈大小为8MB，所以结合PG的<code>max_stack_depth_bytes</code>的规格来看，PG所放的余量最大为6MB，最小也有512KB.</p>
+
+<p>但是在我们的实现中，我们将栈深检查的阈值直接定为线程栈的大小。这就意味着，我们为两次栈深检查之间没有放任何余量。这便使得栈深检查机制变得毫无意义。</p>
+
+<p>下图示意了这一次爆栈的原因:</p>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/20180313/1st_bursting.png"
+        alt="第一次爆栈的原因">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<h3 id="第一次修正">第一次修正</h3>
+
+<p>既然明白了原因，修正方法就很简单: 给阈值放点余量。经过反复试验，最终决定将这个余量设置为16KB。因此栈深检查的代码就修改为下述形式:</p>
+
+<pre><code class="language-c">bool
+stack_is_too_deep(session_t *session)
+{
+    char		stack_top_loc;
+    long		stack_depth;
+
+    stack_depth = (long) (session-&gt;stack_base_ptr - &amp;stack_top_loc);  /* 之前获取的栈基地址放在了会话上下文 */
+
+    if (stack_depth &lt; 0)
+        stack_depth = -stack_depth;
+
+    /* MAX_STACK_SIZE为256KB */
+    /* 检查的阈值为 (线程栈长度 - 16KB) */
+    if (stack_depth &gt; (MAX_STACK_SIZE - (16 * 1024)) &amp;&amp; 
+        stack_base_ptr != NULL)
+        return true;
+
+    return false;
+}
+</code></pre>
+
+<p>当然, 上述修改还是存在一些风险的: 毕竟余量16KB还是比较小的。如果两次栈深检查之间的函数展开中有某个函数使用了16KB的局部变量，照样会让程序爆栈core掉。为此，我又对代码进行了审视，确保了栈深检查之间的函数调用没有使用太多局部变量。之后，便将上述修正给commit了.</p>
+
+<h2 id="第二次爆栈">第二次爆栈</h2>
+
+<p>之后相当长的一段时间内，这个爆栈防护运行得都比较好。且放入回归测试集中的看护测试也总是能如期报出&rdquo;<strong>stack too deep</strong>&ldquo;的错误消息。一切看上去相安无事.</p>
+
+<p>然而，距离上一次对<code>stack_is_too_deep()</code>的修正已有两个月的某一天下午，回归测试被运行起来后，上述的看护测试没有再能如期报出&rdquo;<strong>stack too deep</strong>&ldquo;的错误消息, 而是直接导致了程序core了。再一分析core文件的栈信息，发现有<strong>1000+个</strong>栈帧——显然，又爆栈了&hellip;</p>
+
+<p>得知这一信息后，我的内心是纠结的：理论上可以考虑把之前修正中引入的余量再放大，把检查的阈值再降低; 但是这样一来，将有可能会导致<code>stack_is_too_deep()</code>错误消息报出的频率增大，进而导致我们规格中定义的用户线程栈的默认大小256KB失去意义. 如果再贸然增大线程栈的默认大小，那么就有可能会导致并发度的下降，进而产生一连串连锁反应。更何况，就算要放大余量，放到多少为合适呢?&hellip;&hellip;</p>
+
+<p>思来想去，决定还是先回溯一下代码的commit履历，看看是不是有人在函数调用中使用了过大的局部变量，如果是的话，到底用了多大.</p>
+
+<h3 id="原因分析-1">原因分析</h3>
+
+<p>通过回溯代码的commit, 问题引入的commit很快就被定位到了。但是这个commit的修改内容却和我预想的不太一样：</p>
+
+<p>引入问题的commit简而言之其实只干了一件事情——它把一个线程的静态<a href="https://en.wikipedia.org/wiki/Thread-local_storage#C_and_C++">TLS变量</a>的大小进行了调整。引发问题的代码概要如下：</p>
+
+<pre><code class="language-c">typedef struct foo {
+    char buf_a[BUFFER_SIZE];
+    char buf_b[BUFFER_SIZE];
+} Foo;
+
+__thread Foo thbuf;
+</code></pre>
+
+<p>引入问题的commit的修改就是把上述宏<code>BUFFER_SIZE</code>的定义从 <strong>512</strong> 变成了 <strong>4096</strong></p>
+
+<p>但是线程的TLS变量大小的改变和线程栈之间又有什么关系呢？</p>
+
+<p>分析了一下core文件, 突然发现TLS变量的地址只比代码中线程入口函数取到的所谓&rdquo;线程栈基地址&rdquo; 要高一点，但是又没有高出太多——难道这只是一个巧合??</p>
+
+<p>进一步在网上查找了一下，找到了<a href="https://www.jianshu.com/p/e01c1a2a46e7">一篇文章</a>，里面贴出了一张pthread线程栈的结构图让我恍然大悟:</p>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/20180313/threadstack.jpg"
+        alt="pthread线程栈的结构图">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<p><em>上图出自 <a href="https://www.jianshu.com/p/e01c1a2a46e7">https://www.jianshu.com/p/e01c1a2a46e7</a></em></p>
+
+<p>事实上，我在线程入口函数处取到的所谓&rdquo;栈基址&rdquo;并不是真正的线程栈的栈基址，它只是线程栈中用户程序可用部分的栈底而已。由于TLS变量也是存储在线程栈中的，但是我在算已使用的栈大小时却没有算入TLS变量所占大小。因此，虽然我的防爆栈机制的意图时想让两次栈深检查之间能有16KB的余量可用，但实际上由于计算时的栈基地址选取不当，真正放出的余量并没有16KB，而是要小于16KB。而且随着TLS变量的增大，线程栈阈值之上的余量空间被大大压缩，从而导致在两次栈深检查之间又发生了爆栈。</p>
+
+<p>TLS变量的增大引发的连锁反应如下所示:</p>
+
+<ul>
+<li>TLS变量大小修改前</li>
+</ul>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/20180313/2st_bursting_before.png"
+        alt="TLS变量修改前的线程栈阈值位置">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<ul>
+<li>TLS变量大小修改后</li>
+</ul>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/20180313/2st_bursting_after.png"
+        alt="TLS变量修改后的线程栈阈值位置">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<h3 id="第二次修正">第二次修正</h3>
+
+<p>由于是栈深检查时选取的线程栈基地址有误，因此修改了后台线程入口函数中取基地址的逻辑:</p>
+
+<p>原本是直接在入口函数一上来便声明一个局部变量并取其地址; 现在修改为使用pthread线程库中的<code>pthread_attr_getstackaddr()</code>来获取。</p>
+
+<p>获取当前线程的线程栈基地址以及栈大小的方法可参见下述代码示例:</p>
+
+<pre><code class="language-c">void *thread_handler(void *args) {
+    char start;
+    pthread_t self_tid;
+    pthread_attr_t curr_attr;
+    void *addr = NULL;
+    size_t size;
+
+    self_tid = pthread_self();
+
+    if (pthread_getattr_np(self_tid, &amp;curr_attr) != 0)
+        perror(&quot;pthread_getattr_np() failed&quot;);
+    
+    if (pthread_attr_getstackaddr(&amp;curr_attr, &amp;addr) != 0)
+        perror(&quot;pthread_attr_getstackaddr() failed&quot;);
+    
+    if (pthread_attr_getstacksize(&amp;curr_attr, &amp;size) != 0)
+        perror(&quot;pthread_attr_getstacksize() failed&quot;);
+    
+    printf(&quot;[Thread %d]: retrieved address of thread stack %p, stack size %d bytes\n&quot;, (int)self_tid, addr, (int)size);
+    
+    pthread_attr_destroy(&amp;curr_attr);
+
+    return 0;
+}
+</code></pre>
+
+<h2 id="总结">总结</h2>
+
+<p>经过了一波三折，总算是把爆栈防护机制给稳定了。回溯一下整个过程，可以得到以下教训:</p>
+
+<ol>
+<li>对于程序中所设计的阈值告警，应当把阈值设计得要比&rdquo;不可触及&rdquo;的<strong>红线</strong>略小，否则阈值告警本身等于无效。</li>
+<li>形而上学地照搬代码并不能真正地解决问题，应当还是要祥日本人提倡的那样&rdquo;<strong>原理原則</strong>に従って設計する&rdquo;</li>
+</ol>
+
+<p>最后，我个人认为这个防爆栈实现代码的改善过程还是很有裨益的，因此多写了一点，以飨后者。</p>
+
+  <div>
+  <br/><br/>
+  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">
+    <img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png" />
+  </a><br/>
+  本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">知识共享署名-非商业性使用-相同方式共享 3.0 中国大陆许可协议</a>进行许可。
+  </div>
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="https://xiaowing.github.io/post/20180127_db_isolation_level/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="https://xiaowing.github.io/post/20180127_db_isolation_level/">我所理解的事务隔离级别</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+  </div>
+</div>
+
+
+
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'wingsdak';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+</div>
+
+</div>
+</div>
+<script src="https://xiaowing.github.io/js/ui.js"></script>
+
+
+
+
+</body>
+</html>
+
