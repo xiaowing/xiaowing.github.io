@@ -155,6 +155,25 @@
     </li>
     {{ end }}
 
+    {{ with .Site.Social.wikipedia }}
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://zh.wikipedia.org/wiki/User:{{ . }}" target="_blank"><i class="fa fa-wikipedia-w fa-fw"></i>Wikipedia</a>
+    </li>
+    {{ end }}
+
+    <!-- China SNS, not in font-awesome -->
+    {{ with .Site.Social.zhihu }}
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://www.zhihu.com/people/{{ . }}/activities" target="_blank"><i class="iconfont icon-zhihu"></i>zhihu</a>
+    </li>
+    {{ end }}
+
+    {{ with .Site.Social.douban }}
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://www.douban.com/people/{{ . }}" target="_blank"><i class="iconfont icon-douban"></i>douban</a>
+    </li>
+    {{ end }}
+
     <!-- Gaming -->
 
     {{ with .Site.Social.steam }}
