@@ -1,13 +1,100 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>小wing的驿站</title>
-    <link>https://xiaowing.github.io/tags/postgresql/index.xml</link>
-    <description>Recent content on 小wing的驿站</description>
+    <title>Postgresql on 小wing的驿站</title>
+    <link>https://xiaowing.github.io/tags/postgresql/</link>
+    <description>Recent content in Postgresql on 小wing的驿站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>&amp;copy; Licensed under CC BY-NC-SA.</copyright>
-    <atom:link href="https://xiaowing.github.io/tags/postgresql/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 13 May 2018 23:02:33 +0800</lastBuildDate>
+    
+	<atom:link href="https://xiaowing.github.io/tags/postgresql/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>双剑合璧——当PG的FDW遇上GO(之三)</title>
+      <link>https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part03/</link>
+      <pubDate>Sun, 13 May 2018 23:02:33 +0800</pubDate>
+      
+      <guid>https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part03/</guid>
+      <description>&lt;p&gt;由于对Golang以及PostgreSQL(下文简称&lt;strong&gt;PG&lt;/strong&gt;)的FDW(&lt;em&gt;Foreign Data Wrapper&lt;/em&gt;)两个技术的双重喜爱,因此我利用假期用Golang实现了一个&lt;a href=&#34;https://github.com/xiaowing/douban_fdw&#34;&gt;访问douban API的FDW&lt;/a&gt;. 同时也借此机会总结了一下 PG的FDW技术并分享一下使用Golang实现FDW的一些经验。&lt;/p&gt;
+
+&lt;p&gt;全文索引如下:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part01/&#34;&gt;第一部分: FDW的前世今生&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part02/&#34;&gt;第二部分: 揭秘FDW&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;第三部分: 如何用Go来实现一个FDW&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>双剑合璧——当PG的FDW遇上GO(之二)</title>
+      <link>https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part02/</link>
+      <pubDate>Sun, 13 May 2018 22:02:33 +0800</pubDate>
+      
+      <guid>https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part02/</guid>
+      <description>&lt;p&gt;由于对Golang以及PostgreSQL(下文简称&lt;strong&gt;PG&lt;/strong&gt;)的FDW(&lt;em&gt;Foreign Data Wrapper&lt;/em&gt;)两个技术的双重喜爱,因此我利用假期用Golang实现了一个&lt;a href=&#34;https://github.com/xiaowing/douban_fdw&#34;&gt;访问douban API的FDW&lt;/a&gt;. 同时也借此机会总结了一下 PG的FDW技术并分享一下使用Golang实现FDW的一些经验。&lt;/p&gt;
+
+&lt;p&gt;全文索引如下:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part01/&#34;&gt;第一部分: FDW的前世今生&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;第二部分: 揭秘FDW&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part03/&#34;&gt;第三部分: 如何用Go来实现一个FDW&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>双剑合璧——当PG的FDW遇上GO(之一)</title>
+      <link>https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part01/</link>
+      <pubDate>Sun, 13 May 2018 21:02:33 +0800</pubDate>
+      
+      <guid>https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part01/</guid>
+      <description>&lt;p&gt;由于对Golang以及PostgreSQL(下文简称&lt;strong&gt;PG&lt;/strong&gt;)的FDW(&lt;em&gt;Foreign Data Wrapper&lt;/em&gt;)两个技术的双重喜爱, 因此我利用假期用Golang实现了一个&lt;a href=&#34;https://github.com/xiaowing/douban_fdw&#34;&gt;访问douban API的FDW&lt;/a&gt;. 同时也借此机会总结了一下 PG的FDW技术并分享一下使用Golang实现FDW的一些经验。&lt;/p&gt;
+
+
+
+&lt;div class=&#34;pure-g&#34;&gt;
+
+  
+  
+  
+  
+  &lt;div class=&#34;pure-u-1-1&#34;&gt;
+    &lt;div style=&#34;padding: 0 .2em&#34;&gt;
+      &lt;img
+        class=&#34;pure-img-responsive&#34;
+        src=&#34;https://xiaowing.github.io/img/post/20180513/fdw_metaphor.jpg&#34;
+        alt=&#34;FDW Metaphor&#34;&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  
+
+&lt;/div&gt;
+
+
+&lt;p&gt;全文索引如下:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;第一部分: FDW的前世今生&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part02/&#34;&gt;第二部分: 揭秘FDW&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part03/&#34;&gt;第三部分: 如何用Go来实现一个FDW&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>我所理解的事务隔离级别</title>
@@ -19,210 +106,7 @@
 
 &lt;p&gt;本文就是我在 &lt;a href=&#34;https://about.segmentfault.com/?utm_source=sf-footer&amp;amp;utm_medium=footer-nav&amp;amp;utm_campaign=about&amp;amp;utm_content=about-index&amp;amp;utm_term=%E5%85%B3%E4%BA%8E%E6%88%91%E4%BB%AC&#34;&gt;&lt;em&gt;segmentfault.com&lt;/em&gt;&lt;/a&gt; 上对 &amp;ldquo;&lt;strong&gt;怎么理解SQL的四个事务隔离级别？&lt;/strong&gt;&amp;ldquo;&lt;a href=&#34;https://segmentfault.com/q/1010000012178278/a-1020000012661683&#34;&gt;这个问题的回答&lt;/a&gt;:&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;我认为要理解事务隔离级别，就必须先理解在并发事务场景下隔离的重要性。因此，对于并发读事务之间数据可见性的三种现象需要首先理解清楚。&lt;/p&gt;
-
-&lt;p&gt;下面我将以下表为例直观说明这三种现象。&lt;/p&gt;
-
-
-
-&lt;div class=&#34;pure-g&#34;&gt;
-
-  
-  
-  
-  
-  &lt;div class=&#34;pure-u-1-1&#34;&gt;
-    &lt;div style=&#34;padding: 0 .2em&#34;&gt;
-      &lt;img
-        class=&#34;pure-img-responsive&#34;
-        src=&#34;https://xiaowing.github.io/img/post/20180127/isolation_level_table.png&#34;
-        alt=&#34;示例表&#34;&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  
-
-&lt;/div&gt;
-
-
-&lt;h2 id=&#34;并发读的三种现象&#34;&gt;并发读的三种现象&lt;/h2&gt;
-
-&lt;h3 id=&#34;脏读&#34;&gt;脏读&lt;/h3&gt;
-
-
-
-&lt;div class=&#34;pure-g&#34;&gt;
-
-  
-  
-  
-  
-  &lt;div class=&#34;pure-u-1-1&#34;&gt;
-    &lt;div style=&#34;padding: 0 .2em&#34;&gt;
-      &lt;img
-        class=&#34;pure-img-responsive&#34;
-        src=&#34;https://xiaowing.github.io/img/post/20180127/isolation_level_dirty_read.png&#34;
-        alt=&#34;dirty read&#34;&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  
-
-&lt;/div&gt;
-
-
-&lt;p&gt;这种现象出现在事物间的隔离级别最差的场景下，写事务&lt;strong&gt;对一个元组的更新&lt;/strong&gt;尚未提交时就被另一个事务读到了。如果在一个业务应用中，写事务后面没提交而是回滚了，那么可以预见这个读事务读到的这个未提交的更新在某些业务场景下可能会带来一些困扰。&lt;/p&gt;
-
-&lt;h3 id=&#34;不可重复读&#34;&gt;不可重复读&lt;/h3&gt;
-
-
-
-&lt;div class=&#34;pure-g&#34;&gt;
-
-  
-  
-  
-  
-  &lt;div class=&#34;pure-u-1-1&#34;&gt;
-    &lt;div style=&#34;padding: 0 .2em&#34;&gt;
-      &lt;img
-        class=&#34;pure-img-responsive&#34;
-        src=&#34;https://xiaowing.github.io/img/post/20180127/isolation_level_unrepeatable_read.png&#34;
-        alt=&#34;unrepeatable read&#34;&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  
-
-&lt;/div&gt;
-
-
-&lt;p&gt;这种现象比上面的&lt;strong&gt;脏读&lt;/strong&gt;&amp;ldquo;好&amp;rdquo;一点，只有当写事务提交后，这个更新才会被读事务读取到。但是考虑到如上图所示，在同一个事务中的不同时间点意图读取同一个元组却读到了不同的数据，在某些业务场景下可能也会带来一些困扰。&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;划重点： &amp;ldquo;脏读&amp;rdquo;和&amp;rdquo;不可重复读&amp;rdquo;这两个现象针对的是对于表中的&lt;strong&gt;同一个逻辑上的元组&lt;/strong&gt;而言.引发&amp;rdquo;脏读&amp;rdquo;和&amp;rdquo;不可重复读&amp;rdquo;这两个现象的写事务的操作通常是&lt;strong&gt;UPDATE&lt;/strong&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;幻读&#34;&gt;幻读&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;幻读&lt;/strong&gt;这一现象针对的已不是表中的单一元组而言，而是指读事务在对表中的&lt;strong&gt;某个范围多个元组&lt;/strong&gt;而言的一种现象，引发幻读的写事务对应的操作通常是&lt;strong&gt;INSERT&lt;/strong&gt;或&lt;strong&gt;DELETE&lt;/strong&gt;。如下图所示：&lt;/p&gt;
-
-
-
-&lt;div class=&#34;pure-g&#34;&gt;
-
-  
-  
-  
-  
-  &lt;div class=&#34;pure-u-1-1&#34;&gt;
-    &lt;div style=&#34;padding: 0 .2em&#34;&gt;
-      &lt;img
-        class=&#34;pure-img-responsive&#34;
-        src=&#34;https://xiaowing.github.io/img/post/20180127/isolation_level_phantom_read.png&#34;
-        alt=&#34;phantom read&#34;&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  
-
-&lt;/div&gt;
-
-
-&lt;p&gt;在同一个读事务中，对于同一个过滤条件查询出了不同的结果集，这在某些业务场景下也有可能带来一定的困扰。&lt;/p&gt;
-
-&lt;h3 id=&#34;补充说明&#34;&gt;补充说明&lt;/h3&gt;
-
-&lt;p&gt;上面这些就是关于&amp;rdquo;脏读&amp;rdquo;，&amp;rdquo;不可重复读&amp;rdquo;以及&amp;rdquo;幻读&amp;rdquo;这三个现象的介绍。除此之外，这边还需要再强调两个注意点：&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&amp;ldquo;脏读&amp;rdquo;，&amp;rdquo;不可重复读&amp;rdquo;以及&amp;rdquo;幻读&amp;rdquo;这三个现象&lt;strong&gt;不是错误,更不是BUG&lt;/strong&gt;。它们仅仅是事务并发场景下可能出现的现象。&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&amp;ldquo;脏读&amp;rdquo;，&amp;rdquo;不可重复读&amp;rdquo;以及&amp;rdquo;幻读&amp;rdquo;针对的是&lt;strong&gt;同一个事务&lt;/strong&gt;中的读操作而言。为什么要强调这一点，因为有些对数据库理解不深的同学不能很好的理解清楚 &lt;strong&gt;会话&lt;/strong&gt;,&lt;strong&gt;事务&lt;/strong&gt;和&lt;strong&gt;语句&lt;/strong&gt;这三个概念。于是对于以下的例子就会误认为是&amp;rdquo;不可重复读&amp;rdquo;的现象:&lt;/p&gt;
-
-
-
-&lt;div class=&#34;pure-g&#34;&gt;
-
-  
-  
-  
-  
-  &lt;div class=&#34;pure-u-1-1&#34;&gt;
-    &lt;div style=&#34;padding: 0 .2em&#34;&gt;
-      &lt;img
-        class=&#34;pure-img-responsive&#34;
-        src=&#34;https://xiaowing.github.io/img/post/20180127/read_exception.jpg&#34;
-        alt=&#34;例外&#34;&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  
-
-&lt;/div&gt;
-
-
-&lt;p&gt;但实际上，在这个例子中&lt;strong&gt;会话2&lt;/strong&gt;的SQL是按&lt;strong&gt;隐式事务&lt;/strong&gt;来执行，其执行的两条&lt;code&gt;SELECT name FROM foo WHERE id = 1;&lt;/code&gt;实际上是分属两个不同的读事务。对于后执行的那条SELECT文所属的隐式事务，由于其执行时会话1的更新已经提交，所以它理所当然地可以读到更新后的数据。这与&amp;rdquo;不可重复读&amp;rdquo;的概念没有任何关系。&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&#34;如何理解事务隔离级别&#34;&gt;如何理解事务隔离级别&lt;/h2&gt;
-
-&lt;h3 id=&#34;事务隔离级别与上述三现象的关系&#34;&gt;事务隔离级别与上述三现象的关系&lt;/h3&gt;
-
-&lt;p&gt;理解清楚了以上的这三个&amp;rdquo;读&amp;rdquo;的概念后，就可以很容易的理解事务隔离级别了。因为事务隔离级别的设置本质上就意味着让你控制并发事务之间的写事务带来的数据更新的对于同时正在执行的其他事务的可见性——即，&lt;strong&gt;你允许业务中的并发事务之间出现怎样的都现象&lt;/strong&gt;. 由于&amp;rdquo;脏读&amp;rdquo;，&amp;rdquo;不可重复读&amp;rdquo;以及&amp;rdquo;幻读&amp;rdquo;的概念是一种层层递进的概念，因此事务隔离级别从&amp;rdquo;Read Uncommited&amp;rdquo;到&amp;rdquo;Serializable&amp;rdquo;也是一个比一个严格。&lt;/p&gt;
-
-&lt;p&gt;SQL标准中对于隔离级别与事务之间数据可见性的关系定义如下:&lt;/p&gt;
-
-
-
-&lt;div class=&#34;pure-g&#34;&gt;
-
-  
-  
-  
-  
-  &lt;div class=&#34;pure-u-1-1&#34;&gt;
-    &lt;div style=&#34;padding: 0 .2em&#34;&gt;
-      &lt;img
-        class=&#34;pure-img-responsive&#34;
-        src=&#34;https://xiaowing.github.io/img/post/20180127/isolation_read.png&#34;
-        alt=&#34;读隔离&#34;&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  
-
-&lt;/div&gt;
-
-
-&lt;p&gt;需要注意的是，SQL标准中对于这些隔离级别定义中约束的&amp;rdquo;不允许&amp;rdquo;现象是强制要求的。数据库厂商在宣称支持某个隔离级别时，必须将上表中对应隔离级别的&amp;rdquo;不允许&amp;rdquo;进行实现。但是对于&amp;rdquo;可能&amp;rdquo;项则不代表你必须实现成具备某种都现象。比如在PostgreSQL中，由于其MVCC的实现，&lt;code&gt;REPEATABLE READ&lt;/code&gt;对于读事务的行为实现也和&lt;code&gt;SERIALIZABLE&lt;/code&gt;一样是不会出现幻读的，而&lt;code&gt;REPEATABLE READ&lt;/code&gt;和&lt;code&gt;SERIALIZABLE&lt;/code&gt;的区别，主要体现在下文所述的对更新操作的约束力度上。&lt;/p&gt;
-
-&lt;h3 id=&#34;serializable对写操作的约束&#34;&gt;SERIALIZABLE对写操作的约束&lt;/h3&gt;
-
-&lt;p&gt;在其他隔离级别中，如果并发的两个事务同时意图对同一个元组进行更新时，后更新的事务会等待直到先更新的事务提交后在继续执行其更新操作。 但是在&lt;strong&gt;SERIALIZABLE&lt;/strong&gt;的情况下，由于此时事务隔离级别最强，会对有可能对读一致性带来影响的写操作必须按照事务的串行执行。在PG的实现中，这表现为尝试对于同一元组进行更新的并发事务会在等待完先更新的事务提交后自己报个错：&lt;/p&gt;
-
-
-
-&lt;div class=&#34;pure-g&#34;&gt;
-
-  
-  
-  
-  
-  &lt;div class=&#34;pure-u-1-1&#34;&gt;
-    &lt;div style=&#34;padding: 0 .2em&#34;&gt;
-      &lt;img
-        class=&#34;pure-img-responsive&#34;
-        src=&#34;https://xiaowing.github.io/img/post/20180127/write_serializable.jpg&#34;
-        alt=&#34;可串行化的写约束&#34;&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  
-
-&lt;/div&gt;
-
-
-&lt;p&gt;在&lt;strong&gt;SERIALIZABLE&lt;/strong&gt;隔离级别下，对于上图中的两个更新事务若都希望成功，需要保证右边会话的更新操作所属事务的&lt;code&gt;START TRANSACTION&lt;/code&gt;必须发生在左边会话的更新事务&lt;code&gt;COMMIT&lt;/code&gt;之后，即两个写事务真正是&amp;rdquo;串行&amp;rdquo;的。&lt;/p&gt;
-
-&lt;p&gt;以上就是我对事务隔离级别的认识。&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -258,372 +142,7 @@
 
 &lt;p&gt;第一篇就从PG中无处不在的&lt;strong&gt;OID&lt;/strong&gt;开始吧&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;什么是oid&#34;&gt;什么是OID&lt;/h2&gt;
-
-&lt;p&gt;关于PG中OID(&lt;em&gt;Object Identifier&lt;/em&gt;)的概念在&lt;a href=&#34;https://www.postgresql.org/docs/9.6/static/datatype-oid.html&#34;&gt;PostgreSQL官方手册&lt;/a&gt;有比较详细的介绍。简短洁说就是PostgreSQL内部用于标识数据库对象(即通常意义上的&lt;strong&gt;数据表&lt;/strong&gt;，&lt;strong&gt;视图&lt;/strong&gt;，&lt;strong&gt;存储过程&lt;/strong&gt;之类)的一个长度为&lt;strong&gt;4字节&lt;/strong&gt;的标识符。它是PostgreSQL大部分&lt;a href=&#34;https://www.postgresql.org/docs/9.6/static/catalogs.html&#34;&gt;系统表&lt;/a&gt;的主键。PostgreSQL一个为人称道的特点就是其提供了超强的扩展性，用户甚至可以对PostgreSQL的数据类型, 运算符, 存储过程语言进行扩展。而支撑其扩展性的基盘就是&lt;strong&gt;系统表&lt;/strong&gt;和&lt;strong&gt;OID&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;OID在系统表中通常是作为隐藏列存在的，它是以整个PostgreSQL数据库实例(&lt;a href=&#34;https://www.postgresql.org/docs/9.6/static/catalogs.html&#34;&gt;&lt;strong&gt;Database Cluster&lt;/strong&gt;&lt;/a&gt;)的范围内统一分配。在单个系统表内保存的OID一定可以保证OID的唯一性，但是OID不能保证跨系统表之间的唯一性 —— 也就是说，&lt;strong&gt;可以假定&lt;/strong&gt;&amp;ldquo;两个存储过程对象的OID不可能相同&amp;rdquo;; 但是&lt;strong&gt;绝不能假设&lt;/strong&gt;&amp;ldquo;一个表对象的OID肯定不等于一个存储过程对象的OID&amp;rdquo;(尽管在大部分情况下确实不相等)。此外，对于用户定义的数据表，PostgreSQL默认不会为其中的元组分配OID，除非建表时显式指定(其实PostgreSQL并不鼓励用户建表时指定包含OID, 并且不赞成用户的业务逻辑依赖于普通数据表的OID)。&lt;/p&gt;
-
-&lt;p&gt;由于OID是系统表的隐藏列，因此查看系统表中数据库对象的OID时，必须在SELECT语句中显式指定。下图显示了如何查看一个新创建的Database对象的OID:&lt;/p&gt;
-
-
-
-&lt;div class=&#34;pure-g&#34;&gt;
-
-  
-  
-  
-  
-  &lt;div class=&#34;pure-u-1-1&#34;&gt;
-    &lt;div style=&#34;padding: 0 .2em&#34;&gt;
-      &lt;img
-        class=&#34;pure-img-responsive&#34;
-        src=&#34;https://xiaowing.github.io/img/post/20171117/select_oid_sample.png&#34;
-        alt=&#34;how to query oid&#34;&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  
-
-&lt;/div&gt;
-
-
-&lt;p&gt;但是，对于一个使用&lt;code&gt;CREATE TABLE&lt;/code&gt;创建的普通表，PG默认不会为表中的元组保存OID, 自然执行SELECT语句时也无法查到oid这一列。比如下图所示:&lt;/p&gt;
-
-
-
-&lt;div class=&#34;pure-g&#34;&gt;
-
-  
-  
-  
-  
-  &lt;div class=&#34;pure-u-1-1&#34;&gt;
-    &lt;div style=&#34;padding: 0 .2em&#34;&gt;
-      &lt;img
-        class=&#34;pure-img-responsive&#34;
-        src=&#34;https://xiaowing.github.io/img/post/20171117/query_oid_table_withoutoids.png&#34;
-        alt=&#34;a table by default&#34;&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  
-
-&lt;/div&gt;
-
-
-&lt;p&gt;如果希望在向表中插入数据时让PG为每一个元组生成OID，则需要在&lt;code&gt;CREATE TABLE&lt;/code&gt;时显式地加上&lt;code&gt;WITH OIDS&lt;/code&gt;这个属性。如下所示:&lt;/p&gt;
-
-
-
-&lt;div class=&#34;pure-g&#34;&gt;
-
-  
-  
-  
-  
-  &lt;div class=&#34;pure-u-1-1&#34;&gt;
-    &lt;div style=&#34;padding: 0 .2em&#34;&gt;
-      &lt;img
-        class=&#34;pure-img-responsive&#34;
-        src=&#34;https://xiaowing.github.io/img/post/20171117/query_oid_table_withoids.png&#34;
-        alt=&#34;a table with oids&#34;&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  
-
-&lt;/div&gt;
-
-
-&lt;p&gt;&lt;em&gt;需要注意的是，尽管默认情况下PG不会为用户数据表的元组分配OID，但是对于用户创建的每一张表，PG还是会生成一个OID在系统表进行标识&lt;/em&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;oid机制的实现&#34;&gt;OID机制的实现&lt;/h2&gt;
-
-&lt;p&gt;接下来将从以下几个方面聊一聊PG中关于OID机制的实现&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;OID的保存与共享&lt;/li&gt;
-&lt;li&gt;OID的分配机制&lt;/li&gt;
-&lt;li&gt;OID的持久化&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;oid的保存与共享&#34;&gt;OID的保存与共享&lt;/h3&gt;
-
-&lt;p&gt;众所周知PG是一个多进程架构的数据库，每个用户会话对应了一个postgres进程, 由于受用户的DDL语句/DML语句操作，每一个postgres进程都有可能同时要求分配新的OID; 与此同时实例内部的一些常驻后台进程的动作也可能要求分配新的OID。因此若要实现整个实例范围内的OID统一管理，那么通常首选方案就是&lt;strong&gt;共享内存&lt;/strong&gt;, 事实上PG也是这么做的:&lt;/p&gt;
-
-&lt;p&gt;首先，PG中设计了一个&lt;code&gt;VariableCacheData&lt;/code&gt;结构体来存放OID相关的数据:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;/* include/access/transam.h */
-typedef struct VariableCacheData
-{
-	Oid	nextOid;    /* 保存了下一个要分配的OID */
-	uint32 oidCount;    /* 剩余可用的OID个数 */
-
-	TransactionId nextXid;
-	TransactionId oldestXid;
-	TransactionId xidVacLimit;
-	TransactionId xidWarnLimit;
-	TransactionId xidStopLimit;
-	TransactionId xidWrapLimit;
-	Oid	   oldestXidDB;
-
-	TransactionId oldestCommitTsXid;
-	TransactionId newestCommitTsXid;
-
-	TransactionId latestCompletedXid;	
-} VariableCacheData;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;在整个数据库实例的运行期间，只会在实例启动时(也就是Postmaster进程启动时)在共享内存内创建一个&lt;code&gt;VariableCacheData&lt;/code&gt;结构体实例，同时Postmaster进程会将自己的&lt;code&gt;VariableCache&lt;/code&gt;类型(本质上就是VariableCacheData指针)的全局变量&lt;code&gt;ShmemVariableCache&lt;/code&gt;赋值为共享内存中&lt;code&gt;VariableCacheData&lt;/code&gt;结构体的地址。由于在linux上通过&lt;code&gt;fork()&lt;/code&gt;创建子进程时子进程会继承父进程的所有资源——包括全局变量。因此在实例运行过程中，Postmaster的子进程(含所有postgres进程以及其余的常驻后台进程)也就都共享了这个结构体的地址。&lt;/p&gt;
-
-&lt;p&gt;全局变量&lt;code&gt;ShmemVariableCache&lt;/code&gt;的定义以及初始化的代码如下所示:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;变量定义&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;/* backend/access/transam/varsup.c */
-...(中略)...
-VariableCache ShmemVariableCache = NULL;
-...(下略)...
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
-&lt;li&gt;初始化&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;/* backend/storage/ipc/shmem.c */
-void 
-InitShmemAllocation(void) 
-{
-  ~(中略)~
-  ShmemVariableCache = (VariableCache)
-		ShmemAlloc(sizeof(*ShmemVariableCache));
-  memset(ShmemVariableCache, 0, sizeof(*ShmemVariableCache));
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;需要注意的是Windows上的进程模型与Linux不同，Windows上并没有像&lt;code&gt;fork()&lt;/code&gt;这样能使子进程天生继承父进程资源的机制。因此PG在Windows上实现Postmaster进程向子进程传递全局变量&lt;code&gt;ShmemVariableCache&lt;/code&gt;时稍微绕了一下，将相关的地址dump到一个临时文件&amp;rdquo;pgsql_tmp&amp;rdquo;中，然后在调用&lt;code&gt;CreateProcess()&lt;/code&gt;创建子进程时将文件路径传入后再由子进程从文件中将地址恢复出来。这个过程就不在此处赘述了。&lt;/p&gt;
-
-&lt;h3 id=&#34;oid的生成机制&#34;&gt;OID的生成机制&lt;/h3&gt;
-
-&lt;p&gt;当一条元组被INSERT到表中的时候(也包括语法层面的&lt;code&gt;UPDATE&lt;/code&gt;语句，因为PG中的UPDATE本质上是将更新前的旧元组标记为无效并新增元组)。如果这是一张系统表，或是一张在创建时加了&lt;code&gt;WITH OIDS&lt;/code&gt;的用户数据表，那么在写入元组的时候，PG就会申请生成一个新的OID，并写到新元祖的OID字段中，这时就涉及到了OID的生成。&lt;/p&gt;
-
-&lt;p&gt;OID的生成逻辑其实非常简单，其核心算法就是&amp;rdquo;把在保存共享内存的&lt;code&gt;VariableCacheData&lt;/code&gt;结构体中当前的&lt;code&gt;nextoid&lt;/code&gt;分配出去，之后让&lt;code&gt;nextoid&lt;/code&gt;自增一，同时让&lt;code&gt;oidcount&lt;/code&gt;减一&amp;rdquo;。当然，考虑到多个会话的并发，所以在执行上述算法的时候，会加上一把排他锁。&lt;/p&gt;
-
-&lt;p&gt;上述核心算法的代码如下所示:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;/* backend/access/transam/varsup.c */
-Oid
-GetNewObjectId(void)
-{
-	Oid			result;
-
-	if (RecoveryInProgress())
-		elog(ERROR, &amp;quot;cannot assign OIDs during recovery&amp;quot;);
-
-	LWLockAcquire(OidGenLock, LW_EXCLUSIVE);
-
-	if (ShmemVariableCache-&amp;gt;nextOid &amp;lt; ((Oid) FirstNormalObjectId))
-	{
-		if (IsPostmasterEnvironment)
-		{
-			ShmemVariableCache-&amp;gt;nextOid = FirstNormalObjectId;
-			ShmemVariableCache-&amp;gt;oidCount = 0;
-		}
-		else
-		{
-			if (ShmemVariableCache-&amp;gt;nextOid &amp;lt; ((Oid) FirstBootstrapObjectId))
-			{
-				ShmemVariableCache-&amp;gt;nextOid = FirstNormalObjectId;
-				ShmemVariableCache-&amp;gt;oidCount = 0;
-			}
-		}
-	}
-
-	if (ShmemVariableCache-&amp;gt;oidCount == 0)
-	{
-		XLogPutNextOid(ShmemVariableCache-&amp;gt;nextOid + VAR_OID_PREFETCH);
-		ShmemVariableCache-&amp;gt;oidCount = VAR_OID_PREFETCH;
-	}
-
-	result = ShmemVariableCache-&amp;gt;nextOid;
-
-	(ShmemVariableCache-&amp;gt;nextOid)++;
-	(ShmemVariableCache-&amp;gt;oidCount)--;
-
-	LWLockRelease(OidGenLock);
-
-	return result;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;这个简单的分配算法中有几个细节稍加说明一下:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;一开始的对&lt;code&gt;RecoveryInProgress()&lt;/code&gt;的调用，是判断当前实例是否处于恢复状态。我个人认为与其说它是在防护实例的恢复状态下不应存在的写操作，更不如说它是对&lt;strong&gt;Hot standby节点禁写&lt;/strong&gt;原则的又一层防护，毕竟Hot standby节点一直是运行于恢复态的。也就是说，Hot standby节点上的OID只能通过应用xlog来得到。&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;在之前的博文&lt;a href=&#34;https://xiaowing.github.io/post/20170903_howto_create_a_postgres_builtin_function/&#34;&gt;如何为PostgreSQL创建一个内置函数？&lt;/a&gt;我曾提到过&lt;strong&gt;16384&lt;/strong&gt;这个OID，事实上这也正是PG实例的Bootstrap过程结束后第一个留给用户的OID。因此，当OID递增耗尽回卷时，回卷后的第一个OID不是0，而是16384(也就是上述代码中的&lt;code&gt;FirstNormalObjectId&lt;/code&gt;)。这样可以确保PG实例内的所有&lt;strong&gt;内置数据库对象&lt;/strong&gt;的OID是绝对唯一的。&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;从上述代码可知，OID在每分配8192(即代码中的宏&lt;code&gt;VAR_OID_PREFETCH&lt;/code&gt;)个之后便会向xlog中记一条关于下一个OID分配区间的最大值。这个设计的意图会在下一章节介绍，此处暂时略过。&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;但是，由于OID只有四个字节，因此可以预见到它会有溢出的时刻，这时就会产生上文的所说的回卷逻辑。当OID回卷时，如何保证OID的相对唯一性(这里的“唯一性”在“什么是OID”这一章中有说明)呢？PG中实际上是在上述&lt;code&gt;GetNewObjectId()&lt;/code&gt;之外又封装了一个&lt;code&gt;GetNewOid()&lt;/code&gt;接口供PG代码使用，而在这个接口实现中，PG通过OID字段的索引实现了OID在一张表内的唯一性:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;/* backend/catalog/catalog.c */
-Oid
-GetNewOid(Relation relation)
-{
-	Oid			oidIndex;
-
-	Assert(relation-&amp;gt;rd_rel-&amp;gt;relhasoids);
-
-	if (IsBootstrapProcessingMode())
-		return GetNewObjectId();
-
-	oidIndex = RelationGetOidIndex(relation);
-
-	if (!OidIsValid(oidIndex))
-	{
-		if (IsSystemRelation(relation))
-			elog(WARNING, &amp;quot;generating possibly-non-unique OID for \&amp;quot;%s\&amp;quot;&amp;quot;,
-				 RelationGetRelationName(relation));
-		return GetNewObjectId();
-	}
-
-	return GetNewOidWithIndex(relation, oidIndex, ObjectIdAttributeNumber);
-}
-
-Oid
-GetNewOidWithIndex(Relation relation, Oid indexId, AttrNumber oidcolumn)
-{
-	Oid			newOid;
-	SnapshotData SnapshotDirty;
-	SysScanDesc scan;
-	ScanKeyData key;
-	bool		collides;
-
-	Assert(!IsBinaryUpgrade || RelationGetRelid(relation) != TypeRelationId);
-
-	InitDirtySnapshot(SnapshotDirty);
-
-	do
-	{
-		CHECK_FOR_INTERRUPTS();
-		newOid = GetNewObjectId();
-		ScanKeyInit(&amp;amp;key, oidcolumn, BTEqualStrategyNumber, F_OIDEQ,
-					ObjectIdGetDatum(newOid));
-		scan = systable_beginscan(relation, indexId, true, &amp;amp;SnapshotDirty, 1, &amp;amp;key);
-		collides = HeapTupleIsValid(systable_getnext(scan));
-		systable_endscan(scan);
-	} while (collides);
-
-	return newOid;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;其实它的思路也很简单: 如果这张表上没有基于OID字段的索引(理论上这种情况不会发生在系统表上，只会在用户的数据表上)，那么就直接调用上述核心算法的&lt;code&gt;GetNewObjectId()&lt;/code&gt;直接生成一个OID; 如果表上存在基于OID字段的索引，那么就反复尝试调用&lt;code&gt;GetNewObjectId()&lt;/code&gt;直到生成了一个这张表中未曾出现过的OID.此时生成的OID尽管可以保证在目标表中唯一，但很有可能它已经在别的表中也已经被使用了。这就是为什么在第一章中会说“&lt;strong&gt;在单个系统表内保存的OID一定可以保证唯一性，但是OID不能保证跨系统表之间的唯一性&lt;/strong&gt;”&lt;/p&gt;
-
-&lt;h3 id=&#34;oid的持久化&#34;&gt;OID的持久化&lt;/h3&gt;
-
-&lt;p&gt;搞清楚了OID的生成机制，很自然地就会产生一个想法: 既然每生成一个OID都会加锁，那么在上述的OID唯一性确保逻辑中如果尝试生成OID的次数过多，那就肯定会对并发的性能造成较大的伤害。但OID又是一个保存在共享内存中的数据，假设每次实例正常停机/重启或者异常Crash后恢复，OID就又要从初始的16384开始重新递增，结合上述生成逻辑中确保表内唯一性的试错循环，这对性能将是一个灾难!&lt;/p&gt;
-
-&lt;p&gt;还好，PG的开发者们也想到了这一层, 而上述悲惨情况之所以不会发生的原因是因为PG中对于共享内存中的&lt;code&gt;newoid&lt;/code&gt;进行了持久化以确保实例重启后或者恢复后，还能够接着之前的&lt;code&gt;newoid&lt;/code&gt;生成，而不是从头再来一遍。&lt;/p&gt;
-
-&lt;h3 id=&#34;持久化的时机&#34;&gt;持久化的时机&lt;/h3&gt;
-
-&lt;p&gt;PG对于&lt;code&gt;newoid&lt;/code&gt;的持久化有两处：&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;时机1: 上文的OID核心生成算法中所述——每分配完8192个OID就向xlog中插入一条记录，将下一个8192分配区间的最大值记录在xlog中。&lt;/p&gt;
-
-&lt;p&gt;这里需要注意两点：&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;PG并不是每生成一个OID就向xlog中记录一次。理由是虽然这样很保险，但是记录xlog(就算只是写缓冲区)也是会对性能带来负面影响。&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;写在xlog中的不是当前已分配区间的最大OID，而是下一个分配区间的最大OID。这样一来它可以保证在这个分配区间结束之前，所有已落入磁盘上的元组中，没有一个OID会大于这个写入xlog记录的OID(OID发生回卷除外&amp;hellip;&amp;hellip;)。这个设计意图在接下来介绍oid的恢复机制时会解说其用意。&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;时机2: 生成Checkpoint时, 按下述逻辑将oid数据写入PG实例控制文件的检查点信息中.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;void
-CreateCheckPoint(int flags)
-{
-    ~(前略)~
-
-    CheckPoint  checkPoint;
-    MemSet(&amp;amp;checkPoint, 0, sizeof(checkPoint));
-    checkPoint.time = (pg_time_t) time(NULL);
-
-    ~(中略)~
-        
-    LWLockAcquire(OidGenLock, LW_SHARED);
-    checkPoint.nextOid = ShmemVariableCache-&amp;gt;nextOid;
-    if (!shutdown)
-        checkPoint.nextOid += ShmemVariableCache-&amp;gt;oidCount;
-    LWLockRelease(OidGenLock);
-
-    ~(后略)~
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;有意思的是，记录在Checkpoint时会根据Checkpoint的种类来执行不一样的记录行为:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;如果是SHUTDOWN检查点，则记录真实的下一个待分配的OID&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;如果不是SHUTDOWN检查点，则记录的其实和记录在xlog中的类似：当前分配区间的最大值。理由也是相仿的: 确保当前时间点已落入磁盘的元组中的已生成OID没有大于记录在checkpoint信息中的OID。&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;两个持久化位置几乎殊途同归，持久化OID的策略几乎相同，这应该不是巧合:)&lt;/p&gt;
-
-&lt;h3 id=&#34;恢复机制&#34;&gt;恢复机制&lt;/h3&gt;
-
-&lt;p&gt;接下来从PG的恢复机制来揭晓上述持久化的残留疑问。&lt;/p&gt;
-
-&lt;p&gt;PG从xlog恢复数据时一定是从最近的Checkpoint开始恢复，因为已实施的Checkpoint可以保证到这个Checkpoint为止的数据变更都已经落盘，且已利用xlog进行了一致性确认。所以PG只需要从这个最近的Checkpoint之后的xlog开始恢复即可。 所以，我们可以将全局的&lt;code&gt;VariableCacheData&lt;/code&gt;结构体中的&lt;code&gt;newOid&lt;/code&gt;字段的恢复分成以下几种情况：&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;最近的Checkpoint之后没有记录NewOid的xlog记录&lt;/p&gt;
-
-&lt;p&gt;这说明，实例Crash掉的时间点到最近的Checkpoint之间的时间间隔内，Oid的生成还在同一个8192的分配区间内。这时，即便Checkpoint之后还有一些新的数据写入，但是由于Checkpoint信息中持久化的是当前OID分配区间的最大值，因此可以确保Checkpoint之后分配的OID没有一个能够超过被持久化的那个OID。因此将全局的&lt;code&gt;VariableCacheData&lt;/code&gt;结构体中的&lt;code&gt;newOid&lt;/code&gt;字段恢复成当前分配期间的最大值，后续再生成新的OID也不用经历生成逻辑中确保表内唯一性的试错循环。&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;最近的Checkpoint之后存在一条或多条记录NewOid的xlog记录&lt;/p&gt;
-
-&lt;p&gt;这说明，实例Crash掉的时间点到最近的Checkpoint之间，OID的生成已经跨越了多个8192的分配区间。不过，由于xlog中记录NewOid时记录的都是每一个OID分配区间的最大值。与上一个情况相似，在逐个应用每一条记录NewOid的xlog日志记录后，最终会将将全局的&lt;code&gt;VariableCacheData&lt;/code&gt;结构体中的&lt;code&gt;newOid&lt;/code&gt;字段恢复成最后一个被使用的OID分配区间的最大值，仍然可以保证后续再生成新的OID也不用经历生成逻辑中确保表内唯一性的试错循环。&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;当然，这两种情况都是建立在OID尚未发生回卷的前提下才有实际意义。如果已经发生了回卷，&lt;code&gt;newOid&lt;/code&gt;恢复的其实是一个较小的值，那么试错循环应该就不可避免了。&lt;/em&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;最后一种情况，最近的一个Checkpoint是SHUTDOWN检查点.&lt;/p&gt;
-
-&lt;p&gt;这就意味着实例是被正常关闭重启的, 那么自然这个Checkpoint之后当然不会有任何新的xlog，也自然不会有任何磁盘上的数据更新。因此此时恢复的就是关机Checkpoint时真实的下一个待分配的OID。实例重启后从这个OID开始继续递增即可。&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;由此可见，为了让PG实例启动/恢复后生成新的OID时能够尽可能减少保证唯一性的试错循环带来的负面影响。PG基于已有的恢复机制设计了一套比较合理又巧妙的持久化机制。&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;上述恢复逻辑写在了&lt;code&gt;backend/access/transam/xlog.c&lt;/code&gt;的&lt;code&gt;
-xlog_redo()&lt;/code&gt;函数和&lt;code&gt;StartupXlog()&lt;/code&gt;函数中，由于代码较多便不再贴出。&lt;/em&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;关于oid的一些思考&#34;&gt;关于OID的一些思考&lt;/h2&gt;
-
-&lt;p&gt;关于OID本身的规格以及机制的介绍，基本上就到此结束了。OID的存在，实际上为PG内部的数据库对象实现了一个统一的抽象接口，进而PG可以实现其引以自豪的强大扩展能力。不过，站在&amp;rdquo;事后诸葛亮&amp;rdquo;的角度，我们还是可以看出OID设计中的一些遗憾。&lt;/p&gt;
-
-&lt;p&gt;最大的遗憾恐怕是把OID设计得有点短了: 4个字节对于今天的大数据时代而言，很容易就耗尽了。而且在上文中也说过，一旦4个字节单调递增结束进入回卷阶段，那么将有可能会给PG的性能带来较大的负面影响。&lt;/p&gt;
-
-&lt;p&gt;其实从上述OID的实现代码我们可以合理推测: 一开始的设计初衷中，OID肯定是希望被用来对PG中的所有数据库对象(包括用户数据表中的元组)进行唯一性标识的。佐证有两点：一来是OID的生成机制是简单递增; 二来是到&lt;a href=&#34;https://www.postgresql.org/docs/8.0/static/datatype-oid.html&#34;&gt;PG 8.0为止的手册&lt;/a&gt;里，用户&lt;code&gt;CREATE TABLE&lt;/code&gt;创建的数据表的默认行为是会给所有插入元组附上OID。当然，站在今天这个时间点上，唯一标识实例中所有数据库对象的重任肯定是没法儿交给OID来完成，因此OID就变成了系统表的专属“玩物”了。&lt;/p&gt;
-
-&lt;p&gt;这个遗憾，恐怕可以比肩当年比尔盖茨的“内存有640KB就够了”的预言以及即将枯竭的IPv4地址资源。&lt;/p&gt;
-
-&lt;p&gt;最后，再发散性地想一想: OID本身就是为了实现一个自增的唯一性ID。如果扩展到分布式系统架构下，PG的OID实现是否也可以套用呢？ 答案是肯定的，只需要把上述OID的实现机制中的两部分替换掉，我们就可以用完全相同的逻辑来实现一个适用于分布式架构下的高可用自增唯一性ID的生成服务。而那需要替换掉的两部分分别是:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;将&lt;strong&gt;共享内存&lt;/strong&gt;替换为一个高可用的内存数据库(比如&lt;strong&gt;Redis&lt;/strong&gt;)&lt;/li&gt;
-&lt;li&gt;将&lt;strong&gt;单机上的磁盘&lt;/strong&gt;替换为一个高可用的持久化存储组件(比如&lt;strong&gt;一个DBMS&lt;/strong&gt;)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;昨天看到的这篇文章&lt;a href=&#34;https://mp.weixin.qq.com/s?__biz=MzI0MTk0NTY5MA==&amp;amp;mid=2247483753&amp;amp;idx=1&amp;amp;sn=ee92dd4b76550d333047256ed331b80a&amp;amp;chksm=e9029c5cde75154a56d76e8608d317ba49a073cd090db610992b2a0c35d2c649819635ae95e7&amp;amp;mpshare=1&amp;amp;scene=1&amp;amp;srcid=1208dDQ4MjIHoXZbH7xYZspA&amp;amp;pass_ticket=WMTOs1AURvSB6mWmq5lLAwcyI9EAIL%2BZRa4v13AlE82VEpLG7zmt4Y2JIEYG2J9E#rd&#34;&gt;基于 Redis 的序列号服务的设计&lt;/a&gt;则基本上验证了我的上述想法。难怪&lt;a href=&#34;https://coolshell.cn/haoel&#34;&gt;陈皓&lt;/a&gt;在不同场合都一直在劝诫程序员:&lt;strong&gt;&amp;ldquo;基础上的东西的变化少，基础上的东西一通百通&amp;rdquo;&lt;/strong&gt;。果然如是!&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -636,246 +155,7 @@ xlog_redo()&lt;/code&gt;函数和&lt;code&gt;StartupXlog()&lt;/code&gt;函数中
 
 &lt;p&gt;以上就作为这篇分享的「意味づけ」吧&amp;hellip;&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;什么时候需要去增加一个内置函数&#34;&gt;什么时候需要去增加一个内置函数&lt;/h2&gt;
-
-&lt;p&gt;其实在大多数情况下，鉴于PG提供了强大的SQL扩展能力，我们通常只需要掌握PG中&lt;a href=&#34;https://www.postgresql.org/docs/9.6/static/xfunc.html&#34;&gt;User Define Function(略称:UDF)&lt;/a&gt;就够了。不过内置函数的特性与UDF还是有些不同的，因此在一些特定场景下，我们可能会不得不采用内置函数的方式去定制一些函数接口。&lt;/p&gt;
-
-&lt;p&gt;以下，我对比了一下内置函数和UDF的特性&amp;hellip;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;扩展灵活性&lt;/strong&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;内置函数&lt;/em&gt;&lt;br/&gt;
-不灵活。&lt;br/&gt;对内置函数的增/删/改都必须通过修改并重编PostgreSQL源码实现。&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;User Defined Function&lt;/em&gt;&lt;br/&gt;
-很灵活。&lt;br/&gt;通过&lt;code&gt;CREATE FUNCTION&lt;/code&gt;以及&lt;code&gt;DROP FUNCTION&lt;/code&gt;就可以实现UDF的增加与删除.且函数的具体实现可以通过多种语言(PL/pgsql,PL/python,PL/Perl等等)实现。&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;可见性&lt;/strong&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;内置函数&lt;/em&gt;&lt;br/&gt;
-内置函数默认在所有实例的所有Database中都可见&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;User Defined Function&lt;/em&gt;&lt;br/&gt;
-由于UDF只是一个数据库对象。因此对于一个特定的UDF而言，一次CREATE FUNCTION只能使得它在该特定的Database中可见。若要在别的Database中也可见，需要在目标Database中也执行&lt;code&gt;CREATE FUNCTION&lt;/code&gt;语句&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;执行权限&lt;/strong&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;内置函数&lt;/em&gt;&lt;br/&gt;
-除非在内置函数的实现中做特定限制逻辑，否则内置函数默认对所有的数据库用户可执行&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;User Defined Function&lt;/em&gt;&lt;br/&gt;
-默认只有创建了的该UDF数据库用户拥有执行权限，对于其他用户，需要通过&lt;code&gt;GRANT&lt;/code&gt;语句赋权&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;对于大部分PG用户而言，他们对SQL级别的函数的期待通常都是与具体业务数据紧密相关的(其中的大部分都是希望去实现一些存储过程),因此对于这部分用户而言，UDF已经足够(PG中“存储过程”这个概念已被融入UDF)。通常，只有在以下这几种场景下，我们才需要去实现一个内置函数:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;希望在SQL层面查询PG运行中的一些临时的内部状态(常见于做PG的商业发行版时为了为了满足一些特定需求)&lt;/li&gt;
-&lt;li&gt;希望在SQL层面可以对PG的内部执行加以一些控制(常见于做PG的商业发行版时为了满足一些特定需求)&lt;/li&gt;
-&lt;li&gt;纯粹只是想Hacking一下PG&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;增加内置函数的-三板斧&#34;&gt;增加内置函数的&amp;rdquo;三板斧&amp;rdquo;&lt;/h2&gt;
-
-&lt;p&gt;其实为PG增添一个内置函数本身并不复杂，我总结下来也就三个步骤: &lt;strong&gt;实现函数&lt;/strong&gt;，&lt;strong&gt;声明函数&lt;/strong&gt; &amp;amp; &lt;strong&gt;注册函数&lt;/strong&gt;。下面我就用一个简单的例子来说明如何给PG增加一个内置函数。&lt;/p&gt;
-
-&lt;h3 id=&#34;1-实现&#34;&gt;1. 实现&lt;/h3&gt;
-
-&lt;p&gt;仿照《&lt;a href=&#34;https://book.douban.com/subject/26220250/&#34;&gt;PostgreSQL服务器编程&lt;/a&gt;》一书中的第8章实现一个最简单的函数:&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;输入两个INTEGER的参数，返回一个表示两数相加及其结果的等式(TEXT)&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;实现的代码如下:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;Datum
-add_str(PG_FUNCTION_ARGS) {
-    int arg_1, arg_2;
-    char buf[128] = {0x00};
-    char *result = NULL;
-
-    if (PG_ARGISNULL(0) || PG_ARGISNULL(1)) {
-        ereport(ERROR, 
-            (errcode(ERRCODE_NULL_VALUE_NOT_ALLOWED), 
-             errmsg(&amp;quot;cannot specify NULL as the arguement.&amp;quot;)));
-    }
-
-    arg_1 = PG_GETARG_INT32(0);
-    arg_2 = PG_GETARG_INT32(1);
-
-    snprintf(buf, 128, &amp;quot;%d + %d = %d&amp;quot;, arg_1, arg_2, (arg_1 + arg_2));
-    result = pstrdup(buf);
-
-    PG_RETURN_TEXT_P(cstring_to_text(result));
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;这里需要注意的是，与用C语言编写UDF一样，编写的函数必须是一个&lt;strong&gt;fmgr-compatible&lt;/strong&gt;的函数。即参数必须是&lt;code&gt;PG_FUNCTION_ARGS&lt;/code&gt;, 返回值必须是&lt;code&gt;Datum&lt;/code&gt;。这是由于PG中所有的SQL函数(含内置函数以及UDF)都被一个通用模块模块管理，该模块通过自己的一套机制去定位并执行SQL文中指定的SQL函数(SQL文中的函数调用机制，后面会另写博客分享)。&lt;/p&gt;
-
-&lt;p&gt;上述函数可以实现在PG中的任何一个代码文件中(当然也可以新建一个源文件定于)。不过需要注意的是，必须确保这个源文件包含了&lt;code&gt;&amp;quot;funcapi.h&amp;quot;&lt;/code&gt;这个头文件。&lt;/p&gt;
-
-&lt;p&gt;此外，这个例子只是为了示意，所以做了一个最简单的逻辑。在实际开发中，对于SQL函数，通常有一类需求是希望函数返回一个结果集。对于返回结果集的SQL函数，PG中称之为&lt;code&gt;SRF&lt;/code&gt;(Set Returning Functions). SRF的实现有一个固定范式，详细可以参见PG代码中的&lt;code&gt;src/include/funcapi.h&lt;/code&gt;的注释，内有关于这个范式的详细说明。&lt;/p&gt;
-
-&lt;h3 id=&#34;2-声明&#34;&gt;2. 声明&lt;/h3&gt;
-
-&lt;p&gt;PG中对于内置函数的声明有一个约定俗成的共通位置，即PG源码中的&lt;code&gt;src/include/utils/builtin.h&lt;/code&gt;。通常都是在该头文件中将实现的内置函数声明为一个extern函数以确保其对其他源码文件可见。&lt;/p&gt;
-
-&lt;p&gt;不过，这也只是一个惯例而已，事实上，内置函数的声明位置并不一定限定与此。说白了，只要保证这个声明能让整个fmgr机制看到即可。&lt;/p&gt;
-
-&lt;p&gt;函数声明本身全无特别，在本例中，声明就只是下面简单的一句话：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;extern Datum add_str(PG_FUNCTION_ARGS);
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;3-注册&#34;&gt;3. 注册&lt;/h3&gt;
-
-&lt;p&gt;Last but not least. 对于内置函数而言，光有实现和声明是不够的。与其他的数据库对象相仿，内置函数的元信息必须写入PG的数据字典中。而且由于系统表是数据库实例生来就有的对象，并没有一个CREATE文能帮它把元信息写入数据字典，因此这个步骤必须在源码中事先完成。这就是所谓的&lt;strong&gt;注册&lt;/strong&gt;。&lt;/p&gt;
-
-&lt;p&gt;与UDF一样，内置函数的元数据也是保存在系统表&lt;code&gt;pg_proc&lt;/code&gt;中的。而&lt;code&gt;pg_proc&lt;/code&gt;系统表在PG的数据库模板中初始状态下所具有的元数据元组是在&lt;code&gt;src/include/catalog/pg_proc.h&lt;/code&gt;中注册的。每个元组的注册格式如下:&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;DATA(insert OID = 元组的唯一OID (  内置函数名 属性1 属性2&amp;hellip;&amp;hellip; ));&lt;br/&gt;
-DESCR(内置函数的描述信息(使用半角双引号引起来));&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;为&lt;code&gt;pg_proc.h&lt;/code&gt;增加一个形如上文的元组时，有两个地方需要注意:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;OID必须保证全局唯一&lt;/p&gt;
-
-&lt;p&gt;为&lt;code&gt;pg_proc.h&lt;/code&gt;增加元组时，必须分配一个&lt;strong&gt;9999&lt;/strong&gt;以内的唯一OID(在写下一个OID之前，可以先全文搜索一下PG源码确保其唯一性)&lt;/p&gt;
-
-&lt;p&gt;至于为什么一定要将这个OID选在&lt;strong&gt;9999&lt;/strong&gt;以内，是因为PG源码的&lt;code&gt;src/include/access/transam.h&lt;/code&gt;对于Oid使用范围存在下述描述，且通过两个宏定义来限定:&lt;/p&gt;
-
-
-
-&lt;div class=&#34;pure-g&#34;&gt;
-
-  
-  
-  
-  
-  &lt;div class=&#34;pure-u-1-1&#34;&gt;
-    &lt;div style=&#34;padding: 0 .2em&#34;&gt;
-      &lt;img
-        class=&#34;pure-img-responsive&#34;
-        src=&#34;https://xiaowing.github.io/img/post/20170903/about_oid.jpg&#34;
-        alt=&#34;Object ID&#34;&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  
-
-&lt;/div&gt;
-
-
-&lt;p&gt;在本例中，通过甄选，将&lt;code&gt;add_str&lt;/code&gt;内置函数在&lt;code&gt;pg_proc&lt;/code&gt;中元祖的OID选为&lt;strong&gt;5946&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;元组各个字段属性的写法&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;pg_proc.h&lt;/code&gt;中内置函数的元数据的元组格式咋一看估计会让人懵掉。但实际上，这里的元组的各个属性(函数名已降的各字段)实际上对应的就是PostgreSQL手册中&lt;a href=&#34;https://www.postgresql.org/docs/9.6/static/catalog-pg-proc.html&#34;&gt;pg_proc系统表的各个字段&lt;/a&gt;。对照着这一章节的介绍以及参考&lt;code&gt;pg_proc.h&lt;/code&gt;中已有的内置函数的元组，就可知道该如何为新的内置函数增添元组。&lt;/p&gt;
-
-&lt;p&gt;以下是在手册基础上，对pg_proc的元组各字段数据的写法做的一些补充说明:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;proisstrict&lt;/br&gt;
-如果将此字段设置为&lt;code&gt;t&lt;/code&gt;, 只要通过SQL调用该函数时参数中有一个NULL，那么这个函数实际上不会被调用(即便函数实现中预备了对于NULL的处理)而是直接返回一个NULL。因此如果希望自己处理NULL参数，该字段不应为&lt;code&gt;t&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;proparallel&lt;/br&gt;
-这个字段是 9.6 开始新加的字段。表示的是这个函数是否支持在并行查询的模式下并行执行。&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;prorettype&lt;/br&gt;
-返回值类型。这里需要填入的是返回值类型所对应的OID。这些OID可以在&lt;code&gt;src/include/catalog/pg_type.h&lt;/code&gt;中寻找。但需要注意的是，这里填的OID不要使用宏定义，直接填OID的数字。另外，结果集对应的OID是&lt;code&gt;2249&lt;/code&gt;。&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;proargtypes和proallargtypes&lt;/br&gt;
-这两个字段都需要以集合的形式写出参数类型OID集合。但写法上略有差别:&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;proargtypes的写法是&lt;code&gt;&amp;quot;OID1 OID2 ...&amp;quot;&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;proallargtypes的写法是&lt;code&gt;{OID1 OID2 ...}&lt;/code&gt;。此外，如果返回值是一个结果集的话，填写此字段时，结果集中各个字段的类型也需要在&lt;code&gt;proallargtypes&lt;/code&gt;中严格按照结果集字段的顺序一一声明。在这里，结果集字段与输出参数可以视作等同效果.如果函数不包括任何输出参数且返回值不是结果集的话，这个字段可以直接声明为&lt;code&gt;_null_&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;另外，对于返回值是结果集的内置函数而言，也许要把结果集的每一个字段的信息反映在&lt;code&gt;proargmodes&lt;/code&gt;和&lt;code&gt;proargnames&lt;/code&gt;这两个属性中。&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;由于本例的&lt;code&gt;add_str()&lt;/code&gt;函数比较简单，因此它在&lt;code&gt;pg_proc.h&lt;/code&gt;中对应的元组可写为&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;DATA(insert OID = 5946 (  add_str PGNSP PGUID 12 1 0 0 0 f f f f f f s s 2 0 25 &amp;quot;23 23&amp;quot; _null_ _null_ _null_ _null_ _null_ add_str _null_ _null_ _null_ ));
-DESCR(&amp;quot;add_str just for test&amp;quot;);
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;到这里为止，向PG源码中增添新的内置函数的方法就已经介绍完毕了。但是在实践中，除了上述&amp;rdquo;三板斧&amp;rdquo;，还有一些坑最好也事先知道，以免在增添内置函数时走弯路.&lt;/p&gt;
-
-&lt;h2 id=&#34;踩过的那些坑&#34;&gt;踩过的那些坑&lt;/h2&gt;
-
-&lt;h3 id=&#34;坑1-内置函数的参数默认值&#34;&gt;坑1. 内置函数的参数默认值&lt;/h3&gt;
-
-&lt;p&gt;PG中的SQL函数的参数是可以定义默认值的，然而C语言编写的函数是没有办法为其参数指定默认值的。这个Gap还是必须得从PG自己的机制着手。好消息是&lt;code&gt;pg_proc&lt;/code&gt;系统表中有一个字段叫做&lt;code&gt;proargdefaults&lt;/code&gt;,它看上去似乎可以用于解决参数默认值的问题; 但坏消息是，这个字段接受的是一个以字符串形式表示的&lt;code&gt;Express Tree&lt;/code&gt;，这几乎不是常人能通过人手能够写出来的。&lt;/p&gt;
-
-&lt;p&gt;幸运的是，PG社区的大牛&lt;strong&gt;Tome Lane&lt;/strong&gt;在&lt;a href=&#34;https://www.postgresql.org/message-id/24148.1239060256@sss.pgh.pa.us&#34;&gt;2009年的一封邮件&lt;/a&gt;中指出了为内置函数设置默认值的正确姿势: 不要尝试在&lt;code&gt;pg_proc.h&lt;/code&gt;中通过元组的方式指定参数默认值——因为这种方式很&amp;rdquo;Ugly&amp;rdquo;——而是应该通过在&lt;code&gt;src/backend/catalog/system_views.sql&lt;/code&gt;中通过SQL文定义一个带默认值参数的函数去覆盖用C语言编写的SQL函数。比如，他在邮件中提到的内置函数&lt;code&gt;pg_start_backup()&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;CREATE OR REPLACE FUNCTION
-  pg_start_backup(label text, fast boolean DEFAULT false)
-  RETURNS text LANGUAGE internal STRICT AS &#39;start_backup&#39;;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;换言之，可以先用C语言实现希望增加的内置函数的逻辑，再通过在&lt;code&gt;system_views.sql&lt;/code&gt;中创建SQL函数接口。当然，这个C语言函数仍然得遵循上文所说&lt;code&gt;fmgr-compatible&lt;/code&gt;范式.另外，由于&lt;code&gt;system_views.sql&lt;/code&gt;中定义的函数不是预先写入数据库模板中的，而是在&lt;code&gt;initdb&lt;/code&gt;创建实例的bootstrap过程中执行的，因此这样的函数的OID必然是在10000之后。&lt;/p&gt;
-
-&lt;h3 id=&#34;坑2-pg-proc-h中新元组的生效时机&#34;&gt;坑2. pg_proc.h中新元组的生效时机&lt;/h3&gt;
-
-&lt;p&gt;按照前文所述的&amp;rdquo;三板斧&amp;rdquo;来编写一个内置函数时，如果所用的PG源码所展开的路径是第一次执行编译还好，如果在所展开的路径下先前已经编译过至少一次的情况下，这时就会出现一个神奇的现象：重编后的二进制中可以看到新加的内置函数但无论如何就是没法走到。&lt;/p&gt;
-
-&lt;p&gt;这是因为当我们给&lt;code&gt;pg_proc.h&lt;/code&gt;中增加新的内置函数对应的元组时，以下三个文件会在源码编译过程中基于&lt;code&gt;pg_proc.h&lt;/code&gt;的内容自动生成。&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;src/backend/catalog/postgres.bki&lt;/br&gt;
-src/backend/utils/fmgroids.h&lt;/br&gt;
-src/backend/utils/fmgrtab.c&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;这三个文件中生成的内容对于&lt;code&gt;pg_proc&lt;/code&gt;系统表中的初始化元组起重要作用。但是这三个文件只会在第一次编译时生成且并不会在&lt;code&gt;make clean&lt;/code&gt;时被清理掉。因此，如果是在一个已经执行过至少一次编译的源码环境中增加新的内置函数时，若要&amp;rdquo;三板斧&amp;rdquo;的最后一斧生效，必须在编译前执行下述命令:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$make maintainer-clean
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;当然，这样一来原本生成的所有Makefile也将被清理掉，之后要编译这份代码的话，必须从&lt;code&gt;./configure&lt;/code&gt;重新开始。&lt;/p&gt;
-
-&lt;h2 id=&#34;创建内置函数时最好知道的pg内部api&#34;&gt;创建内置函数时最好知道的PG内部API&lt;/h2&gt;
-
-&lt;p&gt;用C语言为PG做扩展有一些通用的内部接口可供使用，这些接口也不限于内置函数。所以在我所知道的范围内列出一些内部接口，以作备忘:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.postgresql.org/docs/9.6/static/spi.html&#34;&gt;SPI系列函数&lt;/a&gt;&lt;/br&gt;
-可以用于在内部执行SQL等等&lt;/li&gt;
-&lt;li&gt;直接操作元组(Tuple)相关API
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;CreateTemplateTupleDesc()&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;TupleDescInitEntry()&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;BlessTupleDesc()&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;heap_from_tuple()&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;用于查询执行时当前会话状态判断的实用函数
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;superuser()&lt;/code&gt;&lt;/br&gt;
-判断当前用户是否是DB的超级用户&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;IsTransaction()&lt;/code&gt;&lt;/br&gt;
-判断当前语句是否在一个显式事务块中&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;IsInParallelMode()&lt;/code&gt;&lt;/br&gt;
-判断当前是否在并行执行模式中&lt;/li&gt;
-&lt;li&gt;全局变量 &lt;code&gt;XactReadOnly&lt;/code&gt;&lt;/br&gt;
-判断当前会话是否是只读模式&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;结语&#34;&gt;结语&lt;/h2&gt;
-
-&lt;p&gt;以上就是给PG添加内置函数的方法的一个小结，也是我最近一段时间一直在折腾PG的SQL函数所做的一点积累, 希望能够为有类似需求的人提供一些帮助。&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>

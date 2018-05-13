@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Fdw on 小wing的驿站</title>
+    <link>https://xiaowing.github.io/tags/fdw/</link>
+    <description>Recent content in Fdw on 小wing的驿站</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>&amp;copy; Licensed under CC BY-NC-SA.</copyright>
+    <lastBuildDate>Sun, 13 May 2018 23:02:33 +0800</lastBuildDate>
+    
+	<atom:link href="https://xiaowing.github.io/tags/fdw/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>双剑合璧——当PG的FDW遇上GO(之三)</title>
+      <link>https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part03/</link>
+      <pubDate>Sun, 13 May 2018 23:02:33 +0800</pubDate>
+      
+      <guid>https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part03/</guid>
+      <description>&lt;p&gt;由于对Golang以及PostgreSQL(下文简称&lt;strong&gt;PG&lt;/strong&gt;)的FDW(&lt;em&gt;Foreign Data Wrapper&lt;/em&gt;)两个技术的双重喜爱,因此我利用假期用Golang实现了一个&lt;a href=&#34;https://github.com/xiaowing/douban_fdw&#34;&gt;访问douban API的FDW&lt;/a&gt;. 同时也借此机会总结了一下 PG的FDW技术并分享一下使用Golang实现FDW的一些经验。&lt;/p&gt;
+
+&lt;p&gt;全文索引如下:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part01/&#34;&gt;第一部分: FDW的前世今生&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part02/&#34;&gt;第二部分: 揭秘FDW&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;第三部分: 如何用Go来实现一个FDW&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>双剑合璧——当PG的FDW遇上GO(之二)</title>
+      <link>https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part02/</link>
+      <pubDate>Sun, 13 May 2018 22:02:33 +0800</pubDate>
+      
+      <guid>https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part02/</guid>
+      <description>&lt;p&gt;由于对Golang以及PostgreSQL(下文简称&lt;strong&gt;PG&lt;/strong&gt;)的FDW(&lt;em&gt;Foreign Data Wrapper&lt;/em&gt;)两个技术的双重喜爱,因此我利用假期用Golang实现了一个&lt;a href=&#34;https://github.com/xiaowing/douban_fdw&#34;&gt;访问douban API的FDW&lt;/a&gt;. 同时也借此机会总结了一下 PG的FDW技术并分享一下使用Golang实现FDW的一些经验。&lt;/p&gt;
+
+&lt;p&gt;全文索引如下:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part01/&#34;&gt;第一部分: FDW的前世今生&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;第二部分: 揭秘FDW&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part03/&#34;&gt;第三部分: 如何用Go来实现一个FDW&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>双剑合璧——当PG的FDW遇上GO(之一)</title>
+      <link>https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part01/</link>
+      <pubDate>Sun, 13 May 2018 21:02:33 +0800</pubDate>
+      
+      <guid>https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part01/</guid>
+      <description>&lt;p&gt;由于对Golang以及PostgreSQL(下文简称&lt;strong&gt;PG&lt;/strong&gt;)的FDW(&lt;em&gt;Foreign Data Wrapper&lt;/em&gt;)两个技术的双重喜爱, 因此我利用假期用Golang实现了一个&lt;a href=&#34;https://github.com/xiaowing/douban_fdw&#34;&gt;访问douban API的FDW&lt;/a&gt;. 同时也借此机会总结了一下 PG的FDW技术并分享一下使用Golang实现FDW的一些经验。&lt;/p&gt;
+
+
+
+&lt;div class=&#34;pure-g&#34;&gt;
+
+  
+  
+  
+  
+  &lt;div class=&#34;pure-u-1-1&#34;&gt;
+    &lt;div style=&#34;padding: 0 .2em&#34;&gt;
+      &lt;img
+        class=&#34;pure-img-responsive&#34;
+        src=&#34;https://xiaowing.github.io/img/post/20180513/fdw_metaphor.jpg&#34;
+        alt=&#34;FDW Metaphor&#34;&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  
+
+&lt;/div&gt;
+
+
+&lt;p&gt;全文索引如下:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;第一部分: FDW的前世今生&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part02/&#34;&gt;第二部分: 揭秘FDW&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part03/&#34;&gt;第三部分: 如何用Go来实现一个FDW&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

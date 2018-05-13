@@ -5,7 +5,7 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
-  <meta name="generator" content="Hugo 0.17" />
+  <meta name="generator" content="Hugo 0.40.3" />
 
   <title>Postgresql &middot; 小wing的驿站</title>
 
@@ -90,12 +90,6 @@
       
       
         <li class="pure-menu-item">
-          <a class="pure-menu-link" href="https://xiaowing.github.io/"><i class='fa fa-home fa-fw'></i>Home</a>
-      
-        </li>
-      
-      
-        <li class="pure-menu-item">
           <a class="pure-menu-link" href="https://xiaowing.github.io/post/"><i class='fa fa-list fa-fw'></i>Posts</a>
       
         </li>
@@ -115,6 +109,12 @@
       
         <li class="pure-menu-item">
           <a class="pure-menu-link" href="https://xiaowing.github.io/tags/"><i class='fa fa-tags fa-fw'></i>Tags</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/"><i class='fa fa-home fa-fw'></i>Home</a>
       
         </li>
       
@@ -262,6 +262,240 @@
 </div>
 
 <div class="content">
+  
+    <article>
+  <header>
+    <h2><a href="https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part03/">双剑合璧——当PG的FDW遇上GO(之三)</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>13 May 2018, 23:02</time>
+  </div>
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-folder fa-fw"></i>
+    
+      <a class="post-taxonomy-topic" href="https://xiaowing.github.io/topics/%E6%8A%80%E6%9C%AF">技术</a>
+    
+  </div>
+  
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/cgo">cgo</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/golang">golang</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/postgresql">postgresql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/fdw">fdw</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  <p>由于对Golang以及PostgreSQL(下文简称<strong>PG</strong>)的FDW(<em>Foreign Data Wrapper</em>)两个技术的双重喜爱,因此我利用假期用Golang实现了一个<a href="https://github.com/xiaowing/douban_fdw">访问douban API的FDW</a>. 同时也借此机会总结了一下 PG的FDW技术并分享一下使用Golang实现FDW的一些经验。</p>
+
+<p>全文索引如下:</p>
+
+<ul>
+<li><p><a href="https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part01/">第一部分: FDW的前世今生</a></p></li>
+
+<li><p><a href="https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part02/">第二部分: 揭秘FDW</a></p></li>
+
+<li><p><strong>第三部分: 如何用Go来实现一个FDW</strong></p></li>
+</ul>
+
+<p></p>
+  </p>
+
+  
+  <footer>
+    <a href="https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part03/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+  </footer>
+  
+</article>
+
+  
+    <article>
+  <header>
+    <h2><a href="https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part02/">双剑合璧——当PG的FDW遇上GO(之二)</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>13 May 2018, 22:02</time>
+  </div>
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-folder fa-fw"></i>
+    
+      <a class="post-taxonomy-topic" href="https://xiaowing.github.io/topics/%E6%8A%80%E6%9C%AF">技术</a>
+    
+  </div>
+  
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/cgo">cgo</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/golang">golang</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/postgresql">postgresql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/fdw">fdw</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  <p>由于对Golang以及PostgreSQL(下文简称<strong>PG</strong>)的FDW(<em>Foreign Data Wrapper</em>)两个技术的双重喜爱,因此我利用假期用Golang实现了一个<a href="https://github.com/xiaowing/douban_fdw">访问douban API的FDW</a>. 同时也借此机会总结了一下 PG的FDW技术并分享一下使用Golang实现FDW的一些经验。</p>
+
+<p>全文索引如下:</p>
+
+<ul>
+<li><p><a href="https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part01/">第一部分: FDW的前世今生</a></p></li>
+
+<li><p><strong>第二部分: 揭秘FDW</strong></p></li>
+
+<li><p><a href="https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part03/">第三部分: 如何用Go来实现一个FDW</a></p></li>
+</ul>
+
+<p></p>
+  </p>
+
+  
+  <footer>
+    <a href="https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part02/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+  </footer>
+  
+</article>
+
+  
+    <article>
+  <header>
+    <h2><a href="https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part01/">双剑合璧——当PG的FDW遇上GO(之一)</a></h2>
+
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>13 May 2018, 21:02</time>
+  </div>
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-folder fa-fw"></i>
+    
+      <a class="post-taxonomy-topic" href="https://xiaowing.github.io/topics/%E6%8A%80%E6%9C%AF">技术</a>
+    
+  </div>
+  
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/cgo">cgo</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/golang">golang</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/postgresql">postgresql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/fdw">fdw</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <p>
+  <p>由于对Golang以及PostgreSQL(下文简称<strong>PG</strong>)的FDW(<em>Foreign Data Wrapper</em>)两个技术的双重喜爱, 因此我利用假期用Golang实现了一个<a href="https://github.com/xiaowing/douban_fdw">访问douban API的FDW</a>. 同时也借此机会总结了一下 PG的FDW技术并分享一下使用Golang实现FDW的一些经验。</p>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/20180513/fdw_metaphor.jpg"
+        alt="FDW Metaphor">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<p>全文索引如下:</p>
+
+<ul>
+<li><p><strong>第一部分: FDW的前世今生</strong></p></li>
+
+<li><p><a href="https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part02/">第二部分: 揭秘FDW</a></p></li>
+
+<li><p><a href="https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part03/">第三部分: 如何用Go来实现一个FDW</a></p></li>
+</ul>
+
+<p></p>
+  </p>
+
+  
+  <footer>
+    <a href="https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part01/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+  </footer>
+  
+</article>
+
   
     <article>
   <header>

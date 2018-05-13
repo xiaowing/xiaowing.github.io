@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>小wing的驿站</title>
-    <link>https://xiaowing.github.io/topics/%E7%94%9F%E6%B4%BB/index.xml</link>
-    <description>Recent content on 小wing的驿站</description>
+    <title>生活 on 小wing的驿站</title>
+    <link>https://xiaowing.github.io/topics/%E7%94%9F%E6%B4%BB/</link>
+    <description>Recent content in 生活 on 小wing的驿站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>&amp;copy; Licensed under CC BY-NC-SA.</copyright>
-    <atom:link href="https://xiaowing.github.io/topics/%E7%94%9F%E6%B4%BB/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 30 Jul 2017 11:05:37 +0800</lastBuildDate>
+    
+	<atom:link href="https://xiaowing.github.io/topics/%E7%94%9F%E6%B4%BB/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>驿站新开</title>
@@ -19,24 +22,7 @@
 
 &lt;p&gt;但是我终究是一个爱发表自己意见的人，虽然印象笔记上密密麻麻记了不少各种笔记，但是还是想找个渠道把自己的见解公开出来。所以还是打算重新开博。&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;这次开博，将不再用博客服务商提供的服务，而是直接活用github page。静态页面生成工具则最终选定使用Hugo，也算是作为一个不入流的Gopher支持一下golang这门语言吧，当然更重要的是感谢github page支持Hugo。&lt;/p&gt;
-
-&lt;p&gt;与几年前不同的是：如今已经是移动互联网的时代了。大家每时每刻捧着的都是手机，刷的都是朋友圈，谁还看博客啊。まぁ、就把这个博客当作是个“树洞”吧，把自己的想法分享一下。不刻意追求让别人看，只是单纯希望自己分享的东西有用，能够被有需要的人搜到即可。&lt;/p&gt;
-
-&lt;p&gt;不过话虽如此，这一次开博，也不想写的东西太散而导致后面荒废掉，所以给自己定了一些规则：&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;分享的内容要真的“言之有物”。所以考虑题材尽量从日常积累在自己笔记里的东西入手，有些笔记内容，平时记录得可能过于仓促，那么可以借助写博客分享的机会再深堀一下，整理一下。&lt;/li&gt;
-&lt;li&gt;尽量不写时政相关的内容。主要是考虑到Github还是更多以技术为中心的社区平台，所以还是尽量爱护一下，不要给中国政府找到封杀它的借口。&lt;/li&gt;
-&lt;li&gt;不转载文章，保持原创。&lt;/li&gt;
-&lt;li&gt;要保证持续性产出。因此暂定每月至少写两篇有实质性内容的文章分享于此。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;博客的名称还沿用之前我的那个博客，仍然叫&amp;rdquo;小wing的驿站&amp;rdquo;。懒得去想新的了，也算是一个延续吧。&lt;/p&gt;
-
-&lt;p&gt;さぁ、再開しましょう！&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>

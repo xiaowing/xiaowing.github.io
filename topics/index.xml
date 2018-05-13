@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Topics on 小wing的驿站</title>
+    <link>https://xiaowing.github.io/topics/</link>
+    <description>Recent content in Topics on 小wing的驿站</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>&amp;copy; Licensed under CC BY-NC-SA.</copyright>
+    
+	<atom:link href="https://xiaowing.github.io/topics/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>技术</title>
+      <link>https://xiaowing.github.io/topics/%E6%8A%80%E6%9C%AF/</link>
+      <pubDate>Sun, 13 May 2018 23:02:33 +0800</pubDate>
+      
+      <guid>https://xiaowing.github.io/topics/%E6%8A%80%E6%9C%AF/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>生活</title>
+      <link>https://xiaowing.github.io/topics/%E7%94%9F%E6%B4%BB/</link>
+      <pubDate>Sun, 30 Jul 2017 11:05:37 +0800</pubDate>
+      
+      <guid>https://xiaowing.github.io/topics/%E7%94%9F%E6%B4%BB/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.40.3" />
+
+  <title>双剑合璧——当PG的FDW遇上GO(之二) &middot; 小wing的驿站</title>
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/custom.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+  
+  
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-9033761003757481",
+            enable_page_level_ads: true
+       });
+  </script>
+  
+  
+  
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+  
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="https://xiaowing.github.io/img/favicon.ico" type="image/x-icon" />
+
+  
+    <link rel="stylesheet" href="https://xiaowing.github.io/css/my.css">
+  
+  
+    <script src="https://xiaowing.github.io/js/my.js"></script>
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+  <a class="pure-menu-heading brand" href="https://xiaowing.github.io/">小wing的驿站</a>
+
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/post/"><i class='fa fa-list fa-fw'></i>Posts</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/about/"><i class='fa fa-user fa-fw'></i>About</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/topics/"><i class='fa fa-folder fa-fw'></i>Topics</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/tags/"><i class='fa fa-tags fa-fw'></i>Tags</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://twitter.com/xiaowing" target="_blank"><i class="fa fa-twitter-square fa-fw"></i>Twitter</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="http://weibo.com/u/3304350204" target="_blank"><i class="fa fa-weibo fa-fw"></i>Weibo</a>
+    </li>
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://instagram.com/xiaowing" target="_blank"><i class="fa fa-instagram fa-fw"></i>Instagram</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/xiaowing" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://zh.wikipedia.org/wiki/User:%e5%b0%8fwing" target="_blank"><i class="fa fa-wikipedia-w fa-fw"></i>Wikipedia</a>
+    </li>
+    
+
+    
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://www.zhihu.com/people/xiaowing/activities" target="_blank"><i class="iconfont icon-zhihu"></i>zhihu</a>
+    </li>
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://www.douban.com/people/wing0630" target="_blank"><i class="iconfont icon-douban"></i>douban</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small>&copy; Licensed under CC BY-NC-SA.</small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>双剑合璧——当PG的FDW遇上GO(之二)</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>13 May 2018, 22:02</time>
+  </div>
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-folder fa-fw"></i>
+    
+      <a class="post-taxonomy-topic" href="https://xiaowing.github.io/topics/%E6%8A%80%E6%9C%AF">技术</a>
+    
+  </div>
+  
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/cgo">cgo</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/golang">golang</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/postgresql">postgresql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/fdw">fdw</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  <p>由于对Golang以及PostgreSQL(下文简称<strong>PG</strong>)的FDW(<em>Foreign Data Wrapper</em>)两个技术的双重喜爱,因此我利用假期用Golang实现了一个<a href="https://github.com/xiaowing/douban_fdw">访问douban API的FDW</a>. 同时也借此机会总结了一下 PG的FDW技术并分享一下使用Golang实现FDW的一些经验。</p>
+
+<p>全文索引如下:</p>
+
+<ul>
+<li><p><a href="https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part01/">第一部分: FDW的前世今生</a></p></li>
+
+<li><p><strong>第二部分: 揭秘FDW</strong></p></li>
+
+<li><p><a href="https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part03/">第三部分: 如何用Go来实现一个FDW</a></p></li>
+</ul>
+
+<p></p>
+
+<h2 id="2-揭秘fdw">2. 揭秘FDW</h2>
+
+<h3 id="2-1-fdw的通用用法">2.1 FDW的通用用法</h3>
+
+<p>使用FDW的核心就在于使用外部表(<strong>FOREIGN TABLE</strong>)。尽管面向不同数据源的FDW实现各有不同,但是收益于SQL/MED定义的标准, 创建不同数据源的外部表的方法都是一样的,分别需要在PG端依次创建以下几个数据库对象:</p>
+
+<ol>
+<li><p>向PG安装某个数据源的FDW扩展</p></li>
+
+<li><p>使用<code>CREATE FOREIGN DATA WRAPPER</code>语句创建该数据源的FDW对象。</p></li>
+
+<li><p>使用<code>CREATE SERVER</code>语句创建该数据源的服务器对象</p></li>
+
+<li><p>使用<code>CREATE USER MAPPING</code>语句创建外部数据源用户与PG用户的映射关系(这一步是可选的. 比如外部数据源根本没有权限控制时, 也就无需创建USER MAPPING了)</p></li>
+
+<li><p>使用<code>CREATE FOREIGN TABLE</code>语句创建外部表</p></li>
+</ol>
+
+<p>之后就可以使用<code>SELECT</code>语句按照访问普通表的方式访问外部表; 如果该数据源支持写操作且它的FDW也已实现支持写操作的相关接口,则也可以使用<code>INSERT</code>, <code>UPDATE</code>或<code>DELETE</code>语句去更新外部表</p>
+
+<p>上述过程可以简要地用下图来概述:</p>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/20180513/foreign_table_related_objects.png"
+        alt="Foreign Table关联的数据库对象">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<h3 id="2-2-fdw关联的数据库对象">2.2 FDW关联的数据库对象</h3>
+
+<p>上一小节介绍了FDW的通用用法,这里将简单说明一下该用法中提及的几个数据库对象的作用:</p>
+
+<ul>
+<li><p>FOREIGN DATA WRAPPER对象(<a href="https://www.postgresql.org/docs/10/static/sql-createforeigndatawrapper.html">对应的DDL语法</a>)</p>
+
+<p>是一个纯粹的抽象概念,创建该对象的实质是向PG注册了某个数据源的FDW所实现的两个自定义函数——该FDW所实现的所有接口的注册函数(在<code>CREATE FOREIGN DATA WRAPPER</code>语句中称为<strong>HANDLER</strong>)以及该FDW的所支持的选项验证函数(在<code>CREATE FOREIGN DATA WRAPPER</code>语句中称为<strong>VALIDATOR</strong>)。</p>
+
+<p>该对象被创建后, 语句中制定的HANDLER与VALIDATOR会被添加至系统表<a href="https://www.postgresql.org/docs/10/static/catalog-pg-proc.html">pg_proc</a>(保存所有自定义函数的元数据)中,且两者的OID以及该FOREIGN DATA WRAPPER对象的名称与OID一同被保存至系统表<a href="https://www.postgresql.org/docs/10/static/catalog-pg-foreign-data-wrapper.html">pg_foreign_data_wrapper</a>中。</p>
+
+<p>通常FOREIGN DATA WRAPPER对象的创建过程是直接包含在了安装FDW扩展的<code>CREATE EXTENSION</code>语句中,从而在安装时被自动执行,无需数据库用户在使用中单独执行。</p>
+
+<p>需要补充说明的是,HANDLER的作用是将该FDW实现的一系列fdw回调函数的地址打包返回给PG,从而使PG之后访问外部表时可以调用这些访问外部数据的函数。而所谓的fdw回调函数则是指<a href="https://www.postgresql.org/docs/10/static/fdw-callbacks.html">PG手册所提及的下述接口</a>的实现</p>
+
+<ul>
+<li><code>GetForeignRelSize</code></li>
+<li><code>GetForeignPaths</code></li>
+<li><code>GetForeignPlan</code></li>
+<li><code>BeginForeignScan</code></li>
+<li><code>IterateForeignScan</code></li>
+<li><code>EndForeignScan</code></li>
+<li>等等&hellip;&hellip;</li>
+</ul>
+
+<p>关于这些回调函数的作用,会在后文介绍,此处暂略。</p></li>
+
+<li><p>FOREIGN SERVER对象(<a href="https://www.postgresql.org/docs/10/static/sql-createserver.html">对应的DDL语法</a>)</p>
+
+<p>表示的是外部数据源的数据库对象(比如可以在CREATE SERVER时通过选项指定数据库所在服务器的IP地址等信息)</p>
+
+<p>FOREIGN SERVER对象被创建后, 相关的元数据被保存在系统表<a href="https://www.postgresql.org/docs/10/static/catalog-pg-foreign-server.html">pg_foreign_server</a>中</p></li>
+
+<li><p>FOREIGN TABLE对象(<a href="https://www.postgresql.org/docs/10/static/sql-createforeigntable.html">对应的DDL语法</a>)</p>
+
+<p>将外部数据源的数据组织为表的形式,这样的表就被称作为外部表,它可能对应的时外部异构RDBMS的一张表,也有可能对应了文件系统上的某一个文件或是一个微服务的API。具体如何对应,取决于这个数据源的FDW的实现。</p>
+
+<p>当外部表对象被创建后,它与PG中的普通表一样,元数据都会被保存在系统表<a href="https://www.postgresql.org/docs/10/static/catalog-pg-class.html">pg_class</a>中,只是它的<strong>relkind</strong>字段会以&rdquo;<strong>f</strong>&ldquo;进行标识;同时,该表在也会在系统表<a href="https://www.postgresql.org/docs/10/static/catalog-pg-foreign-table.html">pg_foreign_table</a>被保存一条记录,它存储了该表在pg_class的OID与该表所属的FOREIGN SERVER的OID的对应关系。</p>
+
+<p>从9.5开始,PG提供了一个新的语法<code>IMPORT FOREIGN SCHEMA</code>支持用户批量导入外部数据源的外部表,以省却一个一个<code>CREATE FOREIGN TABLE</code>的繁琐. 当然,前提时该数据源的FDW实现中需要实现<code>IMPORT FOREIGN SCHEMA</code>所对应的回掉函数。</p></li>
+</ul>
+
+<p>有了上述外部对象相关的元数据的支撑,当一个查询试图访问外部表得以获取外部数据源的数据时, FDW在整个查询的执行过程中就可以发挥下述作用:</p>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/20180513/fdw_shikumi.png"
+        alt="FDW在外部表查询中发挥的作用">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<p>在此图中, FDW得以介入整个执行过程的奥秘就在于<strong>回调函数</strong></p>
+
+<h3 id="2-3-fdw回调函数与外部表查询">2.3 FDW回调函数与外部表查询</h3>
+
+<p>如上文所说,一个FDW的实现的核心就是实现一组回调函数,从而在查询外部表对象的SQL的执行过程中可以将运行逻辑切换至自定义的扩展代码中,进而遵照PG的内部机制实现对外部数据源的访问。</p>
+
+<p>截止到PG 10, PG提供的FDW回调接口已有20余个。FDW的实现者需要根据外部数据源自身的能力(比如是否支持写操作,以及是否支持在外部数据源端执行JOIN操作等等)对这些接口有选择性地予以实现。</p>
+
+<p>这些接口中,最核心的接口有7个。无论外部数据源自身能力如何,这7个接口是实现通过外部表对象访问该数据源的必须接口。这7个回调函数的接口定义如下:</p>
+
+<pre><code class="language-c">typedef void (*GetForeignRelSize_function) (PlannerInfo *root, RelOptInfo *baserel, Oid foreigntableid);
+
+typedef void (*GetForeignPaths_function) (PlannerInfo *root, RelOptInfo *baserel, Oid foreigntableid);
+
+typedef ForeignScan *(*GetForeignPlan_function) (PlannerInfo *root, RelOptInfo *baserel,Oid foreigntableid, ForeignPath *best_path, List *tlist, List *scan_clauses, Plan *outer_plan);
+
+typedef void (*BeginForeignScan_function) (ForeignScanState *node, int eflags);
+
+typedef TupleTableSlot *(*IterateForeignScan_function) (ForeignScanState *node);
+
+typedef void (*ReScanForeignScan_function) (ForeignScanState *node);
+
+typedef void (*EndForeignScan_function) (ForeignScanState *node);
+</code></pre>
+
+<p>我们知道,一条查询语句在PG中会经历三个大的阶段:</p>
+
+<ul>
+<li>Parser: 包含对SQL的语法解析, 语义校验, 查询重写</li>
+<li>Optimizer: 生成查询计划</li>
+<li>Executor: 按照经典的<a href="http://dbms-arch.wikia.com/wiki/Volcano_Model">火山模型</a>执行查询计划的算子并向上&rdquo;吐&rdquo;数据</li>
+</ul>
+
+<p>上述这七个回调函数主要在<strong>Optimizer</strong>和<strong>Executor</strong>阶段进行&rdquo;介入&rdquo;。如下所示:</p>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/20180513/fdw_callback_sequence.png"
+        alt="FDW回调的时序">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<p>需要注意的是,上图仅仅是显示这些回调函数被调用的时序顺序. 图中的箭头并不表示两个回调之间存在调用关系。事实上这些回调函数都是由PG的<strong>Optimizer</strong>和<strong>Executor</strong>进行调用.</p>
+
+<p>这七个回调函数详细的调用时机以及作用总结如下:</p>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/20180513/fdw_callbacks_details.png"
+        alt="主要的FDW回调函数的详细解说">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<h3 id="2-4-fdw回调函数间的数据传递">2.4 FDW回调函数间的数据传递</h3>
+
+<p>如上文所述,回调函数本身是由PG来调用的,各回调函数之间并不会产生彼此的互相调用。因此就产生了一个衍生的问题——如果在FDW的实现想要在这些回调函数之间传递数据怎么办? PG在设计回调函数的接口时也充分考虑到了这一点：</p>
+
+<ul>
+<li>Optimizer阶段</li>
+</ul>
+
+<p>在Optimizer阶段执行的三个回调函数都会传入一个<code>RelOptInfo</code>结构体作为输入参数,该结构体专门有一个字段可供FDW使用:</p>
+
+<pre><code class="language-c">  typedef struct RelOptInfo {
+      ...(上略)...
+      void	   *fdw_private;
+      ...(下略)...
+  } RelOptInfo;
+</code></pre>
+
+<p>因此如果FDW的实现需要在Optimizer阶段的回掉函数间传递数据时,只需要自行申请内存存储临时数据后将指针挂在上述字段即可.</p>
+
+<ul>
+<li>Executor阶段</li>
+</ul>
+
+<p>在Optimizer阶段执行的回调函数都会传入<code>ForeignScanState</code>结构体. 在PG中, 各种Scan算子都会有一个对应的State结构体,用于存放算子相关的状态数据。考虑到不同数据源的FDW实现可能会需要带一些自定义数据,因此<code>ForeignScanState</code>结构体也专门有一个字段可供FDW使用:</p>
+
+<pre><code class="language-c">  typedef struct ForeignScanState
+  {
+      ScanState	ss;				
+      List	   *fdw_recheck_quals;	
+    
+      struct FdwRoutine *fdwroutine;
+      void	   *fdw_state;    /* 存放各FDW实现的私有状态数据 */	
+  } ForeignScanState;
+</code></pre>
+
+<p>与<code>RelOptInfo</code>的<code>fdw_private</code>字段类似,FDW的实现只需申请内存存储临时数据后将指针挂在<code>fdw_state</code>字段即可.</p>
+
+<ul>
+<li>从Optimizer到Executor</li>
+</ul>
+
+<p>如果FDW的实现中想把一些数据从Optimizer阶段带到Executor阶段,会比上文的两个途径略显复杂。</p>
+
+<p>在PG 9.5中,这样的数据传递是通过下述方法实现的:</p>
+
+<ul>
+<li><p>存入私有数据</p>
+
+<p>在回调函数<code>GetForeignPlan()</code>的实现中必须为后续的Executor创建一个<code>ForeignScan</code>算子(这也是<code>GetForeignPlan()</code>最主要的作用)。由于<code>ForeignScan</code>中有一个<code>fdw_private</code>字段,因此FDW的私有数据可以通过该字段进行存放。</p>
+
+<p>不过,与<code>RelOptInfo</code>结构体不同的是,<code>ForeignScan</code>算子的<code>fdw_private</code>字段是一个<code>List *</code>类型。这是考虑到了FDW的实现中可能想传多个散列的数据结构给后续的Executor中的回调函数, 那么如果仅仅是一个<code>void *</code>势必就要重新做内存分配并且还得做拷贝操作,但时机上FDW的实现只是希望找地方挂一下私有数据即可,因此用<code>List *</code>的话,对于传递多个结构体的情况将更为方便。</p>
+
+<p>只是,<code>List *</code>里按什么样的顺序去挂怎样的数据,这就是PG的接口无法定义的了。这必须依赖于FDW实现自己去严格按照挂数据的顺序以及类型去取数据,这样的接口设计其实是耦合度较高的。不过除了这个方法似乎也没有更好的方法,因此直到现在的PG 10.3版本中,<code>ForeignScan</code>算子的<code>fdw_private</code>字段仍然保持着这样的设计。</p></li>
+
+<li><p>获取私有数据</p>
+
+<p>在Executor执行<code>BeginForeignScan()</code>回调函数时,利用传入的<code>ForeignScanState</code>结构体的<code>ss</code>字段(ScanState类型)访问其中的<code>ps</code>字段(PlanState类型)的<code>plan</code>字段(ForeignScan类型), 进而获取到ForeignScan类型中挂着的存放私有数据的<code>List</code>, 最后解开这个<code>List</code>即可获取在Optimizer阶段传递的私有数据.</p></li>
+</ul>
+
+<p>以上进介绍了执行对外部表查询时所涉及到的回调函数之间的数据传递方式,其他的回调函数之间的数据传递方式暂且略过。</p>
+
+<h3 id="2-5-小结">2.5 小结</h3>
+
+<p>就这样, 对于一个外部数据源而言, 只需要实现了上述的7个回调函数,就可以支持PG对于该外部数据源以通用的SQL语句实现简单的查询功能。当然,如果要真的尝试去实现这些回调函数,还是需要通过PG的一些专门面向FDW提供的接口来与PG进行交互,比如在上一节中提及的<code>make_foreignscan()</code>和<code>create_foreignscan_path()</code>就属于这些接口; 手册上的<a href="https://www.postgresql.org/docs/10/static/fdw-helpers.html">Foreign Data Wrapper Helper Functions章节</a>也有一些关于实现FDW时可能会用到辅助接口的说明。</p>
+
+<p>此外,上文所说这些回调函数如果要让PG能够知晓且调用到,是需要有一个注册机制. 这个注册机制就是通过上文提及的<code>CREATE FOREIGN DATA WRAPPER</code>语句中用<code>HANDLER</code>关键字指定的UDF函数来实现。这个UDF函数的逻辑很简单, 参考一些现成的FDW实现即可,此处不再赘述。</p>
+
+<p>(<em>to be continued&hellip;</em>)</p>
+
+  <div>
+  <br/><br/>
+  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">
+    <img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png" />
+  </a><br/>
+  本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">知识共享署名-非商业性使用-相同方式共享 3.0 中国大陆许可协议</a>进行许可。
+  </div>
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part01/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part01/">双剑合璧——当PG的FDW遇上GO(之一)</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="next">
+      <a href="https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part03/">双剑合璧——当PG的FDW遇上GO(之三)</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+    <a href="https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part03/"><i class="fa fa-chevron-right"></i></a>
+    
+  </div>
+</div>
+
+
+
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'wingsdak';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+</div>
+
+</div>
+</div>
+<script src="https://xiaowing.github.io/js/ui.js"></script>
+
+
+
+
+</body>
+</html>
+

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.40.3" />
+
+  <title>双剑合璧——当PG的FDW遇上GO(之一) &middot; 小wing的驿站</title>
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/custom.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+  
+  
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-9033761003757481",
+            enable_page_level_ads: true
+       });
+  </script>
+  
+  
+  
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+  
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="https://xiaowing.github.io/img/favicon.ico" type="image/x-icon" />
+
+  
+    <link rel="stylesheet" href="https://xiaowing.github.io/css/my.css">
+  
+  
+    <script src="https://xiaowing.github.io/js/my.js"></script>
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+  <a class="pure-menu-heading brand" href="https://xiaowing.github.io/">小wing的驿站</a>
+
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/post/"><i class='fa fa-list fa-fw'></i>Posts</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/about/"><i class='fa fa-user fa-fw'></i>About</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/topics/"><i class='fa fa-folder fa-fw'></i>Topics</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/tags/"><i class='fa fa-tags fa-fw'></i>Tags</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://twitter.com/xiaowing" target="_blank"><i class="fa fa-twitter-square fa-fw"></i>Twitter</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="http://weibo.com/u/3304350204" target="_blank"><i class="fa fa-weibo fa-fw"></i>Weibo</a>
+    </li>
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://instagram.com/xiaowing" target="_blank"><i class="fa fa-instagram fa-fw"></i>Instagram</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/xiaowing" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://zh.wikipedia.org/wiki/User:%e5%b0%8fwing" target="_blank"><i class="fa fa-wikipedia-w fa-fw"></i>Wikipedia</a>
+    </li>
+    
+
+    
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://www.zhihu.com/people/xiaowing/activities" target="_blank"><i class="iconfont icon-zhihu"></i>zhihu</a>
+    </li>
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://www.douban.com/people/wing0630" target="_blank"><i class="iconfont icon-douban"></i>douban</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small>&copy; Licensed under CC BY-NC-SA.</small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>双剑合璧——当PG的FDW遇上GO(之一)</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>13 May 2018, 21:02</time>
+  </div>
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-folder fa-fw"></i>
+    
+      <a class="post-taxonomy-topic" href="https://xiaowing.github.io/topics/%E6%8A%80%E6%9C%AF">技术</a>
+    
+  </div>
+  
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/cgo">cgo</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/golang">golang</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/postgresql">postgresql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/fdw">fdw</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  <p>由于对Golang以及PostgreSQL(下文简称<strong>PG</strong>)的FDW(<em>Foreign Data Wrapper</em>)两个技术的双重喜爱, 因此我利用假期用Golang实现了一个<a href="https://github.com/xiaowing/douban_fdw">访问douban API的FDW</a>. 同时也借此机会总结了一下 PG的FDW技术并分享一下使用Golang实现FDW的一些经验。</p>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/20180513/fdw_metaphor.jpg"
+        alt="FDW Metaphor">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<p>全文索引如下:</p>
+
+<ul>
+<li><p><strong>第一部分: FDW的前世今生</strong></p></li>
+
+<li><p><a href="https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part02/">第二部分: 揭秘FDW</a></p></li>
+
+<li><p><a href="https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part03/">第三部分: 如何用Go来实现一个FDW</a></p></li>
+</ul>
+
+<p></p>
+
+<h2 id="1-fdw的前世今生">1. FDW的前世今生</h2>
+
+<h3 id="1-1-起源-sql-med">1.1 起源——SQL/MED</h3>
+
+<p>通常,随着一个企业/组织的IT体系的日益增大,往往会不可避免的在多个应用之间需要进行数据共享与交换。</p>
+
+<p>通常我们希望这些应用的DAC(Data Access Code)能够简单直观一些。然而不幸的是,即使是在一个企业/组织的内部,不同应用所涉及到的数据往往会存储在不同的数据源中——可能是不同厂商的DBMS产品,甚至是根本不支持SQL的异构数据存储中。因此,往往多个应用的数据访问关系就会变得像下图一样复杂:</p>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/20180513/dac_disaster.png"
+        alt="DAC Disaster">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<p>随着社会的信息化推进,上述问题逐渐称为业界的共性课题。数据库行业在2001年对于该课题给出了一个积极的响应,这就是SQL/MED扩展标准(该标准的第一个版本为 ISO/IEC 9075-9:2001, 目前最新版本为 ISO/IEC 9075-9:2016)</p>
+
+<p>SQL/MED标准旨在建立一个解决此类课题的技术规范: 即应用程序可以通过统一且标准的方式(即,SQL)去访问存储在不同数据源中的数据, 且数据源本身对应用透明。在实际应用中, SQL/MED标准希望达成的效果如下图所示:</p>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/20180513/med_vision.png"
+        alt="SQL/MED vision">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<p>需要注意的是SQL/MED标准对于解决上述问题实际上定义了两套技术规范,一个是<strong>Foreign Data Wrapper</strong>, 另一个则是<strong>datalink 类型</strong>(它与PG中的<a href="https://www.postgresql.org/docs/10/static/dblink.html">dblink</a>以及Oracle中的<a href="https://docs.oracle.com/cd/B28359_01/server.111/b28310/ds_concepts002.htm">Database Link</a>不是一回事,尽管其目的有相似之处).</p>
+
+<p>本文的剩余部分将主要围绕FDW来展开说明.</p>
+
+<h3 id="1-2-pg中fdw的现状">1.2 PG中FDW的现状</h3>
+
+<p>PG对于FDW的支持早在10年前就已经开始了.</p>
+
+<p>社区从2009年推出8.4版本中首先就已经提供了对FDW的创建语句以及Foreign Server的创建语句的语法支持(但未实现实际的功能).到了2011年社区推出9.1版本时正式对外公开了支持FDW功能的内部接口,从而让扩展的编写者可以利用这些接口为不同的数据源编写FDW的实现。并且,社区在接下来的7年内, 每一次PG的版本升级都会带来FDW的功能提升——尽管这些功能增强不一定总是体现在语法层面。比如,在最初的版本中,FDW仅仅只能将远端数据源的数据原封不动地拉至PG中; 但到了最近的两三个版本中,借助FDW已经可以实现将更多地运算(如JOIN, 聚合等)下推至远端数据源,并能够对远端数据源的数据进行更新 (注1)。</p>
+
+<p>截止到目前为止, 全世界已有了成百上千种数据源有了相应的FDW实现,从传统的文件系统到各种新型的Nosql数据库,甚至还包括互联网上的Web Service。在<a href="https://wiki.postgresql.org/wiki/Foreign_data_wrappers">PG官方社区的wiki页</a>中罗列了一部分较常见的数据源的FDW</p>
+
+<p>另外值得一说的是,尽管基于SQL/MED标准的FDW技术的初衷是为了统一异构数据源的访问方式。但是,随着这些年PG的FDW内置功能(core functionality)的逐渐增强,支持将越来越多的运算下推到远端执行。而且,随着FDW功能成长的,还有一个获得社区官方支持的用于访问远端PG服务器的FDW扩展<a href="https://www.postgresql.org/docs/10/static/postgres-fdw.html">postgres_fdw</a>所支持的功能也越来越强大。有鉴于此,PG社区核心团队的大佬 <strong>Bruce Momjian</strong> <a href="https://www.postgresql.org/message-id/20160223164335.GA11285%40momjian.us">在2016年给社区写了一封邮件</a>提议了一个基于FDW技术的分布式分片(术语: Sharding)方案,与此同时,老爷子还<a href="http://momjian.us/main/writings/pgsql/sharding.pdf">写了一份PPT</a>专门阐述这个想法。基于&rdquo;对现有PG代码改动最小&rdquo;这一原则,目前社区已经基本上认可了基于FDW的Sharding方案作为<a href="https://wiki.postgresql.org/wiki/Built-in_Sharding">PG源生的分布式实现方案</a></p>
+
+<p>事实上,Bruce老爷提出的这个方案在实现和落地方面,日本技术者显然走得很远(事实上,实现FDW核心功能的patch最早就是<a href="https://www.postgresql.org/message-id/20101125163436.96F6.6989961C%40metrosystems.co.jp">由日本的花田茂提出的</a>)。2017年, NTT DATA分享了他们在基于PG 9.6做的Sharding方案——简而言之就是PG的 <strong>表继承 + postgres_fdw</strong>。其概念和架构如下所示：</p>
+
+<ul>
+<li>概念图</li>
+</ul>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/20180513/pg_fdw_sharding.png"
+        alt="基于postgres_fdw插件的分布式概念图">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<ul>
+<li>架构图</li>
+</ul>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/20180513/pg_fdw_sharding_internal.png"
+        alt="基于postgres_fdw插件的分布式架构图">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<p>FDW技术应用到了Sharding上,这恐怕也是SQL/MED标准制定者最初没有设想到的吧。但既然社区已经选取FDW这条技术路线作为PG的内置Sharding方案,那么在可预见的未来,社区必然会继续完善FDW的核心功能并积极地增强postgres_fdw扩展的功能.</p>
+
+<p><em>注1: 前提是远端的数据源(特别是异构数据源)本身要能够具备这些被下推的能力(JOIN, 聚合, 数据更新等等)</em></p>
+
+<p>(<em>to be continued&hellip;</em>)</p>
+
+  <div>
+  <br/><br/>
+  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">
+    <img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png" />
+  </a><br/>
+  本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">知识共享署名-非商业性使用-相同方式共享 3.0 中国大陆许可协议</a>进行许可。
+  </div>
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="https://xiaowing.github.io/post/20180313_thread_stack_overflow_protection/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="https://xiaowing.github.io/post/20180313_thread_stack_overflow_protection/">记一次面向线程栈的防爆栈机制的实现探索</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="next">
+      <a href="https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part02/">双剑合璧——当PG的FDW遇上GO(之二)</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+    <a href="https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part02/"><i class="fa fa-chevron-right"></i></a>
+    
+  </div>
+</div>
+
+
+
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'wingsdak';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+</div>
+
+</div>
+</div>
+<script src="https://xiaowing.github.io/js/ui.js"></script>
+
+
+
+
+</body>
+</html>
+
