@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.40.3" />
+
+  <title>[译文]厌倦了REST API设计时的gRPC入门 &middot; 小wing的驿站</title>
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/custom.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+  
+  
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-9033761003757481",
+            enable_page_level_ads: true
+       });
+  </script>
+  
+  
+  
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+  
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="https://xiaowing.github.io/img/favicon.ico" type="image/x-icon" />
+
+  
+    <link rel="stylesheet" href="https://xiaowing.github.io/css/my.css">
+  
+  
+    <script src="https://xiaowing.github.io/js/my.js"></script>
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+  <a class="pure-menu-heading brand" href="https://xiaowing.github.io/">小wing的驿站</a>
+
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/post/"><i class='fa fa-list fa-fw'></i>Posts</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/about/"><i class='fa fa-user fa-fw'></i>About</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/topics/"><i class='fa fa-folder fa-fw'></i>Topics</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/tags/"><i class='fa fa-tags fa-fw'></i>Tags</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://twitter.com/xiaowing" target="_blank"><i class="fa fa-twitter-square fa-fw"></i>Twitter</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="http://weibo.com/u/3304350204" target="_blank"><i class="fa fa-weibo fa-fw"></i>Weibo</a>
+    </li>
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://instagram.com/xiaowing" target="_blank"><i class="fa fa-instagram fa-fw"></i>Instagram</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/xiaowing" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://zh.wikipedia.org/wiki/User:%e5%b0%8fwing" target="_blank"><i class="fa fa-wikipedia-w fa-fw"></i>Wikipedia</a>
+    </li>
+    
+
+    
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://www.zhihu.com/people/xiaowing/activities" target="_blank"><i class="iconfont icon-zhihu"></i>zhihu</a>
+    </li>
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://www.douban.com/people/wing0630" target="_blank"><i class="iconfont icon-douban"></i>douban</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small>&copy; Licensed under CC BY-NC-SA.</small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>[译文]厌倦了REST API设计时的gRPC入门</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>03 Jun 2018, 23:41</time>
+  </div>
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-folder fa-fw"></i>
+    
+      <a class="post-taxonomy-topic" href="https://xiaowing.github.io/topics/%E6%8A%80%E6%9C%AF">技术</a>
+    
+  </div>
+  
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/grpc">gRPC</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1">微服务</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/%E8%AF%91%E4%BD%9C">译作</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  <div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/grpc_logo.png"
+        alt="gRPC Logo">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<p>我对<a href="https://blog.csdn.net/qq_16681169/article/details/73442330">微服务架构</a>一直都饶有兴趣, 不过由于我目前从事的开发跟这一切半毛钱关系也没有, 所以一直也就只能站在局外人的角度看个热闹. 前端时间在<a href="https://qiita.com">Qiita</a>上看到一篇关于使用<a href="https://grpc.io/">gRPC</a>来开发微服务的文章觉得很有意思, 正好gRPC也是我今年想学的技术, 所以就把这篇文章翻译成了中文&hellip;&hellip;</p>
+
+<p></p>
+
+<h2 id="厌倦了rest-api设计时的grpc入门">厌倦了REST API设计时的gRPC入门</h2>
+
+<p>原题: REST APIの設計で消耗している感じたときのgRPC入門</p>
+
+<p>作者: disc99(disc99.g@gmail.com)</p>
+
+<p>链接: <a href="https://qiita.com/disc99/items/cfca50a32240284578bb">https://qiita.com/disc99/items/cfca50a32240284578bb</a></p>
+
+<h3 id="面向rest-api的设计">面向REST API的设计</h3>
+
+<p>最近的系统由于比较重视对于各种各样的终端设备的适配性以及可扩展性, 因此普遍开始采用微服务架构.有了微服务架构,就可以将各个系统彼此分割开并使用轻量的API进行对接. 而在这里所使用的API往往就是所谓的<strong>REST API</strong></p>
+
+<p>但是, 为了设计这样的API, 要慎重考虑并选择的要素有很多:</p>
+
+<ul>
+<li>URL, 参数, 异常的设计</li>
+<li>对应不同编程语言的函数库的设计, 以及对应不同服务器, 客户端的选择与设计</li>
+<li>认证, 鉴权设计</li>
+<li>API文档管理的方法</li>
+<li>单元测试, 集成测试, mock, Consumer-Driven Contracts等等, 测试方法的选定</li>
+<li>开发工具的选择</li>
+</ul>
+
+<p>在缺乏绝对标准规范的状况下, 这些问题将随着系统规模的增大以及团队成员的增加而变得越发复杂, 时间大量地消耗在了设计/管理等方面, 使得原本想要投入功能开发地时间反而越来越少.</p>
+
+<h3 id="grpc是个啥">gRPC是个啥？</h3>
+
+<p>gRPC是在2015年2月由Google公开的一款在Google内部也一直被使用的开源RPC框架. 它主要有以下一些特征:</p>
+
+<ul>
+<li>默认的数据序列化协议格式是Protocol Buffers(gRPC也支持其他协议格式,不过谈及gRPC通常都是用Protocol Buffers来做例子, 因此本文以使用Protocol Buffers为前提进行说明)
+
+<ul>
+<li>通过<a href="https://zh.wikipedia.org/wiki/%E6%8E%A5%E5%8F%A3%E6%8F%8F%E8%BF%B0%E8%AF%AD%E8%A8%80">IDL</a>来保证不同语言之间的通信使用一致的数据类型</li>
+<li>对应了多种编程语言(C++, Java, Go, Python, Ruby, Node.js, Android Java, C#, Objective-C, PHP等)</li>
+<li>保持了数据序列化的兼容性</li>
+</ul></li>
+<li>客户端/服务端之间通信用代码可自动生成</li>
+<li>基于HTTP/2进行通信
+
+<ul>
+<li>并非仅仅是传统的<strong>请求/响应</strong>的通信形式, 也可以使用基于Streaming的双方向通信</li>
+</ul></li>
+</ul>
+
+<h3 id="应用案例">应用案例</h3>
+
+<p>以Google为首, 国内外有大量的应用案例:</p>
+
+<h4 id="海外">海外</h4>
+
+<ul>
+<li>Google</li>
+<li>Square</li>
+<li>Netflix</li>
+<li>CoreOS</li>
+<li>Docker</li>
+<li>Cockroachdb</li>
+<li>Cisco</li>
+<li>Juniper Networks</li>
+</ul>
+
+<h4 id="国内-译注-指日本国内">国内(<em>译注: 指日本国内</em>)</h4>
+
+<ul>
+<li><a href="https://www.mercari.com/">Mercari</a>(<em>译注: 日本的一家C2C的二手交易在线平台</em>)</li>
+<li><a href="https://abema.tv/">AbemaTV</a>(<em>译注: 日本的一家互联网电视台</em>)</li>
+<li><a href="http://dwango.co.jp/">ドワンゴ</a>(<em>译注: 日本的一家综合网络娱乐服务提供商, 提供包括网络直播, 网络视频, 网络游戏等一系列娱乐服务</em>)</li>
+</ul>
+
+<h3 id="使用方法">使用方法</h3>
+
+<ol>
+<li><code>.proto</code>的定义</li>
+<li>生成源代码</li>
+<li>服务端, 客户端逻辑的实现</li>
+<li>执行</li>
+</ol>
+
+<p>所谓的基本使用方法就是编辑后缀名为<code>.proto</code>的定义文件, 将这些定义文件作为输入, 运用命令行工具生成所需编程语言的服务端/客户端代码.</p>
+
+<p>生成的代码中, 实际上是包含了为了进行C/S间通信的gRPC Server, gRPC Stub, 对应的编程语言接口等一系列代码. 真正在实现服务端/客户端逻辑的时候, 实际上是结合业务逻辑调用所生成的接口代码并在实现中对服务端的环境, 通信设定等进行实现.</p>
+
+<p>最后, 只需要启动了嵌入了gRPC Server的服务端, 并在客户端经由gRPC stub进行实际的C/S间通信.  相关的概念图如下:</p>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/20180603/grpc_concept.png"
+        alt="gRPC Concept">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<p>关于使用的更详细内容, 由于随着所用语言的不通, 在细节上多少会存在一些差异, 而且有很多人也都介绍过了相应的内容, 因此关于这些细节可以去查阅gRPC的官方网站或其他人所写的文章即可.</p>
+
+<p>由于实际通信时受送信的消息(<strong>数据结构</strong>)以及受送信的服务(<strong>调用逻辑</strong>)都是基于.proto定义文件的记述而自动生成代码, 因此微服务的实现中只需要去调用这些生成的代码即可, 就不需要对原本REST API所需的通信形式以及通信方法进行详细设计了.</p>
+
+<h3 id="适配rest-api">适配REST API</h3>
+
+<p>gRPC通信时使用的数据格式默认是<a href="https://en.wikipedia.org/wiki/Protocol_Buffers">Protocol Buffers</a>格式, 而外部工具或者已实现的Web前端中的JavaScript代码仍然期望调用的是REST API. 在这里场景下, 使用<a href="https://github.com/grpc-ecosystem/grpc-gateway">grpc-gateway</a>对一个基于gRPC开发的微服务进行REST API适配是最方便的途径.</p>
+
+<p>它实质就是一个gRPC服务的反向代理, 专门用来提供相应的REST API.
+下图很好地说明了它的实质:</p>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/20180603/grpc_replacing_rest.png"
+        alt="gRPC&#39;s reverse-proxy">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<p>即, API客户端以REST API的形式调用上图的反向代理, 该反向代理又是基于.proto定义文件生成的, 因此将这个REST形式的请求转换成一个基于gRPC的请求, 从而和基于gRPC开发的微服务建立起通信.</p>
+
+<p>使用适配<code>grpc-gateway</code>进行适配的方法如下所示:</p>
+
+<ol>
+<li>在.proto文件中追加面向REST API的专有选项</li>
+<li>运用命令行工具生成反向代理的代码(Go语言)</li>
+<li>在生成的代码中追加基于gRPC开发的微服务的服务器信息等环境信息</li>
+<li>执行</li>
+</ol>
+
+<p>使用了<code>grpc-gateway</code>就可以让基于gRPC开发的微服务照样可以通过REST API的方式来调用. 而且, 由于生成的反向代理的代码是Go语言的, 生成的代码经过编译后就只是一个可执行文件, 因此也不需要复杂的反向代理服务器配置值类的, 使用起来非常方便.</p>
+
+<p>另外, 生成的代码仅仅是对微服务本身的反向代理而已, 基于gRPC开发微服务仍然可用任何编程语言.</p>
+
+<p>更为便利的是, <code>grpc-gateway</code>还提供了面向Swagger的JSON定义生成功能,这样一来, 经过适配的gRPC微服务的REST API文档也可以直接使用 Swagger UI来进行输出了.</p>
+
+
+
+<div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-1">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/20180603/adjusted_service_swagger_output.png"
+        alt="适配后的微服务在Swagger上的输出例">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<h3 id="残留的课题">残留的课题</h3>
+
+<p>尽管使用gRPC构筑微服务有很多好处, 现时点仍然残留了不少课题:</p>
+
+<ul>
+<li>面向HTTP/2的基础环境构建</li>
+<li>序列化后的通信内容如何监控</li>
+<li>前端不再能直接使用JavaScript来调用微服务(需要经过<code>grpc-gateway</code>中转适配)</li>
+<li>开发团队对于新技术的学习成本</li>
+</ul>
+
+<h3 id="总结">总结</h3>
+
+<p>尽管 REST API已经被广泛普及了, 但是它其实并非拥有一个固定下来的绝对的指导原则. 由于自由度很高, 因此交由开发者进行选择的要素有很多. 而这有时就相当于是一把悬在头顶的达摩克利斯之剑——因为一旦选择出现了失误, 它将极可能立刻转变成团队的技术债.</p>
+
+<p>而gRPC则与之不同, 它有相当多确定的(Fixed)特性规格, 因此可以把 各种语言的服务端/客户端代码的生成, 性能问题, 以及必要时的REST API适配和Swagger UI对应等问题统统交给它. 当然, gRPC<strong>不是银弹</strong>,  它并不能解决所有问题, 但是使用它的话由于可以尽快地让通信功能动起来, 因此在某种程度上可以让我们把精力和资源更加集中在本就应该优先展开的业务功能开发上.</p>
+
+<p>因此, 如果你觉得你的团队在REST API的设计方面, 或者在REST API开发的规划方面已经花费了大量时间的情况下, 我认为是值得探讨一下使用gRPC的可行性的.</p>
+
+  <div>
+  <br/><br/>
+  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">
+    <img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png" />
+  </a><br/>
+  本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">知识共享署名-非商业性使用-相同方式共享 3.0 中国大陆许可协议</a>进行许可。
+  </div>
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part03/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="https://xiaowing.github.io/post/20180513_write_pgfdw_in_golang_part03/">双剑合璧——当PG的FDW遇上GO(之三)</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+  </div>
+</div>
+
+
+
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'wingsdak';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+</div>
+
+</div>
+</div>
+<script src="https://xiaowing.github.io/js/ui.js"></script>
+
+
+
+
+</body>
+</html>
+

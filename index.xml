@@ -7,10 +7,40 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>&amp;copy; Licensed under CC BY-NC-SA.</copyright>
-    <lastBuildDate>Sun, 13 May 2018 23:02:33 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 03 Jun 2018 23:41:52 +0800</lastBuildDate>
     
 	<atom:link href="https://xiaowing.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>[译文]厌倦了REST API设计时的gRPC入门</title>
+      <link>https://xiaowing.github.io/post/20180603_learning_grpc_when_tired_of_restapi/</link>
+      <pubDate>Sun, 03 Jun 2018 23:41:52 +0800</pubDate>
+      
+      <guid>https://xiaowing.github.io/post/20180603_learning_grpc_when_tired_of_restapi/</guid>
+      <description>&lt;div class=&#34;pure-g&#34;&gt;
+
+  
+  
+  
+  
+  &lt;div class=&#34;pure-u-1-1&#34;&gt;
+    &lt;div style=&#34;padding: 0 .2em&#34;&gt;
+      &lt;img
+        class=&#34;pure-img-responsive&#34;
+        src=&#34;https://xiaowing.github.io/img/post/grpc_logo.png&#34;
+        alt=&#34;gRPC Logo&#34;&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  
+
+&lt;/div&gt;
+
+
+&lt;p&gt;我对&lt;a href=&#34;https://blog.csdn.net/qq_16681169/article/details/73442330&#34;&gt;微服务架构&lt;/a&gt;一直都饶有兴趣, 不过由于我目前从事的开发跟这一切半毛钱关系也没有, 所以一直也就只能站在局外人的角度看个热闹. 前端时间在&lt;a href=&#34;https://qiita.com&#34;&gt;Qiita&lt;/a&gt;上看到一篇关于使用&lt;a href=&#34;https://grpc.io/&#34;&gt;gRPC&lt;/a&gt;来开发微服务的文章觉得很有意思, 正好gRPC也是我今年想学的技术, 所以就把这篇文章翻译成了中文&amp;hellip;&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>双剑合璧——当PG的FDW遇上GO(之三)</title>
