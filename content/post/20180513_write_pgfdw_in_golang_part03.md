@@ -186,6 +186,11 @@ Writing a FDW is fun.
 
 (*fin*)
 
+*本文已投稿至 PG中文社区 以及 DBAPlus社区，并获发表*
+
+* *[http://www.postgres.cn/news/viewone/1/337](http://www.postgres.cn/news/viewone/1/337)*
+* *[http://dbaplus.cn/news-19-2090-1.html](http://dbaplus.cn/news-19-2090-1.html)*
+
 ## 参考资料
 
 * Peter Eisentraut, "SQL/MED and PostgreSQL"[EB/OL], https://wiki.postgresql.org/images/4/4c/SQLMED-FOSDEM2009.pdf, 2009
