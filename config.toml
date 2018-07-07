@@ -31,19 +31,19 @@ paginate = 10
   # Shown in the side menu.
   [[menu.main]]
     name = "Home"
-    pre = "<i class='fa fa-home fa-fw'></i>"
+    pre = "<i class='iconfont icon-home'></i>"
     weight = 0
     identifier = "home"
     url = "/"
   [[menu.main]]
     name = "Posts"
-    pre = "<i class='fa fa-list fa-fw'></i>"
+    pre = "<i class='iconfont icon-catalog'></i>"
     weight = 1
     identifier = "post"
     url = "/post/"
   [[menu.main]]
     name = "About"
-    pre = "<i class='fa fa-user fa-fw'></i>"
+    pre = "<i class='iconfont icon-person'></i>"
     weight = 2
     identifier = "about"
     url = "/about/"
@@ -54,13 +54,13 @@ paginate = 10
   #   url = "/contact/"
   [[menu.main]]
     name = "Topics"
-    pre = "<i class='fa fa-folder fa-fw'></i>"
+    pre = "<i class='iconfont icon-folder'></i>"
     weight = 3
     identifier = "topic"
     url = "/topics/"
   [[menu.main]]
     name = "Tags"
-    pre = "<i class='fa fa-tags fa-fw'></i>"
+    pre = "<i class='iconfont icon-tags'></i>"
     weight = 4
     identifier = "tag"
     url = "/tags/"
