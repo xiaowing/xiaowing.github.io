@@ -14,7 +14,7 @@ topics = [
 +++
 
 {{< fluid_imgs
-  "pure-u-1-1|/img/post/grpc_logo.png|gRPC Logo"
+  "pure-u-1-2|/img/post/grpc_logo.png|gRPC Logo"
 >}}
 
 我对[微服务架构](https://blog.csdn.net/qq_16681169/article/details/73442330)一直都饶有兴趣, 不过由于我目前从事的开发跟这一切半毛钱关系也没有, 所以一直也就只能站在局外人的角度看个热闹. 前端时间在[Qiita](https://qiita.com)上看到一篇关于使用[gRPC](https://grpc.io/)来开发微服务的文章觉得很有意思, 正好gRPC也是我今年想学的技术, 所以就把这篇文章翻译成了中文......
