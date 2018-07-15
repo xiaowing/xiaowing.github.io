@@ -7,10 +7,40 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>&amp;copy; Licensed under CC BY-NC-SA.</copyright>
-    <lastBuildDate>Sun, 03 Jun 2018 23:41:52 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 15 Jul 2018 22:42:33 +0800</lastBuildDate>
     
 	<atom:link href="https://xiaowing.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Nokia 7 Plus入手三十日评测</title>
+      <link>https://xiaowing.github.io/post/20180715_review_of_nokia_7p/</link>
+      <pubDate>Sun, 15 Jul 2018 22:42:33 +0800</pubDate>
+      
+      <guid>https://xiaowing.github.io/post/20180715_review_of_nokia_7p/</guid>
+      <description>&lt;div class=&#34;pure-g&#34;&gt;
+
+  
+  
+  
+  
+  &lt;div class=&#34;pure-u-1-3&#34;&gt;
+    &lt;div style=&#34;padding: 0 .2em&#34;&gt;
+      &lt;img
+        class=&#34;pure-img-responsive&#34;
+        src=&#34;https://xiaowing.github.io/img/post/20180715/nokia_7_plus_black.jpg&#34;
+        alt=&#34;诺记7Plus官宣图&#34;&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  
+
+&lt;/div&gt;
+
+
+&lt;p&gt;由于之前用的三星Galaxy S6 Edge已经用了30个月+, 所以从今年年初开始就一直考虑换手机。得知了诺基亚会推出7 Plus后便一直挂念，并终于在Release 4个月后的京东618年中大促时下手买了这款手机。用到现在已有30余日，因此来简单做点Review&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>[译文]厌倦了REST API设计时的gRPC入门</title>
@@ -24,7 +54,7 @@
   
   
   
-  &lt;div class=&#34;pure-u-1-1&#34;&gt;
+  &lt;div class=&#34;pure-u-1-2&#34;&gt;
     &lt;div style=&#34;padding: 0 .2em&#34;&gt;
       &lt;img
         class=&#34;pure-img-responsive&#34;
