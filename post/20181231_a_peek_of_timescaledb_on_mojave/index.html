@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.40.3" />
+
+  <title>在MacOS Mojave上管中窥豹TimescaleDB &middot; 小wing的驿站</title>
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/custom.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+  
+  
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-9033761003757481",
+            enable_page_level_ads: true
+       });
+  </script>
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css"  crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js" integrity="sha256-fGPu+icKh985TLPhO2v68U7i0CW0dE4kiR06RN4O6jo=" crossorigin="anonymous"></script>
+  
+  
+  
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+  
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="https://xiaowing.github.io/img/favicon.ico" type="image/x-icon" />
+
+  
+    <link rel="stylesheet" href="https://xiaowing.github.io/css/my.css">
+  
+  
+    <script src="https://xiaowing.github.io/js/my.js"></script>
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+  <a class="pure-menu-heading brand" href="https://xiaowing.github.io/">小wing的驿站</a>
+
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/post/"><i class='iconfont icon-catalog'></i>Posts</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/about/"><i class='iconfont icon-person'></i>About</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/topics/"><i class='iconfont icon-folder'></i>Topics</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/tags/"><i class='iconfont icon-tags'></i>Tags</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/"><i class='iconfont icon-home'></i>Home</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://twitter.com/xiaowing" target="_blank"><i class="iconfont icon-twitter"></i>Twitter</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="http://weibo.com/u/3304350204" target="_blank"><i class="iconfont icon-weibo"></i>Weibo</a>
+    </li>
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://instagram.com/xiaowing" target="_blank"><i class="iconfont icon-instagram"></i>Instagram</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/xiaowing" target="_blank"><i class="iconfont icon-github"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://zh.wikipedia.org/wiki/User:%e5%b0%8fwing" target="_blank"><i class="iconfont icon-wikipedia"></i>Wikipedia</a>
+    </li>
+    
+
+    
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://www.zhihu.com/people/xiaowing/activities" target="_blank"><i class="iconfont icon-zhihu"></i>zhihu</a>
+    </li>
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://www.douban.com/people/wing0630" target="_blank"><i class="iconfont icon-douban"></i>douban</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small>&copy; Licensed under CC BY-NC-SA.</small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>在MacOS Mojave上管中窥豹TimescaleDB</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="iconfont icon-calendar"></i>
+    <time>31 Dec 2018, 14:19</time>
+  </div>
+
+  
+
+  
+  
+  
+  <div>
+    <i class="iconfont icon-folder"></i>
+    
+      <a class="post-taxonomy-topic" href="https://xiaowing.github.io/topics/%E6%8A%80%E6%9C%AF">技术</a>
+    
+  </div>
+  
+  
+
+  
+  
+  
+  <div>
+    <i class="iconfont icon-tags"></i>
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/database">database</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/time-series">time-series</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/postgresql">postgresql</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  <div class="pure-g">
+
+  
+  
+  
+  
+  <div class="pure-u-1-3">
+    <div style="padding: 0 .2em">
+      <img
+        class="pure-img-responsive"
+        src="https://xiaowing.github.io/img/post/timescale_logo.png"
+        alt="Logo of TimescaleDB">
+    </div>
+  </div>
+  
+
+</div>
+
+
+<p>年底换了工作, 因此未来一段时间的工作方向会集中在<a href="https://en.wikipedia.org/wiki/Time_series_database">时序数据库</a>.然后恰逢今年9月,号称第一款基于PostgreSQL的时序数据库 <a href="https://en.wikipedia.org/wiki/Time_series_database">TimescaleDB</a>正式推出了可用于生产环境的1.0版本。于是就赶快先试用了一把&hellip;</p>
+
+<p></p>
+
+<h2 id="编译安装">编译安装</h2>
+
+<p>由于换了新东家,所以开发机换成了Macbook。因此顺带记录一下TimescaleDB在<strong>Mac OS 10</strong>的编译安装过程。</p>
+
+<p>仔细研究了一下TimescaleDB，发现它本质上是PostgreSQL的一个<strong>Extension</strong>. 因此下文将从PG在Mac OS 10上的编译安装和TimescaleDB插件的编译安装两部分来叙述。</p>
+
+<h3 id="postgresql在mac-os-10上的编译安装">PostgreSQL在Mac OS 10上的编译安装</h3>
+
+<p>考虑到PG11已经发布，所以选择编译安装PG11.1的代码，而且PG11主打的是LLVM，所以编译安装时自然要选装LLVM的支持, 在Mac OS上需要以下的准备过程：</p>
+
+<ol>
+<li><p>安装XCode command line tools</p>
+
+<p>这是编译安装的基本，它会安装上类似gcc, make等一系列GNU工具</p>
+
+<pre><code class="language-sh">$xcode-select --install
+</code></pre></li>
+
+<li><p>安装llvm工具库</p>
+
+<p>PG的LLVM支持需要使用<code>llvm-config</code>工具，这是Mac下集成了llvm功能的Clang环境无法替代的。因此需要单独下载并安装. 下载并安装直接使用<code>$brew install llvm</code>即可，之后llvm会被安装到/usr/local/opt路径。</p>
+
+<p>安装后需要配置环境变量<code>PATH</code>及以下两个编译器相关的环境变量:</p>
+
+<pre><code class="language-sh">$export LDFLAGS=&quot;-L${llvm安装路径}/lib&quot;
+$export CPPFLAGS=&quot;-I${llvm安装路径}/include&quot;
+$export PATH=${llvm安装路径}/bin:${PATH}
+</code></pre></li>
+
+<li><p>PG安装三板斧</p>
+
+<p>接下来就是用三板斧(configure-make-make install)编译安装PG了, 流程上并没有什么特殊，但是由于Mac环境的特殊性，在<code>configure</code>阶段有以下注意事项:</p>
+
+<ol>
+<li><p>由于Mac OS中已提供了BSD许可证的<code>libedit</code>, 鉴于Mac系产品的商用性质，所以应当使用<code>libedit</code>代替GPL协议的<code>libreadline</code></p></li>
+
+<li><p>若要编译后的PG支持LLVM，需要在<code>configure</code>指定<code>--with-llvm</code>并跟上<strong>llvm-config</strong>的路径</p></li>
+
+<li><p>需要在<code>configure</code>时通过指定<code>PG_SYSROOT</code>显式指定<strong>command line tools sdk</strong>，否则后面的代码编译时会连 <code>stdio.h</code>这样的标准库头文件都找不到。而SDK的路径通常在<code>/Library/Developer/CommandLineTools/SDKs/MacOS.sdk/</code></p></li>
+</ol>
+
+<p>考虑到以上注意事项. 本例中的三板斧命令展开即为</p>
+
+<pre><code class="language-sh">$cd postgresql-11.1/
+$./configure --prfix=${PG的目标安装目录} --with-libedit-preferred --with-llvm LLVM_CONFIG='/usr/local/opt/llvm/bin/llvm-config' PG_SYSROOT=/Library/Developer/CommandLineTools/SDKs/MacOS.sdk/
+$make
+$make install
+</code></pre></li>
+</ol>
+
+<h3 id="timescaledb插件的编译安装">Timescaledb插件的编译安装</h3>
+
+<p>由于Timescaledb是PG的插件，与大部分PG插件相同，其编译安装需要依赖<code>pg_config</code>命令。因此在编译安装前首先确保<code>pg_config</code>可以直接使用(如已分别将安装后的PG的bin目录和lib目录导出到了<code>PATH</code>变量和<code>DYLD_LIBRARY_PATH</code>变量)</p>
+
+<ol>
+<li><p>执行Timescaledb的bootstrap.</p>
+
+<p>在执行bootstrap时，脚本会调用<code>pg_config</code>确认PG环境有无对OpenSSL的支持。在本例中, 我在编译PG时未指定<code>--with-openssl</code>，因此执行bootstrap时需要额外指定<code>-DUSE_OPENSSL=0</code></p>
+
+<pre><code class="language-sh">$cd timescaledb-1.1.0
+$./bootstrap
+</code></pre></li>
+
+<li><p>执行编译和安装</p>
+
+<p>这一步没有什么特殊的，在步骤1.的基础上执行下述命令即可</p>
+
+<pre><code class="language-sh">$cd build
+$make
+$make install
+</code></pre></li>
+</ol>
+
+<p>如此，TimescaleDB便已安装完成。与大部分PG插件相同，它的库文件(二进制)会被安装到<code>${PG的目标安装目录}/lib</code>目录下，它的SQL脚本会被安装至<code>${PG的目标安装目录}/share</code>目录下.</p>
+
+<p>但是安装完毕仍然是不够的，若要正常使用TimescaleDB，还需要以下设置</p>
+
+<ol>
+<li><p>PG实例的设置</p>
+
+<p>通过PG的<a href="https://www.postgresql.org/docs/11/app-initdb.html">initdb</a>命令创建实例后，需要在实例目录的配置文件<code>postgresql.conf</code>中将timescaledb设置为预加载库，这样timescaledb的库文件才会随实例启动而加载</p>
+
+<pre><code class="language-sh">#postgresql.conf
+shared_preload_libraries = 'timescaledb', ...
+</code></pre></li>
+
+<li><p>在目标database中启用timescaledb</p>
+
+<p>在上述步骤3.完成后，重启PG实例。之后使用psql连接至PG实例上的某个Database，通过psql执行下述语句</p>
+
+<pre><code class="language-sql">CREATE EXTENSION timescaledb;
+</code></pre>
+
+<p>这便会<a href="https://www.postgresql.org/docs/11/sql-createextension.html">在且仅在</a>当前Database范围内启用timescaledb.</p>
+
+<p>到此为止，整个安装过程才算结束</p></li>
+</ol>
+
+<h2 id="试用">试用</h2>
+
+<p>根据Timescaledb的手册可知, 使用Timescaledb创建一张时序数据表本身就是创建一张普通表, 加上将该普通表创建Hypertable的步骤. 因此可以按下述方式试用:</p>
+
+<ol>
+<li><p>创建普通表</p>
+
+<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS foobar (
+    time TIMESTAMP NOT NULL,
+    metric VARCHAR(32) DEFAULT 'cpu',
+    usage  DOUBLE PRECISION  DEFAULT RANDOM(),
+    temperature DOUBLE PRECISION DEFAULT (RANDOM()*(40-10)+10)
+);
+</code></pre>
+
+<p>由于这张表后面需要升级为时序表，因此遵照Timescaledb的建议在表中包含了一个<code>TIMESTAMP</code>类型的字段(尽管这不是必须的)</p></li>
+
+<li><p>利用Timescaledb的接口<code>create_hypertable()</code>(实际上就是一个SQL函数)将上述普通表升级为受Timescaledb管理的时序表</p>
+
+<pre><code class="language-sql">SELECT create_hypertable('foobar', 'time'); 
+</code></pre>
+
+<p>该接口的第二参数需要接收表中的一个用于存放时间戳数据的列名以作为该时序表默认分区时的分区键, 这也是为什么Timescaledb推荐时序表中包含一个<code>TIMESTAMP</code>类型字段的原因</p></li>
+</ol>
+
+<p>这样一来, 一张时序表就创建成功了。接下来将从以下两个角度来对时序表进行一些简单评测.
+* 时序库的常用操作
+* 时序表的内部构成</p>
+
+<h3 id="常用操作">常用操作</h3>
+
+<ul>
+<li><p>写入 &amp; 数据点查询</p>
+
+<p>时序库最大的试用场景便是时序数据的写入。在Timescaledb中可以很简单地利用<code>INSERT</code>语句进行写入. 以上文创建的时序表<code>foobar</code>为例:</p>
+
+<pre><code class="language-sql">timedb=# INSERT INTO foobar(time) SELECT * FROM generate_series(now(), now() + '14 days', '1 second');
+INSERT 0 1209601
+timedb=#
+timedb=# SELECT * FROM foobar LIMIT 10;
+            time            | metric |       usage       |   temperature
+----------------------------+--------+-------------------+------------------
+ 2019-01-01 15:00:58.629342 | cpu    | 0.536569389514625 | 15.0133295543492
+ 2019-01-01 15:00:59.629342 | cpu    | 0.161968716420233 | 27.6340685179457
+ 2019-01-01 15:01:00.629342 | cpu    | 0.878905369434506 | 31.2941490672529
+ 2019-01-01 15:01:01.629342 | cpu    |  0.80755941895768 | 14.5778051810339
+ 2019-01-01 15:01:02.629342 | cpu    | 0.796080893371254 | 32.3037584684789
+ 2019-01-01 15:01:03.629342 | cpu    | 0.200302240438759 | 32.3949345899746
+ 2019-01-01 15:01:04.629342 | cpu    |  0.20913993800059 | 31.4002282964066
+ 2019-01-01 15:01:05.629342 | cpu    |  0.91796684730798 |  19.221549173817
+ 2019-01-01 15:01:06.629342 | cpu    | 0.849315787199885 | 11.5261871553957
+ 2019-01-01 15:01:07.629342 | cpu    | 0.468408294487745 | 38.0471089156345
+(10 rows)
+</code></pre>
+
+<p>当然, 如果是通过JDBC等数据库驱动程序的话，更可以利用<a href="https://viralpatel.net/blogs/batch-insert-in-java-jdbc/">批量插入接口</a>来获得更高的写入效率</p></li>
+
+<li><p>降精度聚合查询</p>
+
+<p>利用Timescaledb的特有接口<code>time_bucket()</code>, 再加上标准SQL的<code>GROUP BY</code>语句就可以很容易的实现降精度聚合查询</p>
+
+<pre><code class="language-sql">timedb=# SELECT time_bucket('5 minutes', time) AS five_min, avg(usage), max(temperature) FROM foobar GROUP BY five_min ORDER BY five_min DESC LIMIT 10;
+      five_min       |        avg        |       max
+---------------------+-------------------+------------------
+ 2019-01-15 15:00:00 | 0.511477737916412 |   39.75819949992
+ 2019-01-15 14:55:00 | 0.471913051234248 | 39.7251598956063
+ 2019-01-15 14:50:00 | 0.489521298462835 | 39.9647896923125
+ 2019-01-15 14:45:00 | 0.476991963624023 | 39.9298739805818
+ 2019-01-15 14:40:00 | 0.509973571114242 | 39.8932682536542
+ 2019-01-15 14:35:00 | 0.483743709454623 | 39.9439396383241
+ 2019-01-15 14:30:00 | 0.515407514680798 | 39.9820741685107
+ 2019-01-15 14:25:00 | 0.498390285711115 |  39.929482084699
+ 2019-01-15 14:20:00 | 0.504943751936468 | 39.9079268751666
+ 2019-01-15 14:15:00 | 0.526519591989927 |  39.821355114691
+(10 rows)
+</code></pre></li>
+
+<li><p>数据保存策略(Retention Policies)</p>
+
+<p><strong>数据保存策略</strong>是部分时序数据库(如Influxdb)提供的特性. 其着眼点在于时序数据的使用场景通常都是越新的数据越会被频繁使用, 超过了一段时间的时序数据则通常只需要归档保存.</p>
+
+<p>因此Retention Policies用于在数据写入时指定保存期限，超过时间后数据被自动删除或降精度归档。</p>
+
+<p>在Influxdb中，尚不支持完整的Retention Policies功能, 目前(截至v1.1)只是提供了一个<code>drop_chunks()</code>接口用于执行高性能的数据删除。Timescaledb建议用户配合crontab任务使用<code>drop_chunks()</code>来实现类似Retention Policies的功能</p></li>
+</ul>
+
+<p>综上, 时序库中常用的功能, Timescaledb算是在PG的框架下差强人意地予以了实现</p>
+
+<h3 id="内部构成">内部构成</h3>
+
+<p>接下来研究一下Timescaledb中的时序表内部构成是什么样子的。仍然以上文创建的<code>foobar</code>表为例</p>
+
+<p>首先看一下<code>create_hypertable()</code>对普通表偷偷地做了什么改动:</p>
+
+<pre><code class="language-sql">timedb=# \d+ foobar
+...(表结构略)...
+Indexes:
+    &quot;foobar_time_idx&quot; btree (&quot;time&quot; DESC)
+Triggers:
+    ts_insert_blocker BEFORE INSERT ON foobar FOR EACH ROW EXECUTE PROCEDURE _timescaledb_internal.insert_blocker()
+Child tables: _timescaledb_internal._hyper_4_10_chunk,
+              _timescaledb_internal._hyper_4_11_chunk,
+              _timescaledb_internal._hyper_4_12_chunk
+</code></pre>
+
+<p>可以发现<code>create_hypertable()</code>对指定的普通表做了以下更改:</p>
+
+<ol>
+<li>为传入<code>create_hypertable()</code>第二参数的字段创建了一个默认的Btree索引</li>
+<li>为表<code>foobar</code>创建了一个BEFORE INSERT的触发器. 阅读代码后发现该触发器实际上是屏蔽了对原始<code>foobar</code>的写操作。</li>
+<li>为<code>foobar</code>创建了一系列子表(这一点只有当有数据写入时才能够呈现出来)</li>
+</ol>
+
+<p>更深入一点可以发现, 其实通过<code>create_hypertable()</code>升级的时序表的信息都写入了timescaledb的内部表<code>_timescaledb_catalog.hypertable</code>中，写入的信息如下所示:</p>
+
+<pre><code class="language-sql">timedb=# SELECT * FROM _timescaledb_catalog.hypertable WHERE table_name='foobar';
+
+ id | schema_name | table_name | associated_schema_name | associated_table_prefix | num_dimensions | chunk_sizing_func_schema |  chunk_sizing_func_name  | chunk_target_size
+----+-------------+------------+------------------------+-------------------------+----------------+--------------------------+--------------------------+-------------------
+  4 | public      | foobar     | _timescaledb_internal  | _hyper_4                |              1 | _timescaledb_internal    | calculate_chunk_interval |                 0
+(1 row)
+</code></pre>
+
+<p>记录了原始表的以下扩展信息:</p>
+
+<ul>
+<li>原始的Schema名 &amp; Table名</li>
+<li>原始表在Timescaledb中所关联子表的前缀名</li>
+<li>子表的自动分区的Dimensions数</li>
+<li>自动分区的计算函数(即决定何时开始一个新分区(子表))</li>
+</ul>
+
+<p>这里的原始表和子表的关系实际上就是TimescaleDB实现的一个最核心的特性——时序表的<strong>自动分区</strong>.对于这个核心特性, 我个人的理解如下:</p>
+
+<p>试想一下如果是在PG中的普通表, 为了快速进行数据点查询，那么必须要对时间戳字段上B-tree索引。根据《Database System Implementation》的说法, 理论上B-tree索引的最佳性能通常是确保树高在<strong>3</strong>左右,但树高为3的B-Tree所能索引的数据行数不过是<strong>千万~亿</strong>这个级别。而时序数据库的使用场景下, 一组设备/监控项在一天之内的数据写入恐怕就要达到<strong>千万~亿</strong>级数据。因此随着后续数据不断写入, 树高会增加，这会带来写入时叶节点的不断分裂，从而降低写性能; 同样，树高的增长也会对读性能带来负面影响。这便是普通表不适用于时序数据库的一个最大短板。</p>
+
+<p>Timescaledb瞄准的实际上就是上述短板, 通过自动分区的方式，确保每一个子表(分区)的索引规模都维持在一个较小的范围从而提升写和读的性能。</p>
+
+<h2 id="小结">小结</h2>
+
+<p>如果说硬要从功能角度给Timescale的优缺点做一个第一印象的小结, 我的第一印象的评价如下:</p>
+
+<ul>
+<li><p>优点</p>
+
+<ul>
+<li>完整的SQL支持, 特别是支持与普通表的JOIN查询</li>
+<li>背靠PG好乘凉(稳定性值得信赖)</li>
+</ul></li>
+
+<li><p>缺点</p>
+
+<ul>
+<li>时序功能使用略不直观, 需要预先设计Scheme</li>
+<li>尚不支持自动的Retention Policies, 增加运维成本</li>
+</ul></li>
+</ul>
+
+<p>以上便是对Timescaledb进行试用后整理的一点内容, 当然Timescaledb自身索要包含的内容还远不仅此。</p>
+
+<p>不过由于TimescaleDB是基于PG做的，所以不可避免的，它的时序数据是有Scheme的. 这样的数据模型和当前大部分时序数据库的数据模型(<strong>metric-tagset</strong>模型)都截然不同. 由于时序数据库发展时间尚不长，目前也没有一个标准，所以这两种模型孰优孰劣, 现在还暂时给不了一个定论, 包括从网上的性能评测报告来看, 即便是时序数据的场景下, 也暂时无法断定哪一种模型更好。后面继续拭目以待吧.</p>
+
+  <div>
+  <br/><br/>
+  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">
+    <img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png" />
+  </a><br/>
+  本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">知识共享署名-非商业性使用-相同方式共享 3.0 中国大陆许可协议</a>进行许可。
+  </div>
+  <br/><br/>
+  <div class="social-share" data-sites="wechat,weibo,twitter,facebook,douban" data-mobile-sites="wechat,weibo"></div>
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="https://xiaowing.github.io/post/20180715_review_of_nokia_7p/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="https://xiaowing.github.io/post/20180715_review_of_nokia_7p/">Nokia 7 Plus入手三十日评测</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+  </div>
+</div>
+
+
+
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'wingsdak';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+</div>
+
+</div>
+</div>
+<script src="https://xiaowing.github.io/js/ui.js"></script>
+
+
+
+
+</body>
+</html>
+

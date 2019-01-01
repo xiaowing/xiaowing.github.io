@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://xiaowing.github.io/post/20181231_a_peek_of_timescaledb_on_mojave/</loc>
+    <lastmod>2018-12-31T14:19:05+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://xiaowing.github.io/post/20180715_review_of_nokia_7p/</loc>
     <lastmod>2018-07-15T22:42:33+08:00</lastmod>
   </url>
@@ -101,7 +106,7 @@
   
   <url>
     <loc>https://xiaowing.github.io/tags/database/</loc>
-    <lastmod>2018-01-27T21:08:20+08:00</lastmod>
+    <lastmod>2018-12-31T14:19:05+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -137,13 +142,13 @@
   
   <url>
     <loc>https://xiaowing.github.io/tags/postgresql/</loc>
-    <lastmod>2018-05-13T23:02:33+08:00</lastmod>
+    <lastmod>2018-12-31T14:19:05+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://xiaowing.github.io/post/</loc>
-    <lastmod>2018-07-15T22:42:33+08:00</lastmod>
+    <lastmod>2018-12-31T14:19:05+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -166,6 +171,12 @@
   </url>
   
   <url>
+    <loc>https://xiaowing.github.io/tags/time-series/</loc>
+    <lastmod>2018-12-31T14:19:05+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://xiaowing.github.io/topics/</loc>
     <priority>0</priority>
   </url>
@@ -178,7 +189,7 @@
   
   <url>
     <loc>https://xiaowing.github.io/</loc>
-    <lastmod>2018-07-15T22:42:33+08:00</lastmod>
+    <lastmod>2018-12-31T14:19:05+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -202,7 +213,7 @@
   
   <url>
     <loc>https://xiaowing.github.io/topics/%E6%8A%80%E6%9C%AF/</loc>
-    <lastmod>2018-06-03T23:41:52+08:00</lastmod>
+    <lastmod>2018-12-31T14:19:05+08:00</lastmod>
     <priority>0</priority>
   </url>
   

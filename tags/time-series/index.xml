@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Database on 小wing的驿站</title>
-    <link>https://xiaowing.github.io/tags/database/</link>
-    <description>Recent content in Database on 小wing的驿站</description>
+    <title>Time Series on 小wing的驿站</title>
+    <link>https://xiaowing.github.io/tags/time-series/</link>
+    <description>Recent content in Time Series on 小wing的驿站</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>&amp;copy; Licensed under CC BY-NC-SA.</copyright>
     <lastBuildDate>Mon, 31 Dec 2018 14:19:05 +0800</lastBuildDate>
     
-	<atom:link href="https://xiaowing.github.io/tags/database/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://xiaowing.github.io/tags/time-series/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -38,19 +38,6 @@
 
 
 &lt;p&gt;年底换了工作, 因此未来一段时间的工作方向会集中在&lt;a href=&#34;https://en.wikipedia.org/wiki/Time_series_database&#34;&gt;时序数据库&lt;/a&gt;.然后恰逢今年9月,号称第一款基于PostgreSQL的时序数据库 &lt;a href=&#34;https://en.wikipedia.org/wiki/Time_series_database&#34;&gt;TimescaleDB&lt;/a&gt;正式推出了可用于生产环境的1.0版本。于是就赶快先试用了一把&amp;hellip;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>我所理解的事务隔离级别</title>
-      <link>https://xiaowing.github.io/post/20180127_db_isolation_level/</link>
-      <pubDate>Sat, 27 Jan 2018 21:08:20 +0800</pubDate>
-      
-      <guid>https://xiaowing.github.io/post/20180127_db_isolation_level/</guid>
-      <description>&lt;p&gt;我发现有不少做应用的技术人员对于数据库的一些常识概念其实是理解不清的，这就导致了他们设计的应用中往往充斥了数据访问的相关错误却浑然不知。所以其实我还是比较乐意普及一些数据库常识的。&lt;/p&gt;
-
-&lt;p&gt;本文就是我在 &lt;a href=&#34;https://about.segmentfault.com/?utm_source=sf-footer&amp;amp;utm_medium=footer-nav&amp;amp;utm_campaign=about&amp;amp;utm_content=about-index&amp;amp;utm_term=%E5%85%B3%E4%BA%8E%E6%88%91%E4%BB%AC&#34;&gt;&lt;em&gt;segmentfault.com&lt;/em&gt;&lt;/a&gt; 上对 &amp;ldquo;&lt;strong&gt;怎么理解SQL的四个事务隔离级别？&lt;/strong&gt;&amp;ldquo;&lt;a href=&#34;https://segmentfault.com/q/1010000012178278/a-1020000012661683&#34;&gt;这个问题的回答&lt;/a&gt;:&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
     </item>

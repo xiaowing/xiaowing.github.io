@@ -33,7 +33,7 @@
     <item>
       <title>Database</title>
       <link>https://xiaowing.github.io/tags/database/</link>
-      <pubDate>Sat, 27 Jan 2018 21:08:20 +0800</pubDate>
+      <pubDate>Mon, 31 Dec 2018 14:19:05 +0800</pubDate>
       
       <guid>https://xiaowing.github.io/tags/database/</guid>
       <description></description>
@@ -87,7 +87,7 @@
     <item>
       <title>Postgresql</title>
       <link>https://xiaowing.github.io/tags/postgresql/</link>
-      <pubDate>Sun, 13 May 2018 23:02:33 +0800</pubDate>
+      <pubDate>Mon, 31 Dec 2018 14:19:05 +0800</pubDate>
       
       <guid>https://xiaowing.github.io/tags/postgresql/</guid>
       <description></description>
@@ -108,6 +108,15 @@
       <pubDate>Wed, 13 Sep 2017 21:37:02 +0800</pubDate>
       
       <guid>https://xiaowing.github.io/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Time Series</title>
+      <link>https://xiaowing.github.io/tags/time-series/</link>
+      <pubDate>Mon, 31 Dec 2018 14:19:05 +0800</pubDate>
+      
+      <guid>https://xiaowing.github.io/tags/time-series/</guid>
       <description></description>
     </item>
     
