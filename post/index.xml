@@ -7,10 +7,23 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>&amp;copy; Licensed under CC BY-NC-SA.</copyright>
-    <lastBuildDate>Mon, 31 Dec 2018 14:19:05 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 30 Jan 2019 23:50:00 +0800</lastBuildDate>
     
 	<atom:link href="https://xiaowing.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>一个小问题: Golang可执行程序的退出码</title>
+      <link>https://xiaowing.github.io/post/20190127_exit_code_of_go_program/</link>
+      <pubDate>Wed, 30 Jan 2019 23:50:00 +0800</pubDate>
+      
+      <guid>https://xiaowing.github.io/post/20190127_exit_code_of_go_program/</guid>
+      <description>&lt;p&gt;本周因为工作上的遍历需要, 用Go语言写了一个用于批量文本解析的命令行工具。由于这个工具是要嵌入shell脚本中运行的，所以在写该工具的异常处理时突然意识到一个问题: &lt;strong&gt;Go语言可执行程序的异常退出码该怎么设置？&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;于是带着这个非常细节的问题，稍稍调查了一下，结果发现还是有不少东西可说道说道的&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>在MacOS Mojave上管中窥豹TimescaleDB</title>

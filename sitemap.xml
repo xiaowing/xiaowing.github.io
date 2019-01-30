@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://xiaowing.github.io/post/20190127_exit_code_of_go_program/</loc>
+    <lastmod>2019-01-30T23:50:00+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://xiaowing.github.io/post/20181231_a_peek_of_timescaledb_on_mojave/</loc>
     <lastmod>2018-12-31T14:19:05+08:00</lastmod>
   </url>
@@ -112,7 +117,7 @@
   
   <url>
     <loc>https://xiaowing.github.io/tags/development/</loc>
-    <lastmod>2018-03-13T22:37:10+08:00</lastmod>
+    <lastmod>2019-01-30T23:50:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -124,7 +129,7 @@
   
   <url>
     <loc>https://xiaowing.github.io/tags/golang/</loc>
-    <lastmod>2018-05-13T23:02:33+08:00</lastmod>
+    <lastmod>2019-01-30T23:50:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -148,7 +153,7 @@
   
   <url>
     <loc>https://xiaowing.github.io/post/</loc>
-    <lastmod>2018-12-31T14:19:05+08:00</lastmod>
+    <lastmod>2019-01-30T23:50:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -189,7 +194,7 @@
   
   <url>
     <loc>https://xiaowing.github.io/</loc>
-    <lastmod>2018-12-31T14:19:05+08:00</lastmod>
+    <lastmod>2019-01-30T23:50:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -213,7 +218,7 @@
   
   <url>
     <loc>https://xiaowing.github.io/topics/%E6%8A%80%E6%9C%AF/</loc>
-    <lastmod>2018-12-31T14:19:05+08:00</lastmod>
+    <lastmod>2019-01-30T23:50:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -237,7 +242,7 @@
   
   <url>
     <loc>https://xiaowing.github.io/tags/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/</loc>
-    <lastmod>2018-03-13T22:37:10+08:00</lastmod>
+    <lastmod>2019-01-30T23:50:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   

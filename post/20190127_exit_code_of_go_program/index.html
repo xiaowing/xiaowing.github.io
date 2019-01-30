@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.40.3" />
+
+  <title>一个小问题: Golang可执行程序的退出码 &middot; 小wing的驿站</title>
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://xiaowing.github.io/css/custom.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+  
+  
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-9033761003757481",
+            enable_page_level_ads: true
+       });
+  </script>
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css"  crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js" integrity="sha256-fGPu+icKh985TLPhO2v68U7i0CW0dE4kiR06RN4O6jo=" crossorigin="anonymous"></script>
+  
+  
+  
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+  
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="https://xiaowing.github.io/img/favicon.ico" type="image/x-icon" />
+
+  
+    <link rel="stylesheet" href="https://xiaowing.github.io/css/my.css">
+  
+  
+    <script src="https://xiaowing.github.io/js/my.js"></script>
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+  <a class="pure-menu-heading brand" href="https://xiaowing.github.io/">小wing的驿站</a>
+
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/post/"><i class='iconfont icon-catalog'></i>Posts</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/about/"><i class='iconfont icon-person'></i>About</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/topics/"><i class='iconfont icon-folder'></i>Topics</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/tags/"><i class='iconfont icon-tags'></i>Tags</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://xiaowing.github.io/"><i class='iconfont icon-home'></i>Home</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://twitter.com/xiaowing" target="_blank"><i class="iconfont icon-twitter"></i>Twitter</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="http://weibo.com/u/3304350204" target="_blank"><i class="iconfont icon-weibo"></i>Weibo</a>
+    </li>
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://instagram.com/xiaowing" target="_blank"><i class="iconfont icon-instagram"></i>Instagram</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/xiaowing" target="_blank"><i class="iconfont icon-github"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://zh.wikipedia.org/wiki/User:%e5%b0%8fwing" target="_blank"><i class="iconfont icon-wikipedia"></i>Wikipedia</a>
+    </li>
+    
+
+    
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://www.zhihu.com/people/xiaowing/activities" target="_blank"><i class="iconfont icon-zhihu"></i>zhihu</a>
+    </li>
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://www.douban.com/people/wing0630" target="_blank"><i class="iconfont icon-douban"></i>douban</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small>&copy; Licensed under CC BY-NC-SA.</small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>一个小问题: Golang可执行程序的退出码</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="iconfont icon-calendar"></i>
+    <time>30 Jan 2019, 23:50</time>
+  </div>
+
+  
+
+  
+  
+  
+  <div>
+    <i class="iconfont icon-folder"></i>
+    
+      <a class="post-taxonomy-topic" href="https://xiaowing.github.io/topics/%E6%8A%80%E6%9C%AF">技术</a>
+    
+  </div>
+  
+  
+
+  
+  
+  
+  <div>
+    <i class="iconfont icon-tags"></i>
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/golang">golang</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/development">development</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://xiaowing.github.io/tags/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1">程序设计</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  <p>本周因为工作上的遍历需要, 用Go语言写了一个用于批量文本解析的命令行工具。由于这个工具是要嵌入shell脚本中运行的，所以在写该工具的异常处理时突然意识到一个问题: <strong>Go语言可执行程序的异常退出码该怎么设置？</strong></p>
+
+<p>于是带着这个非常细节的问题，稍稍调查了一下，结果发现还是有不少东西可说道说道的&hellip;</p>
+
+<p></p>
+
+<h2 id="什么是-退出码">什么是&rdquo;退出码&rdquo;</h2>
+
+<p>在现代操作系统中, “退出码”指的是子进程退出时返回给父进程的一个<strong>整数值</strong>, 用以标识子进程退出时的状态. 具体而言, 在Linux操作系统中, 子进程退出时通过<code>exit</code>系统调用设置退出码; 而父进程通过<code>wait</code>系统调用获得子进程的退出码。</p>
+
+<p>当我们在Shell中调用一个可执行文件(最典型的场景: 执行命令行工具)时, 实际上Shell进程会通过<code>execev</code>系统调用派生一个子进程来通过加载器加载该工具的可执行文件并执行(通常情况下此时shell进程会阻塞)。当命令执行完毕后，子进程退出，Shell进程继续。这时候通过下述命令即可获得刚刚退出的子进程的退出码</p>
+
+<pre><code class="language-sh">$echo $?
+</code></pre>
+
+<p>而关于退出码的语义, 事实上并没有一个标准的定义。只是在常年的最佳实践中形成一个共识:</p>
+
+<ul>
+<li><strong>零值</strong>表示子进程正常退出</li>
+<li><strong>非零值</strong>表示子进程异常退出</li>
+</ul>
+
+<h2 id="c语言可执行程序的场景">C语言可执行程序的场景</h2>
+
+<p>在C语言编写的可执行程序中, 通常可以通过以下两种方式来设置<strong>退出码</strong></p>
+
+<ol>
+<li>在程序的任意位置直接调用<code>exit</code>系统调用</li>
+<li>在程序的<code>main</code>函数中通过它的返回值来设置退出码</li>
+</ol>
+
+<p>对于第一种方式, 这本就是操作系统向父进程传递退出码的最直接方式，所以很容易理解; 但是对于第二种方式中退出码的传递机制, 则需要简单地介绍一下<code>main</code>函数的调用原理:</p>
+
+<p>众所周知, C 语言的<code>main</code>函数有两种接口定义</p>
+
+<pre><code class="language-c">/* 无命令行参数 */
+int main(void) {
+    ...
+}
+
+/* 带命令行参数 */
+int main(int argc, char *argv[]) {
+    ...
+}
+</code></pre>
+
+<p>在实际执行可执行程序时, 当<strong>加载器</strong>加载完可执行文件后, <code>main</code>函数实际用户代码的<a href="https://en.wikipedia.org/wiki/Entry_point">Entry Point</a>. 而<code>main</code>函数返回时, 在当代大部分平台上, 该返回值与其他函数的返回值一样会保存在寄存器<code>%eax</code>中。之后加载器便从该寄存器中获取该返回值, 并调用<code>exit</code>系统调用从而将退出码传递出来。</p>
+
+<p>因此, 我们可以看出来无论是上述的方式1还是方式2, 本质上都还是通过<code>exit</code>系统调用来传递<strong>退出码</strong>。差别只在于是你的可执行代码自己主动调用<code>exit</code>; 还是由加载器帮你调用<code>exit</code></p>
+
+<p><em>关于可执行程序的main函数调用机制的详细情况，可以参考文章《<a href="https://luomuxiaoxiao.com/?p=516">Linux X86程序启动 – main函数是如何被执行的</a>》</em></p>
+
+<h2 id="go语言可执行程序的场景">Go语言可执行程序的场景</h2>
+
+<p>有了上面的基于C语言可执行程序的背景知识, 接下来让我们再看看Go语言可执行程序的退出码设置方法和其背后的传递机制</p>
+
+<h3 id="退出码的设置方法">退出码的设置方法</h3>
+
+<p>Go语言的<code>main</code>函数的接口是没有返回值一说的, 其接口规范如下:</p>
+
+<pre><code class="language-c">package main    //必须将main函数定义在名为main的包内
+
+func main() {   // 无参, 无返回值
+    ...
+}
+</code></pre>
+
+<p>经过实测可以发现, 通过<code>main</code>函数正常<strong>return</strong>的情况下, 该程序的退出码永远是<strong>零</strong>。因此，如果要设置一个<strong>非零值</strong>的退出码，就只能通过Go语言标准库中封装好后的<code>exit</code>系统调用来设置</p>
+
+<pre><code class="language-c">os.Exit(code int)
+</code></pre>
+
+<p>比如, 一个用C语言写的小程序，改用Go写, 就会变成如下模样:</p>
+
+<ul>
+<li><p>C语言</p>
+
+<pre><code class="language-c">/* helloc.c */
+int main(int argc, char *argv[]) {
+    int opt, upper = 0, lower = 0;
+    char *org = &quot;hello, let's see&quot;;
+    char result[256] = { 0x00 };
+
+    while((opt=getopt(argc, argv,&quot;u:l:&quot;))!=-1){
+        switch (opt) {
+            case 'u':
+                upper = atoi(optarg);
+                break;
+            case 'l':
+                lower = atoi(optarg);
+                break;
+            default:
+                ;;
+        }
+    }
+
+    if (upper &lt;= lower) {
+        printf(&quot;invalid arguments for upper %d and lower %d&quot;, upper, lower);
+        return 100;
+    }
+
+    strncpy(result, org + lower, (upper - lower));
+    printf(&quot;%s\n&quot;, result);
+    return 0;
+}
+</code></pre></li>
+
+<li><p>Go语言</p>
+
+<pre><code class="language-c">//hellogo.go
+func main() {
+    str := &quot;hello, let's go&quot;
+    upper := flag.Int(&quot;u&quot;, 0, &quot;the upper bound index&quot;)
+    lower := flag.Int(&quot;l&quot;, 0, &quot;the lower bound index&quot;)
+
+    flag.Parse()
+
+    if (*upper &lt;= *lower) {
+        fmt.Printf(&quot;%v&quot;, 
+            fmt.Errorf(&quot;invalid arguments for upper %d and lower %d&quot;, *upper, *lower))
+        os.Exit(100)    
+    }
+
+    fmt.Printf(&quot;%s\n&quot;, str[*(lower):(*upper)])
+}
+</code></pre></li>
+</ul>
+
+<p>之后可以通过以下shell脚本来测试上述的退出码:</p>
+
+<pre><code class="language-sh">#!/bin/bash
+./helloc -l 3 -u 10
+echo $?
+./helloc
+echo $?
+
+./hellogo -l 3 -u 10
+echo $?
+./hellogo
+echo $?
+./hellogo -l 30 -u 40
+echo $?
+</code></pre>
+
+<p>可得到执行结果如下:</p>
+
+<pre><code class="language-sh">$ ./test.sh
+lo, let
+0
+invalid arguments for upper 0 and lower 0
+100
+lo, let
+0
+invalid arguments for upper 0 and lower 0
+100
+panic: runtime error: slice bounds out of range
+
+goroutine 1 [running]:
+main.main()
+        /hellogo.go:22 +0x19f
+2
+</code></pre>
+
+<p>需要注意的是当通过这个go程序触发了一个<strong>panic</strong>时，可观察到其退出码为<strong>2</strong>. 而它并非是在程序代码中所定义的退出码。</p>
+
+<p>接下来我们将研究一下上述Go语言例子中的三个退出码<code>0</code>,<code>100</code>,<code>2</code>具体是在哪里通过什么方式传递出去的。</p>
+
+<h3 id="go语言可执行程序的进程启动与退出">Go语言可执行程序的进程启动与退出</h3>
+
+<p>我们知道Go语言<strong>可执行程序</strong>编译成本地机器码时，其实是包含了两部分代码:</p>
+
+<ol>
+<li>开发者自己写的代码(包含<code>main</code>函数)</li>
+<li>Go语言自己的运行时代码(包含了GC, goroutine调度器等等)</li>
+</ol>
+
+<p>因此它的执行也是需要由加载器加载起来执行的, 那么必然就衍生出一个问题: Go语言可执行程序对于加载器而言的<strong>Entry Point</strong>在哪里？</p>
+
+<p>查阅了一下 <code>$GOROOT</code> 下 <code>runtime</code>包的代码, 找到了 <code>runtime.main()</code>这个函数:</p>
+
+<pre><code class="language-c">//$GOROOT/src/runtime/proc.go
+func main() {
+    g := getg()
+    ...(中略)...
+    runtime_init() // must be before defer
+    ...(中略)...
+    gcenable()
+    if iscgo {
+        ...(中略)...
+        cgocall(_cgo_notify_runtime_init_done, nil)
+    }
+    fn := main_init 
+    fn()
+    
+    ...(中略)...
+    if isarchive || islibrary 
+    {
+        return
+    }
+    fn = main_main
+    fn()  
+    ...(中略)...
+
+    if panicking != 0 {
+        gopark(nil, nil, &quot;panicwait&quot;, traceEvGoStop, 1)
+    }
+
+    exit(0)
+}
+</code></pre>
+
+<p>从代码中可看见, <code>main_main</code>函数有着如下的声明，所以可知它本质上就是用户自己写的<code>main</code>函数。</p>
+
+<pre><code class="language-c">//go:linkname main_main main.main
+func main_main()
+</code></pre>
+
+<p>由于<code>main_main()</code>的调用只是<code>runtime.main()</code>的中间一步. 因此可知, Go语言可执行程序在加载器上的<strong>Entry Point</strong>就是整个这个<code>runtime.main()</code>函数.</p>
+
+<p><em>注:上述go:linkname 注释的含义是指定链接时重定向的实际函数名。即main包的main函数</em></p>
+
+<p>再次观察<code>runtime.main()</code>函数可知，只要用户的<code>main()</code>函数能正常结束(即没有<strong>panic</strong>), 那么最终它会走到系统调用<code>exit(0)</code>。也就是说，最普通的场景下，可执行程序的退出码必然为<strong>0</strong>。</p>
+
+<p>另一方面, 发生panic的情况下返回2也并非是用户代码中设计的。当程序触发panic时, Go运行时会最终调用<code>runtime.dopanic_m()</code>函数，而该函数的最末一行逻辑便是执行系统调用<code>exit(2)</code>,从而传递退出码<strong>2</strong></p>
+
+<h3 id="os-exit-int-的陷阱">os.Exit(int)的陷阱</h3>
+
+<p>经过上文可知, 尽管在形式上, Go可执行程序返回退出码有以下三种方式，但他们本质上都是相同的——都是通过系统调用<code>exit</code>来传递退出码。由于<code>os.Exit(int)</code>就是系统调用<code>exit</code>的Go语言封装，那么我们在代码中是不是就可以放心大胆地使用<code>os.Exit(int)</code>来退出程序传递退出码呢？</p>
+
+<p>很遗憾, 我们调用<code>os.Exit(int)</code>也不能太随意，因为这里有两个坑:</p>
+
+<ol>
+<li><p>如果我们在<code>main()</code>函数里直接传递一个非零值退出码给<code>os.Exit()</code>, 那么倘若我们在<code>main()</code>函数里事先已经登记了<code>defer</code>函数，那么这个<code>defer</code>函数将不会被执行。</p></li>
+
+<li><p>直接调用<code>os.Exit</code>的话, 如果正好同一时刻正好有其他<strong>goroutine</strong>在执行且恰好它触发了panic, 那么这个panic将无法被呈现出来，进而将可能使开发者错过早期发现致命BUG的机会。</p>
+
+<p>事实上，这个坑就是Go语言开发团队发现的. 在Go语言的语境中，panic应该享有最高优先级, 一旦触发则应当力保它被抛出到最外面。但是由于<code>os.Exit</code>是直接退出进程, 反而享有de-facto的最高优先级。因此, Go语言团队为了解决这一问题，专门在<code>runtime.main()</code>代码中调用<code>exit</code>之前插入了下面这段逻辑用来等待正在触发panic的goroutine执行完.</p>
+
+<pre><code class="language-c">// runtime/proc.go
+// main()
+if panicking != 0 {
+    gopark(nil, nil, &quot;panicwait&quot;, traceEvGoStop, 1)
+}
+
+exit(0)
+</code></pre>
+
+<p><em>关于这个坑的详细信息，可以参见Go项目的<a href="https://github.com/golang/go/issues/3934">Issue 3934</a></em></p></li>
+</ol>
+
+<p>因此, 在使用<code>os.Exit</code>传递自定义退出码时, 上面两个坑需要规避</p>
+
+<h3 id="运行时预留的退出码">运行时预留的退出码</h3>
+
+<p>由于我们希望Go程序能够传递出自定义的退出码的目的实际上还是出于语义上进行状态的区分, 因此我们定义退出码时也自然应当注意语义的唯一性。在Go运行时中预留了以下这些退出码供它自己使用, 开发者在定义自己的退出码时应当避免与它们重叠，以保障程序调用者(如Shell脚本)不至于产生二义性:</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">预留值</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">1</td>
+<td align="left">Go运行时自身与操作系统交互时(申请栈空间，创建新进程等)失败</td>
+</tr>
+
+<tr>
+<td align="left">2</td>
+<td align="left">用户代码触发了panic，且未被恢复</td>
+</tr>
+
+<tr>
+<td align="left">3</td>
+<td align="left">程序panic时也触发了panic (<strong>panic during panic</strong>)</td>
+</tr>
+
+<tr>
+<td align="left">4</td>
+<td align="left">程序panic 时遇到了严重错误，导致无法成功打印完traceback信息</td>
+</tr>
+
+<tr>
+<td align="left">5</td>
+<td align="left">程序panic时遇到了致命错误, 导致甚至无法开始打印traceback信息</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="总结与建议">总结与建议</h2>
+
+<p>基于以上总结的关于Go程序的退出码相关Know-how, 如果开发者真的希望自己编写的Go可执行程序能够在退出时传递自定义退出码, 那么在使用<code>os.Exit()</code>传递退出码时可以考虑遵循下述最佳实践:</p>
+
+<ol>
+<li><p>确保<code>os.Exit()</code>的调用只出现在最外层的<code>main</code>函数中.且这种情况下不要在<code>main</code>函数中声明defer调用</p></li>
+
+<li><p>调用<code>os.Exit()</code>时最好确保已无其他goroutine在并发执行</p></li>
+
+<li><p>传递的自定义退出码应避开Go运行时预留的退出码</p></li>
+</ol>
+
+<p>从代码层面而言, 使用<code>os.Exit()</code>向外传递退出码的最佳实践如下所示:</p>
+
+<pre><code class="language-c">package main
+
+func inner_main() int {
+    // 实现原本想在main()函数中实现的逻辑,
+    // 通过函数返回值来返回退出码
+    ...(中略)...
+}
+
+func main() {
+    os.Exit(inner_main())
+}
+</code></pre>
+
+  <div>
+  <br/><br/>
+  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">
+    <img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/cn/88x31.png" />
+  </a><br/>
+  本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">知识共享署名-非商业性使用-相同方式共享 3.0 中国大陆许可协议</a>进行许可。
+  </div>
+  <br/><br/>
+  <div class="social-share" data-sites="wechat,weibo,twitter,facebook,douban" data-mobile-sites="wechat,weibo,twitter,facebook,douban"></div>
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="https://xiaowing.github.io/post/20181231_a_peek_of_timescaledb_on_mojave/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="https://xiaowing.github.io/post/20181231_a_peek_of_timescaledb_on_mojave/">在MacOS Mojave上管中窥豹TimescaleDB</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+  </div>
+</div>
+
+
+
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'wingsdak';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+</div>
+
+</div>
+</div>
+<script src="https://xiaowing.github.io/js/ui.js"></script>
+
+
+
+
+</body>
+</html>
+
