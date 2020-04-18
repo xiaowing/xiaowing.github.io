@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>&amp;copy; Licensed under CC BY-NC-SA.</copyright>
-    <lastBuildDate>Wed, 30 Jan 2019 23:50:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2020 23:30:00 +0800</lastBuildDate>
     
 	<atom:link href="https://xiaowing.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>我所怀念的彼时光景</title>
+      <link>https://xiaowing.github.io/post/20200418_the_scene_i_miss/</link>
+      <pubDate>Sat, 18 Apr 2020 23:30:00 +0800</pubDate>
+      
+      <guid>https://xiaowing.github.io/post/20200418_the_scene_i_miss/</guid>
+      <description>&lt;p&gt;也许是人到了中年就容易开始回忆过去, 随着离不惑之年的越来越近, 我的脑海里逐渐被各种各样的回忆所充塞, 于是反而变得越来越&amp;rdquo;惑&amp;rdquo;. 最近一段时间, 总是会不经意地想起十几年前的一个片段, 其实只是一个很普通的光景, 但不知为何, 近来总是在我的脑海中挥之不散&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>一个小问题: Golang可执行程序的退出码</title>
