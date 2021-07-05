@@ -98,8 +98,33 @@ C语言在操作多线程方便由于缺乏一个统一的标准库，所以在L
         else:
             # 后续的处理逻辑略...
     ````
+3. java的实现
 
-3. Golang的实现
+    自Java 1.8后, java引入了强大`CompletableFuture`异步编程利器, 使得代码中操作多线程变得异常便利。
+
+    ````java
+    import java.lang.Thread;
+    import java.util.List;
+    import java.util.ArrayList;
+    import java.util.concurrent.CompletableFuture;
+
+    public class tester{
+        public static void main (String[] args)
+	    {
+		    List<CompletableFuture<Void>> futures = new ArrayList<CompletableFuture<Void>>(ROUTINE_NUM);
+		    for (int i = 0; i < ROUTINE_NUM; i++) {
+		        futures.add(CompletableFuture.runAsync(() -> {
+		            // 子线程中执行的任务逻辑...
+		        }));
+		    }
+
+            // 通过CompletableFuture的join方法阻塞主线程
+		    CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+	    }
+    }
+    ````
+
+4. Golang的实现
 
     由于Golang的语言特色，并发通过goroutine来实现。通常情况下，各个goroutine根本不需要知道彼此的存在。因此对于这个场景的实现方式，与之前的那些语言都有所不同.代码示例如下:
 
