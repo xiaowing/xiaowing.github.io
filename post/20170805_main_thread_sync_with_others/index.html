@@ -390,6 +390,31 @@ if __name__ == '__main__':
         # 后续的处理逻辑略...
 </code></pre></li>
 
+<li><p>java的实现</p>
+
+<p>自Java 1.8后, java引入了强大<code>CompletableFuture</code>异步编程利器, 使得代码中操作多线程变得异常便利。</p>
+
+<pre><code class="language-java">import java.lang.Thread;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
+
+public class tester{
+    public static void main (String[] args)
+    {
+        List&lt;CompletableFuture&lt;Void&gt;&gt; futures = new ArrayList&lt;CompletableFuture&lt;Void&gt;&gt;(ROUTINE_NUM);
+        for (int i = 0; i &lt; ROUTINE_NUM; i++) {
+            futures.add(CompletableFuture.runAsync(() -&gt; {
+                // 子线程中执行的任务逻辑...
+            }));
+        }
+
+        // 通过CompletableFuture的join方法阻塞主线程
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+    }
+}
+</code></pre></li>
+
 <li><p>Golang的实现</p>
 
 <p>由于Golang的语言特色，并发通过goroutine来实现。通常情况下，各个goroutine根本不需要知道彼此的存在。因此对于这个场景的实现方式，与之前的那些语言都有所不同.代码示例如下:</p>
